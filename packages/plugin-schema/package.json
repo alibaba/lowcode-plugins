@@ -1,0 +1,41 @@
+{
+  "name": "@alilc/lowcode-plugin-schema",
+  "author": "alvarto",
+  "version": "1.0.0",
+  "description": "Show schema in lowcode editor",
+  "files": [
+    "es",
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "README": "README.md",
+  "scripts": {
+    "start": "build-scripts start",
+    "build": "build-scripts build",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@alilc/lowcode-plugin-base-monaco-editor": "^1.0.0",
+    "@alifd/next": "^1.25.13",
+    "classnames": "^2.3.1",
+    "lodash": "^4.17.21",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
+  },
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.32",
+    "@alife/theme-lowcode-light": "^0.1.0",
+    "@alilc/build-plugin-alt": "^1.0.0",
+    "@alilc/lowcode-engine": "^1.0.0",
+    "@alilc/lowcode-shell": "^1.0.0",
+    "@recore/config": "^2.0.6",
+    "@types/react": "^16.0.3",
+    "build-plugin-fusion": "^0.1.19"
+  },
+  "license": "MIT"
+}

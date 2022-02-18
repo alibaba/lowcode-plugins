@@ -1,0 +1,206 @@
+// TODO 分层
+// TODO 主题
+$cls-prefix: "lowcode-plugin-datasource-pane";
+
+.#{$cls-prefix}-container {
+  overflow-y: auto;
+  margin: 8px;
+  height: 100%;
+  >.next-tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    >.next-tabs-bar {
+      .next-tabs-nav-extra {
+        position: relative;
+        margin-top: 6px;
+        .next-btn {
+          margin-left: 4px;
+        }
+      }
+    }
+    >.next-tabs-content {
+      flex: 1 1 auto;
+      >.next-tabs-tabpane.active {
+        overflow-y: auto;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.#{$cls-prefix}-filters {
+  .next-search {
+    width: 100%;
+    .next-search-left {
+      height: 28px !important;
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      .next-before {
+        height: 28px !important;
+        .next-select {
+          height: 28px !important;
+        }
+      }
+      .next-search-input {
+        height: 28px !important;
+        input {
+          height: 28px !important;
+        }
+      }
+      .next-input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+    .next-after {
+      // height: 28px !important;
+      .next-btn {
+        height: 30px !important;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        .next-icon:before {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+.#{$cls-prefix}-operations {
+  margin-top: 8px;
+  .next-btn {
+    margin-right: 4px;
+  }
+}
+
+// TODO
+.#{$cls-prefix}-list-empty {
+  margin-top: 8px;
+  display: block;
+}
+
+.#{$cls-prefix}-list {
+  .datasource-list {
+    margin-top: 8px;
+    // height: unquote("calc(100vh - 48px - 48px - 42px - 28px - 8px - 8px)");
+    // overflow: auto;
+    .next-virtual-list-wrapper > div > ul > li {
+      border-top: 1px solid #ddd;
+      &:first-child {
+        border-top: none;
+      }
+    }
+  }
+}
+
+.#{$cls-prefix}-list-item-sort {
+  padding-left: 24px;
+  .#{$cls-prefix}-list-item-drag-handle {
+    position: absolute;
+    left: 4px;
+    top: 14px;
+  }
+}
+
+.#{$cls-prefix}-list-item-export {
+  padding-left: 24px;
+  .#{$cls-prefix}-list-item-export-checkbox {
+    position: absolute;
+    left: 4px;
+    top: 14px;
+  }
+}
+
+.#{$cls-prefix}-list-item-dragging {
+  opacity: .3;
+}
+
+.#{$cls-prefix}-form {
+  .next-form-item {
+    .next-form-item-control {
+      .react-monaco-editor-container {
+        border: 1px solid #eee;
+      }
+    }
+  }
+}
+
+
+.#{$cls-prefix}-detail {
+  position: absolute;
+  background: #fff;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  left: 300px;
+  top: -48px;
+  min-width: 600px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .#{$cls-prefix}-detail-header {
+    height: 48px;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px #dedede solid;
+    flex: 0 0 48px;
+  }
+  .#{$cls-prefix}-detail-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .#{$cls-prefix}-detail-actions {
+    .next-btn {
+      margin-right: 4px;
+    }
+  }
+  .#{$cls-prefix}-detail-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 8px;
+  }
+}
+
+.#{$cls-prefix}-array-items {
+  .next-formily-item {
+    margin-bottom: 4px;
+  }
+}
+
+.#{$cls-prefix}-create,
+.#{$cls-prefix}-import,
+.#{$cls-prefix}-export {
+  .next-switch {
+    width: 42px;
+  }
+  .#{$cls-prefix}-component-switchbtn {
+    margin-left: -40px;
+    left: 40px;
+    position: relative;
+  }
+}
+
+.#{$cls-prefix}-import {
+}
+
+.#{$cls-prefix}-export {
+  .#{$cls-prefix}-export-btns {
+    text-align: right;
+    .next-btn {
+      margin-right: 4px;
+    }
+  }
+}
+
+.#{$cls-prefix}-code-editor-fullscreen {
+  position: fixed;
+  z-index: 9999;
+  left: 20%;
+  right: 2%0;
+  top: 10%;
+  bottom: 10%;
+  background-color: #fff;
+}

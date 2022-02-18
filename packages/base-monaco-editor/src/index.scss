@@ -1,0 +1,107 @@
+.ve-code-control {
+  position: relative;
+  box-sizing: content-box;
+  border-radius: 3px;
+  min-height: 100px;
+  border: 1px solid transparent;
+  &.ve-code-control {
+    overflow: visible;
+  }
+}
+
+.ve-code-control:hover {
+  border-color: var(--color-field-border-hover, rgba(31, 56, 88, 0.1));
+}
+
+.ve-code-control.ve-focused {
+  border-color: var(--color-field-border-active, rgba(31, 56, 88, 0.15));
+}
+
+.ve-code-control.ve-outline {
+  border: 1px solid var(--color-field-border, rgba(31, 56, 88, 0.05)) !important;
+}
+
+.ve-code-control .react-monaco-editor-container {
+  min-height: 100px;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+}
+
+.ve-code-control .base-monaco-full-screen-icon,
+.base-monaco-full-screen-icon-cancel {
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+  position: absolute;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.base-monaco-full-screen-icon {
+  background-image: url('https://gw.alicdn.com/imgextra/i2/O1CN01JwHaTf27MfJa2vYCZ_!!6000000007783-2-tps-128-128.png');
+  top: 40px;
+  right: 20px;
+}
+
+.base-monaco-full-screen-icon-cancel {
+  background-image: url('https://gw.alicdn.com/imgextra/i3/O1CN01phCfMl1XQ23gyoUUG_!!6000000002917-2-tps-128-128.png');
+  top: 10px;
+  right: 138px;
+}
+
+.ve-code-control .loading {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  color: var(--color-text, rgba(0, 0, 0, 0.3));
+  background-color: transparent;
+
+  &::after {
+    width: 1em;
+    content: '';
+    display: inline;
+    animation: dots steps(3) 1s infinite;
+  }
+}
+
+.ve-code-control .syntaxTips {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 234, 234, 0.8);
+  color: red;
+  padding: 10px 30px;
+  margin: 0;
+  transition: 0.2s ease max-height;
+  max-height: 0;
+  box-sizing: border-box;
+}
+
+.ve-code-control .syntaxTips:hover {
+  max-height: 50%;
+  overflow: auto;
+}
+
+.ve-code-control .syntaxTips .infoIcon {
+  position: absolute;
+  width: 20px;
+  height: 16px;
+  top: 2px;
+  right: 5px;
+  transform: rotateY(180deg);
+}
+
+@keyframes dots {
+  0% { content: '.'; }
+  20% { content: '..'; }
+  40% { content: '...'; }
+  60% { content: '....'; }
+  80% { content: '.....'; }
+}

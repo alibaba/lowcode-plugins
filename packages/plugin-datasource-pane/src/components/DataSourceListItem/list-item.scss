@@ -1,0 +1,39 @@
+$cls-prefix: "lowcode-plugin-datasource-pane";
+
+.#{$cls-prefix}-list-item {
+  margin-top: 8px;
+  border: 1px solid rgba(31, 56, 88, 0.1);
+  border-radius: 3px;
+  padding: 8px;
+  position: relative;
+  .#{$cls-prefix}-list-item-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 28px;
+    .#{$cls-prefix}-list-item-id {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px;
+      .#{$cls-prefix}-item-typetag {
+        font-weight: 700;
+        margin-right: 4px;
+      }
+    }
+    .next-btn {
+      margin-left: 4px;
+    }
+  }
+  .#{$cls-prefix}-list-item-desc {
+    .next-tag {
+      margin-right: 4px;
+      max-width: 120px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    [
+      "build-plugin-fusion",
+      {
+        "themePackage": "@alife/theme-lowcode-light"
+      }
+    ],
+    "build-plugin-component",
+    "./build.plugin.js"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "name": "@alilc/lowcode-plugin-datasource-pane",
+  "version": "1.0.0-beta.2",
+  "description": "低代码引擎数据源面板",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "start": "build-scripts start",
+    "build": "build-scripts build",
+    "test": "ava",
+    "test:snapshot": "ava --update-snapshots"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "snapshotDir": "test/fixtures/__snapshots__",
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.32",
+    "@alife/theme-lowcode-light": "^0.1.0",
+    "@alilc/build-plugin-alt": "beta",
+    "@alilc/lowcode-engine": "beta",
+    "@alilc/lowcode-types": "beta",
+    "@types/babel-types": "^7.0.9",
+    "@types/babel__preset-env": "^7.9.2",
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4",
+    "build-plugin-fusion": "^0.1.9",
+    "monaco-editor": "^0.20.0"
+  },
+  "peerDependencies": {
+    "@alifd/next": "^1.20.28",
+    "moment": "^2.29.1"
+  },
+  "dependencies": {
+    "@alilc/lowcode-plugin-base-monaco-editor": "^1.0.0",
+    "@alilc/lowcode-types": "^1.0.0-beta.3",
+    "@formily/core": "^2.0.0-rc.3",
+    "@formily/next": "^2.0.0-rc.3",
+    "@formily/react": "^2.0.0-rc.3",
+    "@types/lodash": "^4.14.178",
+    "@xstate/react": "^1.6.1",
+    "ajv": "^6.12.4",
+    "lodash": "^4.17.20",
+    "react-copy-to-clipboard": "^5.0.4",
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2",
+    "react-error-boundary": "^3.1.4",
+    "svgo": "2.x",
+    "traverse": "^0.6.6",
+    "xstate": "^4.26.0"
+  },
+  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.0-beta.1/build/index.html"
+}

@@ -1,0 +1,43 @@
+.container {
+  height: 100%;
+}
+
+.plugin-code-editor-pane {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .next-tabs {
+    width: auto;
+    height: 32px;
+    overflow: hidden;
+  }
+
+  .ve-code-control {
+    position: relative;
+    height: calc(100% - 24px);
+  }
+
+  .plugin-code-editor-inner {
+    order: 100;
+    flex: 1 0 100%;
+    height: calc(100% - 34px);
+    border-top: 1px solid #dbdee2;
+    margin-top: -1px;
+    width: 100%;
+  }
+
+  .tab-with-error {
+    color: red!important;
+  }
+  .tab-with-error:before {
+    border-top-color: red!important;
+  }
+
+  // hide status bar, @see https://stackoverflow.com/questions/62383930/override-monaco-editor-hover-widget-style-to-hide-peek-problem
+  div.hover-row.status-bar {
+    display: none !important;
+  }
+}

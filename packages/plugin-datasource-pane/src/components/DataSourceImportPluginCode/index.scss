@@ -1,0 +1,19 @@
+.lowcode-plugin-datasource-import-plugin-code {
+  height: 100%;
+  overflow: auto;
+  padding-top: 10px;
+  .react-monaco-editor-container {
+    border: 1px solid #eee;
+  }
+  .error-msg {
+    line-height: 24px;
+    color: #f60;
+    font-size: 12px;
+  }
+  .btns {
+    margin-top: 8px;
+  }
+  .next-btn {
+    margin-right: 4px;
+  }
+}

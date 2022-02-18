@@ -1,0 +1,34 @@
+{
+  "name": "@alilc/lowcode-plugin-manual",
+  "author": "humphry.huang9@gmail.com",
+  "version": "1.0.0",
+  "description": "低代码产品使用手册",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "README": "README.md",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "build-scripts start",
+    "build": "build-scripts build",
+    "prepublishOnly": "npm run build",
+    "beta": "npm publish --tag beta",
+    "pub": "npm publish"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^16.0.0"
+  },
+  "devDependencies": {
+    "@alilc/lowcode-engine": "^1.0.0",
+    "@alib/build-scripts": "^0.1.32",
+    "@alifd/theme-lowcode-light": "^0.2.1",
+    "@recore/config": "^2.0.6",
+    "@types/react": "^16.0.3",
+    "build-plugin-fusion": "^0.1.19",
+    "@alilc/build-plugin-alt": "^1.0.0"
+  },
+  "license": "MIT"
+}

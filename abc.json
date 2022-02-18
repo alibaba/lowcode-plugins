@@ -1,0 +1,4 @@
+{
+  "type": "lowcode-plugins",
+  "builder": "@alilc/builder-multi-components"
+}

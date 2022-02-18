@@ -1,0 +1,33 @@
+$cls-prefix: "lowcode-plugin-datasource-pane";
+
+.#{$cls-prefix}-universal-value {
+  width: 250px !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .param-value-type {
+    margin-right: 4px;
+  }
+}
+
+.#{$cls-prefix}-universal-value-typeswitch.next-btn-group {
+  .next-btn {
+    padding: 0 2px;
+    height: 20px;
+  }
+}
+
+.#{$cls-prefix}-universal-value-string,
+.#{$cls-prefix}-universal-value-number {
+  width: 200px !important;
+}
+
+.#{$cls-prefix}-universal-value-switch {
+  width: 40px !important;
+}
+
+.#{$cls-prefix}-universal-value-expression,
+.#{$cls-prefix}-universal-value-jsonstring,
+.#{$cls-prefix}-universal-value-json {
+  width: 200px !important;
+}

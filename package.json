@@ -1,0 +1,57 @@
+{
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/css-modules-typescript-loader",
+      "**/@alife/theme-lowcode-*"
+    ]
+  },
+  "scripts": {
+    "dev": "npm run bootstrap && npm run build && cooking watch -c build/cooking.demo.js -p",
+    "build": "./scripts/build.sh",
+    "clean": "rm -rf ./packages/*/lib ./packages/*/es ./packages/*/dist ./packages/*/build",
+    "setup": "./scripts/setup.sh",
+    "setup:test": "./scripts/setup-for-test.sh",
+    "setup:skip-build": "./scripts/setup-skip-build.sh",
+    "start": "./scripts/start.sh",
+    "start:demo": "./scripts/start.sh @alilc/lowcode-demo",
+    "test": "lerna run test --stream",
+    "test:snapshot": "lerna run test:snapshot",
+    "watchdog:build": "node ./scripts/watchdog.js",
+    "f2elint:scan": "f2elint scan -q -i ./packages/*/src",
+    "f2elint:fix": "f2elint fix -i ./packages/*/src",
+    "release:beta": "lerna publish --canary --pre-dist-tag=beta --preid=beta --yes",
+    "release:rc": "lerna publish prerelease --pre-dist-tag=rc --preid=rc",
+    "release:next": "lerna publish prerelease --pre-dist-tag=next --preid=next",
+    "release:preminor": "lerna publish preminor --pre-dist-tag=next --preid=next",
+    "release:premajor": "lerna publish premajor --pre-dist-tag=next --preid=next",
+    "release": "lerna publish",
+    "release:minor": "lerna publish minor",
+    "release:major": "lerna publish major"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
+    }
+  },
+  "devDependencies": {
+    "lerna": "^4.x",
+    "f2elint": "^2.0.1",
+    "husky": "^7.0.4",
+    "typescript": "^3.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "tnpm": {
+    "mode": "yarn",
+    "lockfile": "enable"
+  },
+  "resolutions": {
+    "@builder/babel-preset-ice": "1.0.1"
+  }
+}
