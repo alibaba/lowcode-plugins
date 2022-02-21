@@ -1,0 +1,35 @@
+{
+  "groupList": [
+    "系统组件",
+    {
+      "zh_CN": "原子组件 (文本兼容多语言模式)",
+      "en_US": "Atom Components",
+      "type": "i18n"
+    }
+  ],
+  "componentList": [
+    {
+      "componentName": "Input",
+      "icon": "图片(string) or ReactNode",
+      "title": "输入框",
+      "description": "描述",
+
+      "cagetory": "分类名称（保持兼容）",
+
+      "sort": {
+        "category": "表单",
+        "group": "系统组件",
+        "hidden": false,
+        "priority": 1
+      },
+
+      "snippets": [
+        {
+          "title": "输入框 （可省略，用组件的）",
+          "schema": {},
+          "screenshot": "图片(string) or ReactNode，（可省略，用组件的）"
+        }
+      ]
+    }
+  ]
+}

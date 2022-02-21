@@ -1,0 +1,1185 @@
+{
+  "componentList": [
+    {
+      "title": "Div容器",
+      "componentName": "Div",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": true,
+      "defaultProps": {}
+    },
+    {
+      "title": "容器",
+      "componentName": "Block",
+      "docUrl": "http://gitlab.alibaba-inc.com/vision-components/vc-block/blob/master/README.md",
+      "category": null,
+      "isContainer": true
+    },
+    {
+      "title": "栅格",
+      "componentName": "Grid",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": true,
+      "canHovering": true,
+      "canSelecting": true,
+      "canDragging": true,
+      "canDropTo": true,
+      "defaultProps": {}
+    },
+    {
+      "title": "列",
+      "componentName": "Col",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": true
+    },
+    {
+      "title": "表格",
+      "componentName": "Table",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "表格编辑",
+      "componentName": "TableEdit",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "开关",
+      "componentName": "Switch",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "自定义文件上传",
+      "componentName": "FileUpload",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "文件上传",
+      "componentName": "FileUpload2",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "用户选择",
+      "componentName": "UserSelector",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "表单项",
+      "componentName": "FormField",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "按钮",
+      "componentName": "Button",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "数字输入框",
+      "componentName": "NumberPicker",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "菜单按钮",
+      "componentName": "MenuButton",
+      "category": null,
+      "docUrl": "",
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "菜单",
+      "componentName": "Menu",
+      "category": "高级",
+      "docUrl": "https://go.alibaba-inc.com/help3/vc-menu",
+      "hasSlot": true,
+      "snippets": [
+        {
+          "screenshot": "https://img.alicdn.com/tfs/TB1QAaIu1L2gK0jSZPhXXahvXXa-112-64.png",
+          "label": "菜单",
+          "schema": {
+            "componentName": "Menu",
+            "props": {}
+          }
+        },
+        {
+          "screenshot": "https://img.alicdn.com/tfs/TB1QAaIu1L2gK0jSZPhXXahvXXa-112-64.png",
+          "label": "菜单2",
+          "title": "菜单2",
+          "schema": {
+            "componentName": "Menu",
+            "props": {}
+          }
+        }
+      ]
+    },
+    [
+      {
+        "title": "表格容器",
+        "componentName": "TableContainer",
+        "category": "容器",
+        "isContainer": true,
+        "canDropIn": false,
+        "canUseCondition": false,
+        "canLoop": false,
+        "initialChildren": [
+          {
+            "componentName": "TableQueryForm",
+            "props": {
+              "inline": true,
+              "initChildren": true,
+              "style": {
+                "margin": "8px"
+              }
+            },
+            "children": [
+              {
+                "componentName": "Input",
+                "props": {
+                  "isField": true,
+                  "fieldLabel": "姓名",
+                  "fieldName": "name"
+                }
+              },
+              {
+                "componentName": "Button",
+                "props": {
+                  "text": "查询",
+                  "type": "primary",
+                  "buttonType": "tableQuery",
+                  "actionType": "callAPI",
+                  "_context": {
+                    "type": "JSExpression",
+                    "value": "this.utils.epochPolyfill(this)"
+                  }
+                }
+              },
+              {
+                "componentName": "Button",
+                "props": {
+                  "text": "重置",
+                  "buttonType": "reset",
+                  "_context": {
+                    "type": "JSExpression",
+                    "value": "this.utils.epochPolyfill(this)"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "componentName": "TableAction",
+            "props": {
+              "style": {
+                "margin": "8px 8px 16px 8px"
+              }
+            }
+          },
+          {
+            "componentName": "Table",
+            "props": {
+              "style": {
+                "margin": "8px"
+              },
+              "enableSelection": true
+            }
+          }
+        ],
+        "configure": [
+          {
+            "name": "id",
+            "title": "节点 ID",
+            "setter": "NodeSetter"
+          },
+          {
+            "name": "_context",
+            "title": "上下文",
+            "initialValue": {
+              "type": "JSExpression",
+              "value": "this.utils.epochPolyfill(this)"
+            },
+            "display": "none"
+          },
+          {
+            "type": "group",
+            "name": "formContent",
+            "title": "表格内容",
+            "collapsed": false,
+            "items": [
+              {
+                "name": "_autoCreate",
+                "title": "表单自动生成",
+                "setter": {
+                  "componentName": "DomainModelFormGeneratorSetter",
+                  "props": {
+                    "mode": "table"
+                  }
+                },
+                "ignore": true
+              }
+            ]
+          },
+          {
+            "name": "style",
+            "title": "样式设置",
+            "display": "accordion",
+            "collapsed": true,
+            "initialValue": {},
+            "setter": "StyleSetter"
+          }
+        ]
+      }
+    ],
+    {
+      "title": "表单容器",
+      "componentName": "Form",
+      "category": "基础",
+      "isInline": false,
+      "dataSource": true,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "文本输入框",
+      "componentName": "Input",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "下拉框",
+      "componentName": "Select",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "复选框",
+      "componentName": "Checkbox",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "复选框组",
+      "componentName": "CheckboxGroup",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "单选框",
+      "componentName": "Radio",
+      "category": "表单",
+      "isInline": false,
+      "canUseCondition": false,
+      "canLoop": false,
+      "isContainer": false
+    },
+    {
+      "title": "单选框组",
+      "componentName": "RadioGroup",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "日期区间",
+      "componentName": "RangePicker",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "日期选择",
+      "componentName": "DatePicker",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "提示输入框",
+      "componentName": "AutoComplete",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "时间选择",
+      "componentName": "TimePicker",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "代码编辑器",
+      "componentName": "CodeEditor",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false
+    },
+    {
+      "title": "穿梭框",
+      "componentName": "Transfer",
+      "category": "表单",
+      "isInline": false,
+      "canUseCondition": false,
+      "canLoop": false,
+      "isContainer": false
+    },
+    {
+      "title": "评分",
+      "componentName": "Rating",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "树型选择",
+      "componentName": "TreeSelect",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "级联选择",
+      "componentName": "CascaderSelect",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "Excel导出",
+      "componentName": "ExcelExport",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "Excel导入",
+      "componentName": "ExcelImport",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "图片",
+      "componentName": "Image",
+      "category": "基础",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "图标",
+      "componentName": "Icon",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "搜索框",
+      "componentName": "Search",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "标签",
+      "componentName": "Tag",
+      "category": "基础",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "文本标签",
+      "componentName": "Label",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "步骤",
+      "componentName": "Step",
+      "category": "基础",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "面包屑",
+      "componentName": "BreadCrumb",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "树",
+      "componentName": "Tree",
+      "category": "基础",
+      "isInline": false,
+      "canUseCondition": false,
+      "canLoop": false,
+      "isContainer": false
+    },
+    {
+      "title": "自定义渲染",
+      "componentName": "CustomizeRender",
+      "category": "基础",
+      "isInline": false
+    },
+    {
+      "title": "链接设置",
+      "componentName": "Redirect",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "表格查询栏",
+      "componentName": "TableQueryForm",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": true,
+      "dataSource": true,
+      "canUseCondition": false,
+      "canLoop": false,
+      "defaultProps": {
+        "_context": {
+          "type": "JSExpression",
+          "value": "this.utils.epochPolyfill(this)"
+        },
+        "inline": true
+      }
+    },
+    {
+      "title": "表单操作",
+      "componentName": "FormButtonBar",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "componentName": "TabsLayout",
+      "title": "选项卡",
+      "docUrl": "https://go.alibaba-inc.com/help3/vc-tabs-layout",
+      "category": "布局",
+      "isInline": false,
+      "isContainer": true,
+      "canHovering": true,
+      "canSelecting": true,
+      "canDragging": true,
+      "canDropIn": "Tab",
+      "canDropTo": true,
+      "initialChildren": [
+        {
+          "componentName": "Tab",
+          "props": {
+            "primaryKey": "tab_krc0v6p5"
+          }
+        },
+        {
+          "componentName": "Tab",
+          "props": {
+            "primaryKey": "tab_krc0v6p6"
+          }
+        }
+      ],
+      "snippets": [
+        {
+          "screenshot": "https://img.alicdn.com/tfs/TB1D0p2u.z1gK0jSZLeXXb9kVXa-112-64.png",
+          "label": "普通型",
+          "schema": {
+            "componentName": "TabsLayout",
+            "props": {},
+            "children": [
+              {
+                "componentName": "Tab",
+                "props": {
+                  "primaryKey": "tab_krc0v6p5"
+                }
+              },
+              {
+                "componentName": "Tab",
+                "props": {
+                  "primaryKey": "tab_krc0v6p6"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "screenshot": "https://img.alicdn.com/tfs/TB1C0pZuWL7gK0jSZFBXXXZZpXa-112-64.png",
+          "label": "胶囊型",
+          "schema": {
+            "componentName": "TabsLayout",
+            "props": {
+              "shape": "capsule"
+            },
+            "children": [
+              {
+                "componentName": "Tab",
+                "props": {
+                  "primaryKey": "tab_krc0v6p5"
+                }
+              },
+              {
+                "componentName": "Tab",
+                "props": {
+                  "primaryKey": "tab_krc0v6p6"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "componentName": "Tab",
+      "title": "选项",
+      "category": null,
+      "isInline": false,
+      "isContainer": true,
+      "canHovering": false,
+      "canSelecting": false,
+      "canDropIn": true,
+      "canDragging": false,
+      "canDropTo": "Tabs"
+    },
+    {
+      "title": "提示文案",
+      "componentName": "Info",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "markdown编辑器",
+      "componentName": "MarkdownEditor",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": true
+    },
+    {
+      "title": "富文本编辑器",
+      "componentName": "RichEdit",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "分隔按钮",
+      "componentName": "SplitButton",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "组合框",
+      "componentName": "Combobox",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false
+    },
+    {
+      "title": "行",
+      "componentName": "Row",
+      "category": null,
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "列表容器",
+      "componentName": "ListView",
+      "category": "容器",
+      "isInline": false,
+      "isContainer": true
+    },
+    {
+      "title": "代码比较",
+      "componentName": "CodeDiff",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false
+    },
+    {
+      "title": "可折叠容器",
+      "componentName": "Collapse",
+      "category": "容器",
+      "isInline": false,
+      "isContainer": true
+    },
+    {
+      "title": "翻页器",
+      "componentName": "Pagination",
+      "category": "基础",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "分组容器",
+      "componentName": "Group",
+      "category": null,
+      "isInline": false,
+      "isContainer": true
+    },
+    {
+      "title": "集合容器",
+      "componentName": "ListContainer",
+      "category": null,
+      "isInline": false,
+      "isContainer": true
+    },
+    {
+      "title": "语雀编辑器",
+      "componentName": "YuqueEditor",
+      "category": "表单",
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "Dialog",
+      "componentName": "Dialog",
+      "category": "基础",
+      "isContainer": true,
+      "isModal": true,
+      "canUseCondition": false,
+      "canLoop": false,
+      "rectSelector": "div.general-editor-fusion-dialog",
+      "docUrl": "http://gitlab.alibaba-inc.com/vision-components/vc-fusion-dialog/blob/master/README.md"
+    },
+    {
+      "title": "Iframe",
+      "componentName": "Iframe",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "下拉菜单",
+      "componentName": "Dropdown",
+      "category": "高级",
+      "docUrl": "",
+      "isContainer": true,
+      "initialChildren": [
+        {
+          "componentName": "Button",
+          "props": {
+            "type": "secondary",
+            "content": {
+              "type": "i18n",
+              "en_US": "Dropdown",
+              "zh_CN": "下拉菜单"
+            }
+          }
+        }
+      ],
+      "snippets": [
+        {
+          "screenshot": "https://img.alicdn.com/tfs/TB1YNWMu1L2gK0jSZFmXXc7iXXa-112-64.png",
+          "label": "下拉菜单",
+          "schema": {
+            "componentName": "Dropdown",
+            "props": {
+              "dataSource": [
+                {
+                  "label": "操作1",
+                  "key": "option1"
+                },
+                {
+                  "label": "操作2",
+                  "key": "option2"
+                },
+                {
+                  "label": "操作3",
+                  "key": "option3"
+                }
+              ],
+              "triggerType": "hover",
+              "disabled": false,
+              "align": "tl, bl",
+              "offset": [0, 0],
+              "autoFocus": false,
+              "hasMask": false,
+              "cache": false
+            },
+            "children": [
+              {
+                "componentName": "Button",
+                "props": {
+                  "content": "下拉菜单",
+                  "type": "secondary",
+                  "size": "medium",
+                  "behavior": "NORMAL",
+                  "baseIcon": "",
+                  "otherIcon": "",
+                  "loading": false,
+                  "triggerEventsWhenLoading": false
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "抽屉",
+      "componentName": "Drawer",
+      "category": "基础",
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false,
+      "isModal": true,
+      "rectSelector": ".vc-drawer"
+    },
+    {
+      "title": "货币输入框",
+      "componentName": "CurrencyInput",
+      "category": "表单",
+      "isInline": true,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "信息提示",
+      "componentName": "Message",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "Nav",
+      "componentName": "Nav",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "页面容器",
+      "componentName": "PageContainer",
+      "category": "基础",
+      "isInline": false,
+      "isContainer": false,
+      "defaultProps": {},
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "Power编辑器",
+      "componentName": "PowerEditor",
+      "category": "表单",
+      "isInline": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "图片播放",
+      "componentName": "ImagePlayer",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "视频播放",
+      "componentName": "VideoPlayer",
+      "category": "表单",
+      "isInline": false,
+      "isContainer": false,
+      "canUseCondition": false,
+      "canLoop": false
+    },
+    {
+      "title": "表格操作栏",
+      "componentName": "TableAction",
+      "category": null,
+      "isInline": false,
+      "isContainer": true,
+      "dataSource": true,
+      "canOperating": false,
+      "defaultProps": {
+        "_context": {
+          "type": "JSExpression",
+          "value": "this.utils.epochPolyfill(this)"
+        },
+        "inline": true
+      },
+      "initialChildren": [
+        {
+          "componentName": "Button",
+          "props": {
+            "text": "新建",
+            "type": "primary"
+          }
+        },
+        {
+          "componentName": "Button",
+          "props": {
+            "text": "删除"
+          }
+        }
+      ]
+    },
+    {
+      "title": "页面内容",
+      "componentName": "ShellContainer",
+      "componentType": "Layout",
+      "category": "基础",
+      "categoryType": "Layout",
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false,
+      "defaultProps": {}
+    },
+    {
+      "title": "多标签布局",
+      "componentName": "ShellTabs",
+      "componentType": "Layout",
+      "category": "布局",
+      "categoryType": "Layout",
+      "isInline": false,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false,
+      "defaultProps": {}
+    },
+    {
+      "componentName": "EpochPageLayout",
+      "hasSlot": true,
+      "title": "模型页面布局",
+      "category": "布局",
+      "isInline": false,
+      "isContainer": true,
+      "icon": "https://img.alicdn.com/tfs/TB1_HQRqjMZ7e4jSZFOXXX7epXa-482-287.png",
+      "initialChildren": [
+        {
+          "componentName": "EpochPageLayoutContainer"
+        }
+      ]
+    },
+    {
+      "componentName": "EpochTableLayout",
+      "hasSlot": true,
+      "title": "模型表格布局",
+      "category": "布局",
+      "isInline": false,
+      "isContainer": true,
+      "icon": "https://img.alicdn.com/tfs/TB1_HQRqjMZ7e4jSZFOXXX7epXa-482-287.png"
+    },
+    {
+      "componentName": "Page",
+      "title": "页面",
+      "icon": "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSIxMDI0cHgiIGhlaWdodD0iMTAyNHB4IiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0Ij4KICA8cGF0aCBmaWxsPSIjZWNmMGYxIiBkPSJNODcxLjIzOTY4IDE5MS4xNjAzMmwtNjg2LjA4IDBjLTIyLjYzMDQgMC00MC45NiAxOC4zNTAwOC00MC45NiA0MC45NmwwIDU3My40NGMwIDIyLjYzMDQgMTguMzI5NiA0MC45NiA0MC45NiA0MC45Nmw2ODYuMDggMGMyMi42MDk5MiAwIDQwLjk2LTE4LjMyOTYgNDAuOTYtNDAuOTZsMC01NzMuNDRDOTEyLjE5OTY4IDIwOS41MTA0IDg5My44NDk2IDE5MS4xNjAzMiA4NzEuMjM5NjggMTkxLjE2MDMyek03ODAuOCAyNDIuNDQyMjRjMTcuODM4MDggMCAzMi4zMTc0NCAxNC40NzkzNiAzMi4zMTc0NCAzMi4zNTg0IDAgMTcuODM4MDgtMTQuNDc5MzYgMzIuMzE3NDQtMzIuMzE3NDQgMzIuMzE3NDQtMTcuODc5MDQgMC0zMi4zNTg0LTE0LjQ3OTM2LTMyLjM1ODQtMzIuMzE3NDRDNzQ4LjQ0MTYgMjU2LjkyMTYgNzYyLjkyMDk2IDI0Mi40NDIyNCA3ODAuOCAyNDIuNDQyMjR6TTY4OS40Nzk2OCAyNDIuNDQyMjRjMTcuODc5MDQgMCAzMi4zNTg0IDE0LjQ3OTM2IDMyLjM1ODQgMzIuMzU4NCAwIDE3LjgzODA4LTE0LjQ3OTM2IDMyLjMxNzQ0LTMyLjM1ODQgMzIuMzE3NDQtMTcuODM4MDggMC0zMi4zMTc0NC0xNC40NzkzNi0zMi4zMTc0NC0zMi4zMTc0NEM2NTcuMTYyMjQgMjU2LjkyMTYgNjcxLjY0MTYgMjQyLjQ0MjI0IDY4OS40Nzk2OCAyNDIuNDQyMjR6TTU5OC4xNTkzNiAyNDIuNDQyMjRjMTcuODc5MDQgMCAzMi4zNTg0IDE0LjQ3OTM2IDMyLjM1ODQgMzIuMzU4NCAwIDE3LjgzODA4LTE0LjQ3OTM2IDMyLjMxNzQ0LTMyLjM1ODQgMzIuMzE3NDQtMTcuODM4MDggMC0zMi4zMTc0NC0xNC40NzkzNi0zMi4zMTc0NC0zMi4zMTc0NEM1NjUuODQxOTIgMjU2LjkyMTYgNTgwLjMyMTI4IDI0Mi40NDIyNCA1OTguMTU5MzYgMjQyLjQ0MjI0ek04MzAuMjc5NjggNzY0LjYwMDMybC02MDQuMTYgMEwyMjYuMTE5NjggMzQ4LjE2bDYwNC4xNiAwTDgzMC4yNzk2OCA3NjQuNjAwMzJ6TTc5Ny44MzkzNiA1MTAuMzIwNjRsLTUzOS4yNzkzNiAwIDAtMTIyLjg4IDUzOS4yNzkzNiAwTDc5Ny44MzkzNiA1MTAuMzIwNjR6TTUwOC42NDEyOCA2MjIuMTIwOTZsLTI1MC4wODEyOCAwIDAtNzUuMDc5NjggMjUwLjA4MTI4IDBMNTA4LjY0MTI4IDYyMi4xMjA5NnpNNTA4LjY0MTI4IDczMC40ODA2NGwtMjUwLjA4MTI4IDAgMC03NS4wNzk2OCAyNTAuMDgxMjggMEw1MDguNjQxMjggNzMwLjQ4MDY0ek03OTQuNDM5NjggNjIyLjEyMDk2IDU0NC4zNTg0IDYyMi4xMjA5NmwwLTc1LjA3OTY4IDI1MC4wODEyOCAwTDc5NC40Mzk2OCA2MjIuMTIwOTZ6TTc5NC40Mzk2OCA3MzAuNDgwNjQgNTQ0LjM1ODQgNzMwLjQ4MDY0bDAtNzUuMDc5NjggMjUwLjA4MTI4IDBMNzk0LjQzOTY4IDczMC40ODA2NHoiIC8+Cjwvc3ZnPgo=",
+      "category": null,
+      "canHovering": false,
+      "canSelecting": true,
+      "canDragging": false,
+      "canOperating": false,
+      "canDropTo": false,
+      "isContainer": true,
+      "configurable": []
+    },
+    {
+      "title": "低代码业务组件",
+      "componentName": "Component",
+      "docUrl": "http://gitlab.alibaba-inc.com/vision-components/vc-component/blob/master/README.md",
+      "category": null,
+      "isContainer": true,
+      "canUseCondition": false,
+      "canLoop": false,
+      "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDQxLjEgKDM1Mzc2KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5Hcm91cCBDb3B5PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGRlZnM+PC9kZWZzPgogICAgPGcgaWQ9IuS4u+inhuiniSIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9Ikdyb3VwLUNvcHkiIGZpbGw9IiNGRkZGRkYiPgogICAgICAgICAgICA8cGF0aCBkPSJNMC4wMjU3ODE4Njk2LDAuMDI1ODQ0NjEyMSBMMC4wMjU3ODE4Njk2LDIzLjg1MTg0MjMgTDIzLjg1MTQ3NjMsMjMuODUxODQyMyBMMjMuODUxNDc2MywwLjAyNTg0NDYxMjEgTDAuMDI1NzgxODY5NiwwLjAyNTg0NDYxMjEgTDAuMDI1NzgxODY5NiwwLjAyNTg0NDYxMjEgWiBNMjIuODIzNjQ5MSwyMi44MTY0NjE1IEwxLjA1MzYwOTEzLDIyLjgxNjQ2MTUgTDEuMDUzNjA5MTMsMS4wNjEyNTI5NCBMMjIuODIzNjQ5MSwxLjA2MTI1Mjk0IEwyMi44MjM2NDkxLDIyLjgxNjQ2MTUgTDIyLjgyMzY0OTEsMjIuODE2NDYxNSBaIE0yMC41MzI5ODE0LDMuODU1NjYxNzcgTDMuMzQ0Mjc2NzUsMy44NTU2NjE3NyBMMy4zNDQyNzY3NSw5LjkzNzc0NTAyIEwyMC41MzI5ODE0LDkuOTM3NzQ1MDIgTDIwLjUzMjk4MTQsMy44NTU2NjE3NyBMMjAuNTMyOTgxNCwzLjg1NTY2MTc3IFogTTE5LjcyMzg3NDgsOS4xMjI3OTQxIEw0LjE1MzQxMDk0LDkuMTIyNzk0MSBMNC4xNTM0MTA5NCw0LjY3MTE2NDA0IEwxOS43MjM4NzQ5LDQuNjcxMTY0MDQgTDE5LjcyMzg3NDgsOS4xMjI3OTQxIEwxOS43MjM4NzQ4LDkuMTIyNzk0MSBaIE0xMi45MzUwNDMyLDE0LjYzNDgwODcgTDIwLjUzMjk4MTQsMTQuNjM0ODA4NyBMMjAuNTMyOTgxNCwxMS41MzA5NTQ1IEwxMi45MzUwNDMyLDExLjUzMDk1NDUgTDEyLjkzNTA0MzIsMTQuNjM0ODA4NyBMMTIuOTM1MDQzMiwxNC42MzQ4MDg3IFogTTEzLjc0NDE3NzMsMTIuMzQ2NDg0MyBMMTkuNzIzODc0OCwxMi4zNDY0ODQzIEwxOS43MjM4NzQ4LDEzLjgxOTg4NTMgTDEzLjc0NDE3NzMsMTMuODE5ODg1MyBMMTMuNzQ0MTc3MywxMi4zNDY0ODQzIEwxMy43NDQxNzczLDEyLjM0NjQ4NDMgWiBNMTIuOTM1MDQzMiwxOC45NjE5NDM5IEwyMC41MzI5ODE0LDE4Ljk2MTk0MzkgTDIwLjUzMjk4MTQsMTUuODU4MDg5NyBMMTIuOTM1MDQzMiwxNS44NTgwODk3IEwxMi45MzUwNDMyLDE4Ljk2MTk0MzkgTDEyLjkzNTA0MzIsMTguOTYxOTQzOSBaIE0xMy43NDQxNzczLDE2LjY3MzA0MDYgTDE5LjcyMzg3NDgsMTYuNjczMDQwNiBMMTkuNzIzODc0OCwxOC4xNDY0NDE2IEwxMy43NDQxNzczLDE4LjE0NjQ0MTYgTDEzLjc0NDE3NzMsMTYuNjczMDQwNiBMMTMuNzQ0MTc3MywxNi42NzMwNDA2IFogTTMuNTE4MjAwMjIsMjAuNjE5NzQ0IEwxMS4xMTY3MTc0LDIwLjYxOTc0NCBMMTEuMTE2NzE3NCwxMC45MDEwMDkyIEwzLjUxODIwMDIyLDEwLjkwMTAwOTIgTDMuNTE4MjAwMjIsMjAuNjE5NzQ0IEwzLjUxODIwMDIyLDIwLjYxOTc0NCBaIE00LjMyNzMwNjgyLDExLjcxNTkzMjUgTDEwLjMwNzAwNDMsMTEuNzE1OTMyNSBMMTAuMzA3MDA0MywxOS44MDQ3OTMxIEw0LjMyNzMwNjgyLDE5LjgwNDc5MzEgTDQuMzI3MzA2ODIsMTEuNzE1OTMyNSBMNC4zMjczMDY4MiwxMS43MTU5MzI1IFoiIGlkPSJTaGFwZSI+PC9wYXRoPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==",
+      "transducers": [{}]
+    },
+    {
+      "title": "Group Tree",
+      "componentName": "GroupTree",
+      "category": "业务组件",
+      "isInline": false,
+      "isContainer": false,
+      "defaultProps": {}
+    },
+    {
+      "title": "表达式弹框",
+      "componentName": "ExpressionDialog",
+      "category": "业务组件",
+      "isContainer": false,
+      "isModal": true,
+      "rectSelector": "div.general-editor-expression-dialog"
+    },
+    {
+      "title": "ValueTreeGrid",
+      "componentName": "ValueTreeGrid",
+      "category": "业务组件",
+      "isInline": false,
+      "isContainer": false,
+      "defaultProps": {}
+    },
+    {
+      "title": "TableGrid",
+      "componentName": "TableGrid",
+      "category": "业务组件",
+      "isInline": false,
+      "isContainer": false,
+      "defaultProps": {}
+    },
+    {
+      "title": "内容编辑器",
+      "componentName": "ContentEditor",
+      "category": "业务组件",
+      "isInline": false,
+      "isContainer": false,
+      "defaultProps": {}
+    },
+    {
+      "title": "条件输入框",
+      "componentName": "ConditionInput",
+      "isContainer": false,
+      "isModal": true,
+      "rectSelector": "div.general-editor-expression-dialog"
+    },
+    {
+      "title": "RuleCondition",
+      "componentName": "RuleCondition",
+      "category": "业务组件",
+      "isInline": false,
+      "isContainer": false,
+      "defaultProps": {}
+    },
+    {
+      "title": "领域模型按钮",
+      "componentName": "DomainModelButton",
+      "category": null,
+      "isInline": false,
+      "isContainer": false
+    },
+    {
+      "title": "领域模型按钮容器",
+      "componentName": "DomainModelButtonContainer",
+      "category": null,
+      "isInline": false,
+      "isContainer": true,
+      "canOperating": false,
+      "defaultProps": {}
+    },
+    {
+      "title": "领域模型表单布局",
+      "componentName": "DomainModelFormLayout",
+      "category": null,
+      "isContainer": true,
+      "canOperating": false,
+      "initialChildren": [
+        {
+          "componentName": "DomainModelForm",
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "领域模型表格",
+      "componentName": "DomainModelTable",
+      "category": null,
+      "isInline": false,
+      "isContainer": false,
+      "canDropIn": false,
+      "canOperating": false,
+      "initialChildren": [
+        {
+          "componentName": "DomainModelTableAction"
+        }
+      ]
+    },
+    {
+      "title": "领域模型表格布局",
+      "componentName": "DomainModelTableLayout",
+      "canOperating": true,
+      "canDropIn": false,
+      "category": null,
+      "isContainer": true,
+      "initialChildren": [
+        {
+          "componentName": "DomainModelForm",
+          "props": {
+            "inline": true
+          }
+        },
+        {
+          "componentName": "DomainModelButtonContainer",
+          "props": {
+            "buttonAlign": "button-align-left"
+          }
+        },
+        {
+          "componentName": "DomainModelTable"
+        }
+      ]
+    },
+    {
+      "title": "领域模型日期区间",
+      "componentName": "DomainModelRangePicker",
+      "category": null,
+      "isInline": false,
+      "isContainer": false
+    },
+    {
+      "title": "领域模型表单容器",
+      "componentName": "DomainModelFormContainer",
+      "category": null,
+      "isContainer": true,
+      "canDragging": false,
+      "canSelecting": false,
+      "canOperating": false
+    },
+    {
+      "title": "领域模型表单",
+      "componentName": "DomainModelForm",
+      "isInline": false,
+      "isContainer": true,
+      "canOperating": true
+    },
+    {
+      "title": "领域模型详情",
+      "componentName": "DomainModelDetail",
+      "category": null,
+      "isContainer": true,
+      "canOperating": false,
+      "initialChildren": [
+        {
+          "componentName": "DomainModelFormContainer",
+          "children": [
+            {
+              "componentName": "DomainModelDetailForm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "componentName": "DomainModelLayoutTab",
+      "title": "模型布局选项卡",
+      "category": null,
+      "isInline": false,
+      "isContainer": true,
+      "canOperating": false,
+      "canDropIn": "DomainModelLayoutTabItem",
+      "canDropTo": false
+    },
+    {
+      "componentName": "DomainModelLayoutTabItem",
+      "title": "模型布局",
+      "category": null,
+      "isInline": false,
+      "isContainer": true,
+      "canDropIn": false,
+      "canDragging": true,
+      "canDropTo": ["DomainModelLayoutTab", "DomainModelFormContainer"]
+    },
+    {
+      "title": "Debug日志列表",
+      "componentName": "DebugLogList",
+      "category": "业务组件",
+      "isInline": false,
+      "isContainer": false,
+      "defaultProps": {}
+    }
+  ]
+}

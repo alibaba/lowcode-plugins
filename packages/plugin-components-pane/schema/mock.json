@@ -1,0 +1,4108 @@
+{
+	"packages": [
+    {
+		"package": "moment",
+		"version": "2.24.0",
+		"urls": ["https://g.alicdn.com/mylib/moment/2.24.0/min/moment.min.js"],
+		"library": "moment"
+	}, {
+		"title": "fusion组件库",
+		"package": "@alifd/next",
+		"version": "1.23.0",
+		"urls": ["https://alifd.alicdn.com/npm/@alifd/next/1.23.0/next.min.css", "https://alifd.alicdn.com/npm/@alifd/next/1.23.0/next-with-locales.min.js"],
+		"library": "Next"
+	}, {
+		"package": "antd",
+		"version": "4.9.1",
+		"urls": ["//g.alicdn.com/code/lib/antd/4.9.1/antd.min.js", "//g.alicdn.com/code/lib/antd/4.9.1/antd.min.css"],
+		"library": "antd"
+	}, {
+		"package": "@alife/fusion-ui",
+		"version": "0.1.7",
+		"library": "AlifeFusionUi",
+		"urls": ["/view.js"],
+		"editUrls": ["/view.js"],
+		"renderUrls": ["https://g.alicdn.com/code/npm/@alife/fusion-ui/0.1.7/dist/AlifeFusionUi.js", "https://g.alicdn.com/code/npm/@alife/fusion-ui/0.1.7/dist/AlifeFusionUi.css"]
+	}, {
+		"package": "moment",
+		"version": "2.24.0",
+		"urls": ["https://g.alicdn.com/mylib/moment/2.24.0/min/moment.min.js"],
+		"library": "moment"
+	}, {
+		"title": "fusion组件库",
+		"package": "@alifd/next",
+		"version": "1.23.0",
+		"urls": ["https://g.alicdn.com/code/lib/alifd__next/1.23.18/next.min.css", "https://g.alicdn.com/code/lib/alifd__next/1.23.18/next-with-locales.min.js"],
+		"library": "Next"
+	}, {
+		"title": "NextTable",
+		"package": "NextTable",
+		"version": "1.0.1",
+		"urls": ["https://g.alicdn.com/fusion-platform/pro-table/1.0.1/next-table.js", "https://g.alicdn.com/fusion-platform/pro-table/1.0.1/next-table.css"],
+		"library": "NextTable"
+	}, {
+		"title": "AliLowCodeComponents",
+		"package": "@alifd/ali-lowcode-components",
+		"version": "latest",
+		"urls": ["https://gw.alipayobjects.com/os/lib/alifd/ali-lowcode-components/0.1.4/dist/ali-lowcode-components.js", "https://gw.alipayobjects.com/os/lib/alifd/ali-lowcode-components/0.1.4/dist/ali-lowcode-components.css"],
+		"library": "AliLowCodeComponents"
+	}, {
+		"title": "BizCharts",
+		"package": "bizcharts",
+		"version": "4.1.11",
+		"urls": ["https://g.alicdn.com/code/lib/bizcharts/4.1.11/BizCharts.min.js"],
+		"library": "BizCharts"
+	}, {
+		"title": "Container",
+		"package": "@alife/container",
+		"version": "0.3.7",
+		"urls": ["https://g.alicdn.com/fusion-design/auto-layout/0.3.7/dist/container.css", "https://g.alicdn.com/fusion-design/auto-layout/0.3.7/dist/container.js"],
+		"library": "Container"
+	}],
+	"groupList": ["精选组件", "原子组件"],
+	"components": [
+    {
+		"componentName": "CheckboxGroup",
+		"isFormItemComponent": true,
+		"title": "复选按钮组",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "Checkbox",
+			"main": "",
+			"destructuring": true,
+			"subName": "Group"
+		},
+		"icon": "",
+		"category": "内容",
+		"experimental": {
+			"initials": [{
+				"name": "dataSource"
+			}]
+		}
+	}, {
+		"componentName": "ChildForm",
+		"title": "子表单",
+		"docUrl": "",
+		"screenshot": "",
+		"category": "表单类",
+		"group": "原子组件",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.24",
+			"exportName": "ChildForm",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"snippets": [{
+			"title": "ChildForm",
+			"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01MJT0lc1pXVaHIcoBy_!!6000000005370-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "ChildForm",
+				"props": {
+					"primaryKey": "7039",
+					"placeholder": "请在右侧面板添加表单项+",
+					"placeholderStyle": {
+						"height": "38px",
+						"color": "#0088FF",
+						"background": "#d8d8d836",
+						"border": 0,
+						"gridArea": "span 4 / span 4"
+					},
+					"columns": 3,
+					"labelCol": {
+						"fixedSpan": 4
+					},
+					"labelAlign": "left",
+					"emptyContent": "添加表单项"
+				},
+				"children": [{
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "7070",
+						"componentProps": {
+							"componentName": "Input"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "2993",
+						"componentProps": {
+							"componentName": "Input"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "781",
+						"componentProps": {
+							"componentName": "Input"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}]
+			}
+		}]
+	}, {
+		"componentName": "ColumnChart",
+		"title": "柱状图",
+		"category": "图表",
+		"group": "系统组件",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.3-beta.3",
+			"exportName": "ColumnChart",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "ref",
+			"propType": {
+				"type": "oneOfType",
+				"value": [{
+					"type": "func",
+					"params": [{
+						"name": "instance",
+						"propType": "object"
+					}],
+					"returns": {
+						"propType": "number"
+					},
+					"raw": "(instance: unknown) => void"
+				}, "object"]
+			}
+		}, {
+			"name": "key",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["string", "number"]
+			}
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"snippets": [{
+			"title": "柱状图",
+			"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01mz7siK1JIn9XZmCF6_!!6000000001006-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "ColumnChart",
+				"props": {
+					"data": [{
+						"year": "1991",
+						"value": 72345678
+					}, {
+						"year": "1992",
+						"value": 4321132
+					}, {
+						"year": "1993",
+						"value": 33121112.5
+					}, {
+						"year": "1994",
+						"value": 45227221
+					}, {
+						"year": "1995",
+						"value": 4321221.9
+					}, {
+						"year": "1996",
+						"value": 6322121
+					}, {
+						"year": "1997",
+						"value": 78312213
+					}, {
+						"year": "1998",
+						"value": 4192312
+					}, {
+						"year": "1999",
+						"value": 6212332
+					}, {
+						"year": "2000",
+						"value": 3192312
+					}],
+					"xField": "year",
+					"yField": "value",
+					"color": "#0079f2",
+					"label": {
+						"visible": true,
+						"position": "middle"
+					}
+				}
+			}
+		},{
+			"title": "柱状图2",
+			"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01mz7siK1JIn9XZmCF6_!!6000000001006-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "ColumnChart",
+				"props": {
+					"data": [{
+						"year": "1991",
+						"value": 72345678
+					}, {
+						"year": "1992",
+						"value": 4321132
+					}, {
+						"year": "1993",
+						"value": 33121112.5
+					}, {
+						"year": "1994",
+						"value": 45227221
+					}, {
+						"year": "1995",
+						"value": 4321221.9
+					}, {
+						"year": "1996",
+						"value": 6322121
+					}, {
+						"year": "1997",
+						"value": 78312213
+					}, {
+						"year": "1998",
+						"value": 4192312
+					}, {
+						"year": "1999",
+						"value": 6212332
+					}, {
+						"year": "2000",
+						"value": 3192312
+					}],
+					"xField": "year",
+					"yField": "value",
+					"color": "#0079f2",
+					"label": {
+						"visible": true,
+						"position": "middle"
+					}
+				}
+			}
+		}]
+	}, {
+		"componentName": "DatePicker",
+		"isFormItemComponent": true,
+		"title": "日期选择框",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "DatePicker",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "back",
+			"title": " ",
+			"display": "plain"
+		}, {
+			"name": "prefix",
+			"propType": "string",
+			"defaultValue": "next-"
+		}, {
+			"name": "rtl",
+			"propType": "bool",
+			"defaultValue": false
+		}, {
+			"name": "name",
+			"title": {
+				"label": "名称",
+				"tip": "name|表单相关"
+			},
+			"propType": "string",
+			"description": "name|表单相关"
+		}, {
+			"name": "label",
+			"title": {
+				"label": "标签",
+				"tip": "label|表单项内置标签"
+			},
+			"propType": "string",
+			"description": "label|表单项内置标签"
+		}, {
+			"name": "state",
+			"title": {
+				"label": "状态",
+				"tip": "state|表单项状态"
+			},
+			"propType": {
+				"type": "oneOf",
+				"value": ["success", "loading", "error"]
+			},
+			"description": "state|表单项状态"
+		}, {
+			"name": "placeholder",
+			"title": {
+				"label": "占位提示",
+				"tip": "placeholder|输入提示"
+			},
+			"propType": "string",
+			"description": "输入提示"
+		}, {
+			"name": "value",
+			"title": {
+				"label": "value",
+				"tip": "value|日期值（受控）"
+			},
+			"propType": {
+				"type": "instanceOf",
+				"value": "custom"
+			},
+			"description": "日期值（受控）moment 对象"
+		}, {
+			"name": "defaultValue",
+			"title": {
+				"label": "默认值",
+				"tip": "defaultValue|初始日期值，moment 对象"
+			},
+			"propType": "date",
+			"description": "defaultValue|初始日期值，moment 对象"
+		}, {
+			"name": "format",
+			"title": {
+				"label": "格式",
+				"tip": "format|日期值的格式（用于限定用户输入和展示）"
+			},
+			"propType": "string",
+			"description": "format|日期值的格式（用于限定用户输入和展示）",
+			"defaultValue": "YYYY-MM-DD"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "日期值改变时的回调\n@param {MomentObject|String} value 日期值"
+		}, {
+			"name": "onOk",
+			"propType": "func",
+			"description": "点击确认按钮时的回调\n@return {MomentObject|String} 日期值"
+		}, {
+			"name": "size",
+			"title": {
+				"label": "尺寸",
+				"tip": "size|表单项尺寸"
+			},
+			"propType": {
+				"type": "oneOf",
+				"value": ["small", "medium", "large"]
+			},
+			"description": "size|表单项尺寸",
+			"defaultValue": "medium"
+		}, {
+			"name": "disabled",
+			"title": {
+				"label": "是否禁用",
+				"tip": "disabled|是否禁用"
+			},
+			"propType": "bool",
+			"description": "是否禁用"
+		}, {
+			"name": "hasClear",
+			"title": {
+				"label": "清除按钮",
+				"tip": "hasClear|是否显示清空按钮"
+			},
+			"propType": "bool",
+			"description": "hasClear|是否显示清空按钮",
+			"defaultValue": true
+		}, {
+			"name": "followTrigger",
+			"propType": "bool",
+			"description": "跟随滚动"
+		}, {
+			"name": "defaultVisible",
+			"title": {
+				"label": "弹层显示",
+				"tip": "defaultVisible|弹层默认是否显示"
+			},
+			"propType": "bool",
+			"description": "defaultVisible|弹层默认是否显示",
+			"defaultValue": false
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}, {
+			"name": "form",
+			"propType": "object"
+		}],
+		"icon": "",
+		"category": "内容"
+	}, {
+		"componentName": "DonutChart",
+		"title": "环形图",
+		"category": "图表",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.3-beta.3",
+			"exportName": "DonutChart",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "ref",
+			"propType": {
+				"type": "oneOfType",
+				"value": [{
+					"type": "func",
+					"params": [{
+						"name": "instance",
+						"propType": "object"
+					}],
+					"returns": {
+						"propType": "number"
+					},
+					"raw": "(instance: unknown) => void"
+				}, "object"]
+			}
+		}, {
+			"name": "key",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["string", "number"]
+			}
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"snippets": [{
+			"title": "环形图",
+			"screenshot": "https://img.alicdn.com/imgextra/i3/O1CN01pLbt7T1Mh0woqKEN1_!!6000000001465-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "DonutChart",
+				"props": {
+					"legend": {
+						"position": "top-left"
+					},
+					"data": [{
+						"year": "1991",
+						"value": 72345678
+					}, {
+						"year": "1992",
+						"value": 4321132
+					}, {
+						"year": "1993",
+						"value": 33121112.5
+					}, {
+						"year": "1994",
+						"value": 45227221
+					}, {
+						"year": "1995",
+						"value": 4321221.9
+					}, {
+						"year": "1996",
+						"value": 6322121
+					}, {
+						"year": "1997",
+						"value": 78312213
+					}, {
+						"year": "1998",
+						"value": 2192312
+					}, {
+						"year": "1999",
+						"value": 6212332
+					}, {
+						"year": "2000",
+						"value": 1192312
+					}],
+					"angleField": "value",
+					"colorField": "year",
+					"label": {
+						"visible": true,
+						"type": "spider"
+					},
+					"color": ["#3BCBD1", "#47A4FE", "#EDBA42", "#F4704E", "#ED6899", "#7F62C3", "#6E7BC9"]
+				}
+			}
+		}]
+	}, {
+		"componentName": "EditTable",
+		"title": "可编辑表格",
+		"docUrl": "",
+		"icon": "https://img.alicdn.com/imgextra/i4/O1CN01dtjMvv1heoyqst9u5_!!6000000004303-55-tps-56-56.svg",
+		"devMode": "procode",
+		"group": "精选组件",
+		"category": "表格类",
+		"tags": ["业务组件"],
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "1.0.24-21",
+			"exportName": "EditTable",
+			"main": "src/pro-table/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"experimental": {
+			"callbacks": {},
+			"initials": [],
+			"filters": [],
+			"autoruns": []
+		},
+		"snippets": [{
+			"title": "可编辑表格",
+			"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01dtjMvv1heoyqst9u5_!!6000000004303-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "EditTable",
+				"props": {
+					"dataSource": [{
+						"id": "id-2f5DdE2b-0",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司"
+					}, {
+						"id": "id-2f5DdE2b-1",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司"
+					}, {
+						"id": "id-2f5DdE2b-2",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司"
+					}, {
+						"id": "id-2f5DdE2b-3",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司"
+					}, {
+						"id": "id-2f5DdE2b-4",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司"
+					}],
+					"actionColumnButtons": {
+						"text": true,
+						"visibleButtonCount": 3
+					},
+					"actionBarButtons": {
+						"dataSource": [{
+							"type": "primary",
+							"children": "操作一"
+						}, {
+							"type": "normal",
+							"children": "操作二"
+						}],
+						"visibleButtonCount": 3
+					},
+					"paginationProps": {
+						"pageSize": 20,
+						"current": 1
+					},
+					"settingButtons": true,
+					"columns": [{
+						"title": "公司",
+						"dataIndex": "company",
+						"width": 160,
+						"formatType": "link",
+						"searchable": true
+					}, {
+						"title": "单据金额",
+						"dataIndex": "documentAmount",
+						"formatType": "money"
+					}, {
+						"title": "币种",
+						"dataIndex": "currency",
+						"formatType": "currency",
+						"filters": [{
+							"label": "CNY",
+							"value": "CNY"
+						}, {
+							"label": "USD",
+							"value": "USD"
+						}, {
+							"label": "JPY",
+							"value": "JPY"
+						}, {
+							"label": "HKD",
+							"value": "HKD"
+						}],
+						"filterMode": "multiple",
+						"explanation": "提示信息",
+						"width": 110
+					}, {
+						"title": "完成进度",
+						"dataIndex": "percent",
+						"formatType": "progress"
+					}, {
+						"title": "到账日期",
+						"dataIndex": "date",
+						"formatType": "date"
+					}]
+				}
+			}
+		}]
+	}, {
+		"componentName": "ExpandTable",
+		"title": "母子表格",
+		"docUrl": "",
+		"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01N3gxxr1cjKnzi9iBU_!!6000000003636-55-tps-56-56.svg",
+		"devMode": "proCode",
+		"group": "精选组件",
+		"category": "表格类",
+		"tags": ["业务组件"],
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.8",
+			"exportName": "ExpandTable",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"snippets": [{
+			"title": "母子表格",
+			"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01N3gxxr1cjKnzi9iBU_!!6000000003636-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "ExpandTable",
+				"props": {
+					"dataSource": [{
+						"id": "id-2f5DdE2b-0",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司",
+						"childTableProps": {
+							"dataSource": [],
+							"columns": [{
+								"title": "公司",
+								"dataIndex": "company",
+								"width": 160,
+								"formatType": "link",
+								"searchable": true
+							}, {
+								"title": "单据金额",
+								"dataIndex": "documentAmount",
+								"formatType": "money"
+							}, {
+								"title": "币种",
+								"dataIndex": "currency",
+								"formatType": "currency",
+								"filters": [{
+									"label": "CNY",
+									"value": "CNY"
+								}, {
+									"label": "USD",
+									"value": "USD"
+								}, {
+									"label": "JPY",
+									"value": "JPY"
+								}, {
+									"label": "HKD",
+									"value": "HKD"
+								}],
+								"filterMode": "multiple",
+								"explanation": "提示信息",
+								"width": 110
+							}, {
+								"title": "完成进度",
+								"dataIndex": "percent",
+								"formatType": "progress"
+							}, {
+								"title": "到账日期",
+								"dataIndex": "date",
+								"formatType": "date"
+							}]
+						}
+					}, {
+						"id": "id-2f5DdE2b-1",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司",
+						"childTableProps": {
+							"dataSource": [],
+							"columns": [{
+								"title": "公司",
+								"dataIndex": "company",
+								"width": 160,
+								"formatType": "link",
+								"searchable": true
+							}, {
+								"title": "单据金额",
+								"dataIndex": "documentAmount",
+								"formatType": "money"
+							}, {
+								"title": "币种",
+								"dataIndex": "currency",
+								"formatType": "currency",
+								"filters": [{
+									"label": "CNY",
+									"value": "CNY"
+								}, {
+									"label": "USD",
+									"value": "USD"
+								}, {
+									"label": "JPY",
+									"value": "JPY"
+								}, {
+									"label": "HKD",
+									"value": "HKD"
+								}],
+								"filterMode": "multiple",
+								"explanation": "提示信息",
+								"width": 110
+							}, {
+								"title": "完成进度",
+								"dataIndex": "percent",
+								"formatType": "progress"
+							}, {
+								"title": "到账日期",
+								"dataIndex": "date",
+								"formatType": "date"
+							}]
+						}
+					}, {
+						"id": "id-2f5DdE2b-2",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司",
+						"childTableProps": {
+							"dataSource": [],
+							"columns": [{
+								"title": "公司",
+								"dataIndex": "company",
+								"width": 160,
+								"formatType": "link",
+								"searchable": true
+							}, {
+								"title": "单据金额",
+								"dataIndex": "documentAmount",
+								"formatType": "money"
+							}, {
+								"title": "币种",
+								"dataIndex": "currency",
+								"formatType": "currency",
+								"filters": [{
+									"label": "CNY",
+									"value": "CNY"
+								}, {
+									"label": "USD",
+									"value": "USD"
+								}, {
+									"label": "JPY",
+									"value": "JPY"
+								}, {
+									"label": "HKD",
+									"value": "HKD"
+								}],
+								"filterMode": "multiple",
+								"explanation": "提示信息",
+								"width": 110
+							}, {
+								"title": "完成进度",
+								"dataIndex": "percent",
+								"formatType": "progress"
+							}, {
+								"title": "到账日期",
+								"dataIndex": "date",
+								"formatType": "date"
+							}]
+						}
+					}],
+					"actionColumnButtons": {
+						"dataSource": [{
+							"children": "查看",
+							"type": "primary"
+						}, {
+							"children": "编辑",
+							"type": "primary",
+							"disabled": true
+						}, {
+							"children": "删除",
+							"type": "primary"
+						}],
+						"text": true,
+						"visibleButtonCount": 3
+					},
+					"actionBarButtons": {
+						"dataSource": [{
+							"type": "primary",
+							"children": "操作一"
+						}, {
+							"type": "normal",
+							"children": "操作二"
+						}],
+						"visibleButtonCount": 3
+					},
+					"paginationProps": {
+						"pageSize": 20,
+						"current": 1
+					},
+					"settingButtons": true,
+					"columns": [{
+						"title": "公司",
+						"dataIndex": "company",
+						"width": 160,
+						"formatType": "link",
+						"searchable": true
+					}, {
+						"title": "单据金额",
+						"dataIndex": "documentAmount",
+						"formatType": "money"
+					}, {
+						"title": "币种",
+						"dataIndex": "currency",
+						"formatType": "currency",
+						"filters": [{
+							"label": "CNY",
+							"value": "CNY"
+						}, {
+							"label": "USD",
+							"value": "USD"
+						}, {
+							"label": "JPY",
+							"value": "JPY"
+						}, {
+							"label": "HKD",
+							"value": "HKD"
+						}],
+						"filterMode": "multiple",
+						"explanation": "提示信息",
+						"width": 110
+					}, {
+						"title": "完成进度",
+						"dataIndex": "percent",
+						"formatType": "progress"
+					}, {
+						"title": "到账日期",
+						"dataIndex": "date",
+						"formatType": "date"
+					}]
+				}
+			}
+		}]
+	}, {
+		"componentName": "FilterItem",
+		"title": "FilterItem",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.8",
+			"exportName": "FilterItem",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		}
+	}, {
+		"componentName": "Filter",
+		"title": "查询筛选",
+		"group": "精选组件",
+		"category": "表格类",
+		"tags": ["业务组件"],
+		"docUrl": "",
+		"icon": "https://img.alicdn.com/imgextra/i1/O1CN01O4Oshp1RA6Z0sFZ6h_!!6000000002070-55-tps-56-56.svg",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.8",
+			"exportName": "Filter",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"snippets": [{
+			"title": "查询筛选",
+			"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01O4Oshp1RA6Z0sFZ6h_!!6000000002070-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "Filter",
+				"id": "node_ockt5mo4jj1",
+				"props": {},
+				"children": [{
+					"componentName": "ProFormItem",
+					"id": "node_ockt5mo4jj2",
+					"props": {
+						"primaryKey": "8750",
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop",
+						"fullWidth": true,
+						"componentProps": {
+							"componentName": "Input"
+						}
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"id": "node_ockt5mo4jj3",
+					"props": {
+						"primaryKey": "8641",
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop",
+						"fullWidth": true,
+						"componentProps": {
+							"componentName": "Input"
+						}
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"id": "node_ockt5mo4jj6",
+					"props": {
+						"primaryKey": "6369",
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop",
+						"fullWidth": true,
+						"componentProps": {
+							"componentName": "Input"
+						}
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"id": "node_ockt5mo4jj7",
+					"props": {
+						"primaryKey": "1683",
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop",
+						"fullWidth": true,
+						"componentProps": {
+							"componentName": "Input"
+						}
+					}
+				}]
+			}
+		}]
+	}, {
+		"componentName": "GroupTable",
+		"title": "分组表格",
+		"docUrl": "",
+		"icon": "https://img.alicdn.com/imgextra/i4/O1CN01idASGC1tGLCY6bAUC_!!6000000005874-55-tps-56-56.svg",
+		"devMode": "proCode",
+		"group": "精选组件",
+		"category": "表格类",
+		"tags": ["业务组件"],
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "1.0.24-21",
+			"exportName": "GroupTable",
+			"main": "src/pro-table/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [],
+		"experimental": {
+			"callbacks": {},
+			"filters": [],
+			"autoruns": []
+		},
+		"snippets": [{
+			"title": "分组表格",
+			"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01idASGC1tGLCY6bAUC_!!6000000005874-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "GroupTable",
+				"props": {
+					"dataSource": [{
+						"header": "头部文字",
+						"footer": "尾部文字",
+						"children": [{
+							"company": "支付宝科技有限公司",
+							"documentAmount": 2022,
+							"currency": "CNY",
+							"percent": 1.862,
+							"date": "2013-06-12",
+							"id": "id-2f5DdE2b-0"
+						}, {
+							"company": "支付宝科技有限公司",
+							"documentAmount": 2022,
+							"currency": "CNY",
+							"percent": 1.862,
+							"date": "2013-06-12",
+							"id": "id-2f5DdE2b-0"
+						}]
+					}, {
+						"header": "头部文字2",
+						"footer": "尾部文字2",
+						"children": [{
+							"company": "支付宝科技有限公司",
+							"documentAmount": 2022,
+							"currency": "CNY",
+							"percent": 1.862,
+							"date": "2013-06-12",
+							"id": "id-2f5DdE2b-0"
+						}, {
+							"company": "支付宝科技有限公司",
+							"documentAmount": 2022,
+							"currency": "CNY",
+							"percent": 1.862,
+							"date": "2013-06-12",
+							"id": "id-2f5DdE2b-0"
+						}, {
+							"company": "支付宝科技有限公司",
+							"documentAmount": 2022,
+							"currency": "CNY",
+							"percent": 1.862,
+							"date": "2013-06-12",
+							"id": "id-2f5DdE2b-0"
+						}, {
+							"company": "支付宝科技有限公司",
+							"documentAmount": 2022,
+							"currency": "CNY",
+							"percent": 1.862,
+							"date": "2013-06-12",
+							"id": "id-2f5DdE2b-0"
+						}]
+					}],
+					"actionColumnButtons": {
+						"dataSource": [{
+							"children": "查看",
+							"type": "primary"
+						}, {
+							"children": "编辑",
+							"type": "primary",
+							"disabled": true
+						}, {
+							"children": "删除",
+							"type": "primary"
+						}],
+						"text": true,
+						"visibleButtonCount": 3
+					},
+					"actionBarButtons": {
+						"dataSource": [{
+							"type": "primary",
+							"children": "操作一"
+						}, {
+							"type": "normal",
+							"children": "操作二"
+						}],
+						"visibleButtonCount": 3
+					},
+					"paginationProps": {
+						"pageSize": 20,
+						"current": 1
+					},
+					"settingButtons": true,
+					"columns": [{
+						"title": "公司",
+						"dataIndex": "company",
+						"width": 160,
+						"formatType": "link",
+						"searchable": true
+					}, {
+						"title": "单据金额",
+						"dataIndex": "documentAmount",
+						"formatType": "money"
+					}, {
+						"title": "币种",
+						"dataIndex": "currency",
+						"formatType": "currency",
+						"filters": [{
+							"label": "CNY",
+							"value": "CNY"
+						}, {
+							"label": "USD",
+							"value": "USD"
+						}, {
+							"label": "JPY",
+							"value": "JPY"
+						}, {
+							"label": "HKD",
+							"value": "HKD"
+						}],
+						"filterMode": "multiple",
+						"explanation": "提示信息",
+						"width": 110
+					}, {
+						"title": "完成进度",
+						"dataIndex": "percent",
+						"formatType": "progress"
+					}, {
+						"title": "到账日期",
+						"dataIndex": "date",
+						"formatType": "date"
+					}]
+				}
+			}
+		}]
+	}, {
+		"componentName": "Input",
+		"isFormItemComponent": true,
+		"title": "输入框",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "Input",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"experimental": {
+			"initials": [{
+				"name": "placeholder"
+			}]
+		},
+		"icon": "",
+		"category": "内容"
+	}, {}, {
+		"componentName": "LineChart",
+		"title": "折线图",
+		"category": "图表",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.3-beta.3",
+			"exportName": "LineChart",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "ref",
+			"propType": {
+				"type": "oneOfType",
+				"value": [{
+					"type": "func",
+					"params": [{
+						"name": "instance",
+						"propType": "object"
+					}],
+					"returns": {
+						"propType": "number"
+					},
+					"raw": "(instance: unknown) => void"
+				}, "object"]
+			}
+		}, {
+			"name": "key",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["string", "number"]
+			}
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"snippets": [{
+			"title": "折线图",
+			"screenshot": "https://img.alicdn.com/imgextra/i2/O1CN01ChN5mm1txOQnh6kTh_!!6000000005968-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "LineChart",
+				"props": {
+					"data": [{
+						"year": "1991",
+						"value": 72345678
+					}, {
+						"year": "1992",
+						"value": 4321132
+					}, {
+						"year": "1993",
+						"value": 33121112.5
+					}, {
+						"year": "1994",
+						"value": 45227221
+					}, {
+						"year": "1995",
+						"value": 4321221.9
+					}, {
+						"year": "1996",
+						"value": 6322121
+					}, {
+						"year": "1997",
+						"value": 78312213
+					}, {
+						"year": "1998",
+						"value": 4192312
+					}, {
+						"year": "1999",
+						"value": 6212332
+					}, {
+						"year": "2000",
+						"value": 3192312
+					}],
+					"xField": "year",
+					"yField": "value",
+					"color": "#0079f2",
+					"label": {
+						"visible": true
+					}
+				}
+			}
+		}]
+	}, {
+		"componentName": "MonthPicker",
+		"title": "MonthPicker",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "DatePicker",
+			"main": "",
+			"destructuring": true,
+			"subName": "MonthPicker"
+		},
+		"props": [{
+			"name": "prefix",
+			"propType": "string",
+			"defaultValue": "next-"
+		}, {
+			"name": "rtl",
+			"propType": "bool",
+			"defaultValue": false
+		}, {
+			"name": "label",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			},
+			"description": "表单项内置标签"
+		}, {
+			"name": "state",
+			"propType": {
+				"type": "oneOf",
+				"value": ["success", "loading", "error"]
+			},
+			"description": "表单项状态"
+		}, {
+			"name": "placeholder",
+			"propType": "string",
+			"description": "输入提示"
+		}, {
+			"name": "defaultVisibleYear",
+			"propType": "func",
+			"description": "默认展现的年\n@return {MomentObject} 返回包含指定年份的 moment 对象实例"
+		}, {
+			"name": "value",
+			"propType": {
+				"type": "instanceOf",
+				"value": "custom"
+			},
+			"description": "日期值（受控）moment 对象"
+		}, {
+			"name": "defaultValue",
+			"propType": {
+				"type": "instanceOf",
+				"value": "custom"
+			},
+			"description": "初始日期值，moment 对象"
+		}, {
+			"name": "format",
+			"propType": "string",
+			"description": "日期值的格式（用于限定用户输入和展示）",
+			"defaultValue": "YYYY-MM"
+		}, {
+			"name": "disabledDate",
+			"propType": "func",
+			"description": "禁用日期函数\n@param {MomentObject} 日期值\n@param {String} view 当前视图类型，year: 年， month: 月, date: 日\n@return {Boolean} 是否禁用"
+		}, {
+			"name": "footerRender",
+			"propType": "func",
+			"description": "自定义面板页脚\n@return {Node} 自定义的面板页脚组件"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "日期值改变时的回调\n@param {MomentObject|String} value 日期值"
+		}, {
+			"name": "size",
+			"propType": {
+				"type": "oneOf",
+				"value": ["small", "medium", "large"]
+			},
+			"description": "表单项尺寸",
+			"defaultValue": "medium"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用"
+		}, {
+			"name": "hasClear",
+			"propType": "bool",
+			"description": "是否显示清空按钮",
+			"defaultValue": true
+		}, {
+			"name": "visible",
+			"propType": "bool",
+			"description": "弹层显示状态"
+		}, {
+			"name": "defaultVisible",
+			"propType": "bool",
+			"description": "弹层默认是否显示"
+		}, {
+			"name": "onVisibleChange",
+			"propType": "func",
+			"description": "弹层展示状态变化时的回调\n@param {Boolean} visible 弹层是否显示\n@param {String} type 触发弹层显示和隐藏的来源 calendarSelect 表示由日期表盘的选择触发； fromTrigger 表示由trigger的点击触发； docClick 表示由document的点击触发"
+		}, {
+			"name": "popupTriggerType",
+			"propType": {
+				"type": "oneOf",
+				"value": ["click", "hover"]
+			},
+			"description": "弹层触发方式",
+			"defaultValue": "click"
+		}, {
+			"name": "popupAlign",
+			"propType": "string",
+			"description": "弹层对齐方式, 具体含义见 OverLay文档",
+			"defaultValue": "tl tl"
+		}, {
+			"name": "popupContainer",
+			"propType": "any",
+			"description": "弹层容器\n@param {Element} target 目标元素\n@return {Element} 弹层的容器元素"
+		}, {
+			"name": "popupStyle",
+			"propType": "object",
+			"description": "弹层自定义样式"
+		}, {
+			"name": "popupClassName",
+			"propType": "string",
+			"description": "弹层自定义样式类"
+		}, {
+			"name": "popupProps",
+			"propType": "object",
+			"description": "弹层其他属性"
+		}, {
+			"name": "followTrigger",
+			"propType": "bool",
+			"description": "是否跟随滚动"
+		}, {
+			"name": "inputProps",
+			"propType": "object",
+			"description": "表单项其他属性"
+		}, {
+			"name": "monthCellRender",
+			"propType": "func",
+			"description": "自定义月份渲染函数\n@param {Object} calendarDate 对应 Calendar 返回的自定义日期对象\n@returns {ReactNode}"
+		}, {
+			"name": "yearCellRender",
+			"propType": "func"
+		}, {
+			"name": "dateInputAriaLabel",
+			"propType": "string",
+			"description": "日期表单项的 aria-label 属性"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "是否为预览态"
+		}, {
+			"name": "renderPreview",
+			"propType": "func",
+			"description": "预览态模式下渲染的内容\n@param {MomentObject} value 月份"
+		}, {
+			"name": "locale",
+			"propType": "object"
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "name",
+			"propType": "string"
+		}, {
+			"name": "popupComponent",
+			"propType": {
+				"type": "instanceOf",
+				"value": "elementType"
+			}
+		}, {
+			"name": "popupContent",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			}
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"category": "基础"
+	}, {
+		"componentName": "NumberPicker",
+		"isFormItemComponent": true,
+		"title": "数字表单项",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "NumberPicker",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "size",
+			"propType": {
+				"type": "oneOf",
+				"value": ["large", "medium"]
+			},
+			"description": "大小",
+			"defaultValue": "medium"
+		}, {
+			"name": "type",
+			"propType": {
+				"type": "oneOf",
+				"value": ["normal", "inline"]
+			},
+			"description": "设置类型",
+			"defaultValue": "normal"
+		}, {
+			"name": "value",
+			"propType": "number",
+			"description": "当前值"
+		}, {
+			"name": "defaultValue",
+			"propType": "number",
+			"description": "默认值"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用"
+		}, {
+			"name": "step",
+			"propType": "number",
+			"description": "步长",
+			"defaultValue": 1
+		}, {
+			"name": "precision",
+			"propType": "number",
+			"description": "保留小数点后位数",
+			"defaultValue": 0
+		}, {
+			"name": "editable",
+			"propType": "bool",
+			"description": "用户是否可以输入",
+			"defaultValue": true
+		}, {
+			"name": "autoFocus",
+			"propType": "bool",
+			"description": "自动焦点"
+		}, {
+			"name": "max",
+			"propType": "number",
+			"description": "最大值",
+			"defaultValue": null
+		}, {
+			"name": "min",
+			"propType": "number",
+			"description": "最小值",
+			"defaultValue": null
+		}, {
+			"name": "format",
+			"propType": "func",
+			"description": "格式化当前值"
+		}, {
+			"name": "upBtnProps",
+			"propType": "object",
+			"description": "增加按钮的props"
+		}, {
+			"name": "downBtnProps",
+			"propType": "object",
+			"description": "减少按钮的props"
+		}, {
+			"name": "label",
+			"propType": "string",
+			"description": "内联 label"
+		}, {
+			"name": "innerAfter",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["string", "icon"]
+			},
+			"description": "inner after"
+		}, {
+			"name": "rtl",
+			"propType": "bool"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "是否为预览态"
+		}, {
+			"name": "renderPreview",
+			"propType": "func",
+			"description": "预览态模式下渲染的内容\n@param {number} value 评分值"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "数值被改变的事件\n@param {Number} value 数据\n@param {Event} e DOM事件对象"
+		}, {
+			"name": "onKeyDown",
+			"propType": "func",
+			"description": "键盘按下"
+		}, {
+			"name": "onFocus",
+			"propType": "func",
+			"description": "焦点获得"
+		}, {
+			"name": "onBlur",
+			"propType": "func",
+			"description": "焦点失去"
+		}, {
+			"name": "onCorrect",
+			"propType": "func",
+			"description": "数值订正后的回调\n@param {Object} obj {currentValue,oldValue:String}"
+		}, {
+			"name": "onDisabled",
+			"propType": "func"
+		}, {
+			"name": "className",
+			"propType": "string",
+			"description": "自定义class"
+		}, {
+			"name": "style",
+			"propType": "object",
+			"description": "自定义内联样式"
+		}],
+		"experimental": {
+			"initials": [{
+				"name": "placeholder"
+			}, {
+				"name": "alwaysShowTrigger"
+			}]
+		},
+		"icon": "",
+		"category": "内容"
+	}, {
+		"componentName": "PageHeader",
+		"category": "布局容器类",
+		"group": "精选组件",
+		"title": "页头",
+		"docUrl": "",
+		"icon": "https://img.alicdn.com/imgextra/i2/O1CN01q3ZRHx24rrQ9ysyU8_!!6000000007445-55-tps-56-56.svg",
+		"devMode": "procode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "1.0.0",
+			"exportName": "PageHeader",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "backIcon",
+			"propType": "node"
+		}, {
+			"name": "prefixCls",
+			"propType": "string"
+		}, {
+			"name": "title",
+			"propType": "node"
+		}, {
+			"name": "subTitle",
+			"propType": "node"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}, {
+			"name": "breadcrumb",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["object"]
+			}
+		}, {
+			"name": "breadcrumbRender",
+			"propType": {
+				"type": "func",
+				"params": [{
+					"name": "props",
+					"propType": {
+						"type": "shape",
+						"value": [{
+							"name": "backIcon",
+							"propType": "node"
+						}, {
+							"name": "prefixCls",
+							"propType": "string"
+						}, {
+							"name": "title",
+							"propType": "node"
+						}, {
+							"name": "subTitle",
+							"propType": "node"
+						}, {
+							"name": "style",
+							"propType": "object"
+						}, {
+							"name": "breadcrumb",
+							"propType": {
+								"type": "oneOfType",
+								"value": ["object"]
+							}
+						}, {
+							"name": "breadcrumbRender",
+							"propType": "object"
+						}, {
+							"name": "tags",
+							"propType": {
+								"type": "oneOfType",
+								"value": ["object", {
+									"type": "arrayOf",
+									"value": "object"
+								}]
+							}
+						}, {
+							"name": "footer",
+							"propType": "node"
+						}, {
+							"name": "extra",
+							"propType": "node"
+						}, {
+							"name": "avatar",
+							"propType": "object"
+						}, {
+							"name": "onBack",
+							"propType": {
+								"type": "func",
+								"params": [{
+									"name": "e",
+									"propType": "object"
+								}],
+								"raw": "(e?: MouseEvent<HTMLDivElement, MouseEvent>) => void"
+							}
+						}, {
+							"name": "className",
+							"propType": "string"
+						}, {
+							"name": "ghost",
+							"propType": "bool"
+						}]
+					}
+				}, {
+					"name": "defaultDom",
+					"propType": "node"
+				}],
+				"raw": "(props: PageHeaderProps, defaultDom: ReactNode) => ReactNode"
+			}
+		}, {
+			"name": "tags",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["object", {
+					"type": "arrayOf",
+					"value": "object"
+				}]
+			}
+		}, {
+			"name": "footer",
+			"propType": "node"
+		}, {
+			"name": "extra",
+			"propType": "node"
+		}, {
+			"name": "avatar",
+			"propType": "object"
+		}, {
+			"name": "onBack",
+			"propType": {
+				"type": "func",
+				"params": [{
+					"name": "e",
+					"propType": "object"
+				}],
+				"raw": "(e?: MouseEvent<HTMLDivElement, MouseEvent>) => void"
+			}
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "ghost",
+			"propType": "bool"
+		}],
+		"snippets": [{
+			"title": "页头",
+			"screenshot": "https://img.alicdn.com/imgextra/i2/O1CN01q3ZRHx24rrQ9ysyU8_!!6000000007445-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "PageHeader",
+				"title": "页头",
+				"props": {
+					"title": "This is a designer title",
+					"subTitle": "This is a subTitle",
+					"breadcrumb": ["First-level Menu", "Second-level Menu", "Third-level Menu"]
+				}
+			}
+		}]
+	}, {
+		"componentName": "PieChart",
+		"title": "饼图",
+		"category": "图表",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "procode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.3-beta.3",
+			"exportName": "PieChart",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "ref",
+			"propType": {
+				"type": "oneOfType",
+				"value": [{
+					"type": "func",
+					"params": [{
+						"name": "instance",
+						"propType": "object"
+					}],
+					"returns": {
+						"propType": "number"
+					},
+					"raw": "(instance: unknown) => void"
+				}, "object"]
+			}
+		}, {
+			"name": "key",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["string", "number"]
+			}
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"snippets": [{
+			"title": "饼图",
+			"name": "PieChart",
+			"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN018rBRGK24fx7hzkITN_!!6000000007419-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "PieChart",
+				"title": "饼图",
+				"props": {
+					"legend": {
+						"position": "top-left"
+					},
+					"data": [{
+						"year": "1991",
+						"value": 72345678
+					}, {
+						"year": "1992",
+						"value": 4321132
+					}, {
+						"year": "1993",
+						"value": 33121112.5
+					}, {
+						"year": "1994",
+						"value": 45227221
+					}, {
+						"year": "1995",
+						"value": 4321221.9
+					}, {
+						"year": "1996",
+						"value": 6322121
+					}, {
+						"year": "1997",
+						"value": 78312213
+					}, {
+						"year": "1998",
+						"value": 2192312
+					}, {
+						"year": "1999",
+						"value": 6212332
+					}, {
+						"year": "2000",
+						"value": 1192312
+					}],
+					"angleField": "value",
+					"colorField": "year",
+					"label": {
+						"visible": true,
+						"type": "spider"
+					},
+					"color": ["#3BCBD1", "#47A4FE", "#EDBA42", "#F4704E", "#ED6899", "#7F62C3", "#6E7BC9"]
+				}
+			}
+		}]
+	}, {
+		"componentName": "ProCard",
+		"title": "卡片",
+		"group": "精选组件",
+    "docUrl": "",
+    "priority": 100,
+		"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01qjZnGj1OW8lpLCQqm_!!6000000001712-55-tps-56-56.svg",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "1.0.0",
+			"exportName": "ProCard",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "id",
+			"propType": "string"
+		}, {
+			"name": "title",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["node", "string"]
+			},
+			"description": "标题"
+		}, {
+			"name": "explanation",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["node", "string"]
+			},
+			"description": "副标题"
+		}, {
+			"name": "loading",
+			"setter": "BoolSetter",
+			"title": "是否加载中",
+			"defaultValue": false
+		}, {
+			"name": "hasCollapse",
+			"setter": "BoolSetter",
+			"title": "显示展开收起",
+			"defaultValue": false
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"icon": "https://img.alicdn.com/imgextra/i4/O1CN01qjZnGj1OW8lpLCQqm_!!6000000001712-55-tps-56-56.svg",
+		"category": "布局容器类",
+		"experimental": {
+			"initials": [{
+				"name": "isFillContainer"
+			}]
+		},
+		"snippets": [{
+			"title": "卡片",
+			"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01qjZnGj1OW8lpLCQqm_!!6000000001712-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "ProCard",
+				"props": {
+					"title": "标题",
+					"hasDivider": true,
+					"isFillContainer": true
+				}
+			}
+		}]
+	}, {
+		"componentName": "ProCardSection",
+		"title": "内部卡片",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "1.0.0",
+			"exportName": "ProCard",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": "CardSection"
+		},
+		"props": [{
+			"name": "title",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["node", "string"]
+			},
+			"description": "标题"
+		}, {
+			"name": "explanation",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["node", "string"]
+			},
+			"description": "副标题"
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"icon": "https://img.alicdn.com/imgextra/i1/O1CN01QLAiJK1tXHqxBV16n_!!6000000005911-55-tps-56-56.svg",
+		"category": "布局容器类",
+		"experimental": {
+			"initials": [{
+				"name": "isFillContainer"
+			}]
+		},
+		"snippets": [{
+			"title": "内部卡片",
+			"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01QLAiJK1tXHqxBV16n_!!6000000005911-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "ProCardSection",
+				"props": {
+					"title": "子标题",
+					"hasDivider": true,
+					"isFillContainer": true
+				}
+			}
+		}]
+	}, {
+		"componentName": "ProDialog",
+		"title": "对话框",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01n5JLZG1aBmYZlckSx_!!6000000003292-55-tps-56-56.svg",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.23",
+			"exportName": "ProDialog",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"experimental": {
+			"callbacks": {},
+			"initials": [{
+				"name": "ref"
+			}]
+		},
+		"icon": "https://img.alicdn.com/imgextra/i1/O1CN01n5JLZG1aBmYZlckSx_!!6000000003292-55-tps-56-56.svg",
+		"category": "布局容器类",
+		"snippets": [{
+			"title": "高级对话框",
+			"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01n5JLZG1aBmYZlckSx_!!6000000003292-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "ProDialog",
+				"props": {
+					"status": "success",
+					"size": "medium",
+					"prefix": "next-",
+					"footerAlign": "right",
+					"title": "Title",
+					"closeMode": "esc,close",
+					"hasMask": true,
+					"align": "cc cc",
+					"minMargin": 40,
+					"isAutoContainer": true,
+					"visible": true
+				}
+			}
+		}]
+	}, {
+		"componentName": "Drawer",
+		"title": "抽屉",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.23",
+			"exportName": "ProDrawer",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"experimental": {
+			"callbacks": {}
+		},
+		"icon": "",
+		"category": "布局容器类",
+		"snippets": [{
+			"title": "侧抽屉",
+			"screenshot": "https://img.alicdn.com/imgextra/i3/O1CN01PIbHBa1dxMY8m44cf_!!6000000003802-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "Drawer",
+				"props": {
+					"prefix": "next-",
+					"triggerType": "click",
+					"closeable": true,
+					"placement": "right",
+					"hasMask": true,
+					"isAutoContainer": true,
+					"visible": true,
+					"size": "small"
+				}
+			}
+		}]
+	}, {
+		"componentName": "ProForm",
+		"category": "表单类",
+		"title": "高级表单",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "procode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.4",
+			"exportName": "ProForm",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"experimental": {
+			"initials": [{
+				"name": "labelCol"
+			}]
+		},
+		"snippets": [{
+			"title": "高级表单",
+			"screenshot": "https://img.alicdn.com/imgextra/i2/O1CN016gn5DQ1FeXUNKdK22_!!6000000000512-55-tps-50-36.svg",
+			"schema": {
+				"componentName": "ProForm",
+				"props": {
+					"placeholder": "请在右侧面板添加表单项+",
+					"placeholderStyle": {
+						"height": "38px",
+						"color": "#0088FF",
+						"background": "#d8d8d836",
+						"border": 0,
+						"gridArea": "span 4 / span 4"
+					},
+					"columns": 4,
+					"labelCol": {
+						"fixedSpan": 4
+					},
+					"labelAlign": "top",
+					"emptyContent": "添加表单项"
+				},
+				"children": [{
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "3218",
+						"componentProps": {
+							"componentName": "Input",
+							"placeholder": "请输入"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "2332",
+						"componentProps": {
+							"componentName": "Input",
+							"placeholder": "请输入"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "8983",
+						"componentProps": {
+							"componentName": "Input",
+							"placeholder": "请输入"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "3128",
+						"componentProps": {
+							"componentName": "Input",
+							"placeholder": "请输入"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "2268",
+						"componentProps": {
+							"componentName": "Input",
+							"placeholder": "请输入"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "4633",
+						"componentProps": {
+							"componentName": "Input",
+							"placeholder": "请输入"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "4084",
+						"componentProps": {
+							"componentName": "Input",
+							"placeholder": "请输入"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}, {
+					"componentName": "ProFormItem",
+					"props": {
+						"primaryKey": "7564",
+						"componentProps": {
+							"componentName": "Input",
+							"placeholder": "请输入"
+						},
+						"label": "表单项",
+						"size": "medium",
+						"device": "desktop"
+					}
+				}]
+			}
+		}]
+	}, {
+		"componentName": "ProFormItem",
+		"title": "表单项",
+		"docUrl": "",
+		"screenshot": "https://img.alicdn.com/imgextra/i2/O1CN016gn5DQ1FeXUNKdK22_!!6000000000512-55-tps-50-36.svg",
+		"icon": "https://img.alicdn.com/imgextra/i2/O1CN016gn5DQ1FeXUNKdK22_!!6000000000512-55-tps-50-36.svg",
+		"devMode": "procode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.4",
+			"exportName": "ProForm",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": "Item"
+		},
+		"experimental": {
+			"initialChildren": [{
+				"componentName": "Input",
+				"props": {
+					"hasBorder": true,
+					"size": "medium",
+					"autoComplete": "off"
+				}
+			}],
+			"callbacks": {},
+			"initials": [{
+				"name": "fullWidth"
+			}]
+		}
+	}, {
+		"componentName": "ProTableSlot",
+		"title": "ProTableSlot",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.8",
+			"exportName": "ProTableSlot",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		}
+	}, {
+		"componentName": "ProTable",
+		"title": "高级表格",
+		"docUrl": "",
+		"icon": "https://img.alicdn.com/imgextra/i4/O1CN01z4HeA61OwhjktJNDW_!!6000000001770-55-tps-56-56.svg",
+		"devMode": "proCode",
+		"group": "精选组件",
+		"category": "表格类",
+		"tags": ["业务组件"],
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "1.0.24-21",
+			"exportName": "ProTable",
+			"main": "src/pro-table/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [],
+		"experimental": {
+			"callbacks": {},
+			"initials": [],
+			"filters": [],
+			"autoruns": []
+		},
+		"snippets": [{
+			"title": "高级表格",
+			"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01R1OdLV1GgCXW0rjop_!!6000000000651-2-tps-112-112.png",
+			"schema": {
+				"componentName": "ProTable",
+				"props": {
+					"dataSource": [{
+						"id": "id-2f5DdE2b-0",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司"
+					}, {
+						"id": "id-2f5DdE2b-1",
+						"date": "2013-06-12",
+						"percent": 1.862,
+						"documentAmount": 2022,
+						"currency": "CNY",
+						"company": "支付宝科技有限公司"
+					}],
+					"actionColumnButtons": {
+						"dataSource": [{
+							"children": "查看",
+							"type": "primary"
+						}, {
+							"children": "编辑",
+							"type": "primary",
+							"disabled": true
+						}, {
+							"children": "删除",
+							"type": "primary"
+						}],
+						"text": true,
+						"visibleButtonCount": 3
+					},
+					"actionBarButtons": {
+						"dataSource": [{
+							"type": "primary",
+							"children": "操作一"
+						}, {
+							"type": "normal",
+							"children": "操作二"
+						}],
+						"visibleButtonCount": 3
+					},
+					"paginationProps": {
+						"pageSize": 20,
+						"current": 1
+					},
+					"settingButtons": true,
+					"columns": [{
+						"title": "公司",
+						"dataIndex": "company",
+						"width": 160,
+						"formatType": "link",
+						"searchable": true
+					}, {
+						"title": "单据金额",
+						"dataIndex": "documentAmount",
+						"formatType": "money"
+					}, {
+						"title": "币种",
+						"dataIndex": "currency",
+						"formatType": "currency",
+						"filters": [{
+							"label": "CNY",
+							"value": "CNY"
+						}, {
+							"label": "USD",
+							"value": "USD"
+						}, {
+							"label": "JPY",
+							"value": "JPY"
+						}, {
+							"label": "HKD",
+							"value": "HKD"
+						}],
+						"filterMode": "multiple",
+						"explanation": "提示信息",
+						"width": 110
+					}, {
+						"title": "完成进度",
+						"dataIndex": "percent",
+						"formatType": "progress"
+					}, {
+						"title": "到账日期",
+						"dataIndex": "date",
+						"formatType": "date"
+					}]
+				}
+			}
+		}, {
+			"title": "树状表格",
+			"screenshot": "https://img.alicdn.com/imgextra/i1/O1CN01m4IZ481VKPwFFbDhP_!!6000000002634-2-tps-112-112.png",
+			"schema": {
+				"componentName": "ProTable",
+				"props": {
+					"isTree": true,
+					"dataSource": [{
+						"id": "id-2f5DdE2b-0",
+						"children": [{
+							"id": "2f5DdE2b-5Aee-c43c-e1db-213213213"
+						}]
+					}],
+					"columns": [{
+						"title": "公司",
+						"dataIndex": "company",
+						"width": 160,
+						"formatType": "link",
+						"searchable": true
+					}, {
+						"title": "单据金额",
+						"dataIndex": "documentAmount",
+						"formatType": "money"
+					}, {
+						"title": "币种",
+						"dataIndex": "currency",
+						"formatType": "currency",
+						"filters": [{
+							"label": "CNY",
+							"value": "CNY"
+						}, {
+							"label": "USD",
+							"value": "USD"
+						}, {
+							"label": "JPY",
+							"value": "JPY"
+						}, {
+							"label": "HKD",
+							"value": "HKD"
+						}],
+						"filterMode": "multiple",
+						"explanation": "提示信息",
+						"width": 110
+					}, {
+						"title": "完成进度",
+						"dataIndex": "percent",
+						"formatType": "progress"
+					}, {
+						"title": "到账日期",
+						"dataIndex": "date",
+						"formatType": "date"
+					}]
+				}
+			}
+		}]
+	}, {
+		"componentName": "ProTableSlot",
+		"title": "表格槽位",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "1.0.24-21",
+			"exportName": "ProTableSlot",
+			"main": "src/pro-table/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "position",
+			"propType": {
+				"type": "oneOf",
+				"isRequired": true,
+				"value": ["actionBarLeft", "actionBarRight", "actionBarBefore", "actionBarAfter", "table"]
+			},
+			"description": "位置"
+		}]
+	}, {
+		"componentName": "RadioGroup",
+		"isFormItemComponent": true,
+		"title": "单选框组",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "Radio",
+			"main": "",
+			"destructuring": true,
+			"subName": "Group"
+		},
+		"props": [{
+			"name": "className",
+			"propType": "string",
+			"description": "自定义类名"
+		}, {
+			"name": "style",
+			"propType": "object",
+			"description": "自定义内敛样式"
+		}, {
+			"name": "name",
+			"propType": "string",
+			"description": "name"
+		}, {
+			"name": "size",
+			"propType": {
+				"type": "oneOf",
+				"value": ["large", "medium", "small"]
+			},
+			"description": "尺寸",
+			"defaultValue": "medium"
+		}, {
+			"name": "shape",
+			"propType": {
+				"type": "oneOf",
+				"value": ["normal", "button"]
+			},
+			"description": "展示形态"
+		}, {
+			"name": "value",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["string", "number", "bool"]
+			},
+			"description": "选中项的值"
+		}, {
+			"name": "defaultValue",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["string", "number", "bool"]
+			},
+			"description": "默认值"
+		}, {
+			"name": "component",
+			"propType": "string",
+			"description": "设置标签类型",
+			"defaultValue": "div"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否被禁用"
+		}, {
+			"name": "dataSource",
+			"propType": "object",
+			"description": "可选项列表"
+		}, {
+			"name": "itemDirection",
+			"propType": {
+				"type": "oneOf",
+				"value": ["hoz", "ver"]
+			},
+			"description": "子项目的排列方式",
+			"defaultValue": "hoz"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "是否为预览态",
+			"defaultValue": false
+		}, {
+			"name": "renderPreview",
+			"propType": "func",
+			"description": "预览态模式下渲染的内容\n@param {number} value 评分值"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "选中值改变时的事件\n@param {String/Number} value 选中项的值\n@param {Event} e Dom 事件对象"
+		}],
+		"icon": "",
+		"category": "内容",
+		"experimental": {
+			"initials": [{
+				"name": "dataSource"
+			}]
+		}
+	}, {
+		"componentName": "RangePicker",
+		"isFormItemComponent": true,
+		"title": "日期区段选择",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "DatePicker",
+			"main": "",
+			"destructuring": true,
+			"subName": "RangePicker"
+		},
+		"props": [{
+			"name": "prefix",
+			"propType": "string",
+			"defaultValue": "next-"
+		}, {
+			"name": "rtl",
+			"propType": "bool",
+			"defaultValue": false
+		}, {
+			"name": "type",
+			"propType": {
+				"type": "oneOf",
+				"value": ["date", "month", "year"]
+			},
+			"description": "日期范围类型",
+			"defaultValue": "date"
+		}, {
+			"name": "defaultVisibleMonth",
+			"propType": "func",
+			"description": "默认展示的起始月份\n@return {MomentObject} 返回包含指定月份的 moment 对象实例"
+		}, {
+			"name": "onVisibleMonthChange",
+			"propType": "func"
+		}, {
+			"name": "value",
+			"propType": "array",
+			"description": "日期范围值数组 [moment, moment]"
+		}, {
+			"name": "defaultValue",
+			"propType": "array",
+			"description": "初始的日期范围值数组 [moment, moment]"
+		}, {
+			"name": "format",
+			"propType": "string",
+			"description": "日期格式",
+			"defaultValue": "YYYY-MM-DD"
+		}, {
+			"name": "showTime",
+			"propType": "bool",
+			"description": "是否使用时间控件，支持传入 TimePicker 的属性",
+			"defaultValue": false
+		}, {
+			"name": "resetTime",
+			"propType": "bool",
+			"description": "每次选择是否重置时间（仅在 showTime 开启时有效）",
+			"defaultValue": false
+		}, {
+			"name": "disabledDate",
+			"propType": "func",
+			"description": "禁用日期函数\n@param {MomentObject} 日期值\n@param {String} view 当前视图类型，year: 年， month: 月, date: 日\n@return {Boolean} 是否禁用"
+		}, {
+			"name": "footerRender",
+			"propType": "func",
+			"description": "自定义面板页脚\n@return {Node} 自定义的面板页脚组件"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "日期范围值改变时的回调 [ MomentObject|String, MomentObject|String ]\n@param {Array<MomentObject|String>} value 日期值"
+		}, {
+			"name": "onOk",
+			"propType": "func",
+			"description": "点击确认按钮时的回调 返回开始时间和结束时间`[ MomentObject|String, MomentObject|String ]`\n@return {Array} 日期范围"
+		}, {
+			"name": "label",
+			"propType": "string",
+			"description": "表单项内置标签"
+		}, {
+			"name": "state",
+			"propType": {
+				"type": "oneOf",
+				"value": ["error", "loading", "success"]
+			},
+			"description": "表单项状态"
+		}, {
+			"name": "size",
+			"propType": {
+				"type": "oneOf",
+				"value": ["small", "medium", "large"]
+			},
+			"description": "表单项尺寸",
+			"defaultValue": "medium"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用"
+		}, {
+			"name": "hasClear",
+			"propType": "bool",
+			"description": "是否显示清空按钮",
+			"defaultValue": true
+		}, {
+			"name": "visible",
+			"propType": "bool",
+			"description": "弹层显示状态"
+		}, {
+			"name": "defaultVisible",
+			"propType": "bool",
+			"description": "弹层默认是否显示",
+			"defaultValue": false
+		}, {
+			"name": "onVisibleChange",
+			"propType": "func",
+			"description": "弹层展示状态变化时的回调\n@param {Boolean} visible 弹层是否显示\n@param {String} type 触发弹层显示和隐藏的来源 okBtnClick 表示由确认按钮触发； fromTrigger 表示由trigger的点击触发； docClick 表示由document的点击触发"
+		}, {
+			"name": "popupTriggerType",
+			"propType": {
+				"type": "oneOf",
+				"value": ["click", "hover"]
+			},
+			"description": "弹层触发方式",
+			"defaultValue": "click"
+		}, {
+			"name": "popupAlign",
+			"propType": "string",
+			"description": "弹层对齐方式, 具体含义见 OverLay文档",
+			"defaultValue": "tl tl"
+		}, {
+			"name": "popupContainer",
+			"propType": "node",
+			"description": "弹层容器\n@param {Element} target 目标元素\n@return {Element} 弹层的容器元素"
+		}, {
+			"name": "popupClassName",
+			"propType": "string",
+			"description": "弹层自定义样式类"
+		}, {
+			"name": "followTrigger",
+			"propType": "bool",
+			"description": "是否跟随滚动"
+		}, {
+			"name": "startDateInputAriaLabel",
+			"propType": "string",
+			"description": "开始日期表单项的 aria-label 属性"
+		}, {
+			"name": "startTimeInputAriaLabel",
+			"propType": "string",
+			"description": "开始时间表单项的 aria-label 属性"
+		}, {
+			"name": "endDateInputAriaLabel",
+			"propType": "string",
+			"description": "结束日期表单项的 aria-label 属性"
+		}, {
+			"name": "endTimeInputAriaLabel",
+			"propType": "string",
+			"description": "结束时间表单项的 aria-label 属性"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "是否为预览态"
+		}, {
+			"name": "locale",
+			"propType": "object"
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "name",
+			"propType": "string"
+		}, {
+			"name": "popupComponent",
+			"propType": "string"
+		}, {
+			"name": "popupContent",
+			"propType": "node"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"category": "内容",
+		"icon": ""
+	}, {
+		"componentName": "Rating",
+		"isFormItemComponent": true,
+		"title": "评分",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "Rating",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "id",
+			"propType": "string"
+		}, {
+			"name": "name",
+			"propType": "string",
+			"description": "name"
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}, {
+			"name": "defaultValue",
+			"propType": "number",
+			"description": "默认值",
+			"defaultValue": 0
+		}, {
+			"name": "value",
+			"propType": "number",
+			"description": "值"
+		}, {
+			"name": "size",
+			"propType": {
+				"type": "oneOf",
+				"value": ["small", "medium", "large"]
+			},
+			"description": "尺寸",
+			"defaultValue": "medium"
+		}, {
+			"name": "count",
+			"propType": "number",
+			"description": "评分的总数",
+			"defaultValue": 5
+		}, {
+			"name": "showGrade",
+			"propType": "bool",
+			"description": "是否显示 grade",
+			"defaultValue": false
+		}, {
+			"name": "allowHalf",
+			"propType": "bool",
+			"description": "是否允许半星评分",
+			"defaultValue": false
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用",
+			"defaultValue": false
+		}, {
+			"name": "rtl",
+			"propType": "bool"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "是否为预览态",
+			"defaultValue": false
+		}, {
+			"name": "renderPreview",
+			"propType": "func",
+			"description": "预览态模式下渲染的内容"
+		}, {
+			"name": "readOnly",
+			"propType": "bool",
+			"description": "是否为只读态，效果上同 disabeld",
+			"defaultValue": false
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "用户点击评分时触发的回调\n@param {String} value 评分值"
+		}, {
+			"name": "onHoverChange",
+			"propType": "func",
+			"description": "用户hover评分时触发的回调\n@param {String} value 评分值"
+		}],
+		"icon": "",
+		"category": "内容"
+	}, {
+		"componentName": "Select",
+		"isFormItemComponent": true,
+		"title": "选择器",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "Select",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "back",
+			"title": " ",
+			"display": "plain"
+		}, {
+			"name": "placeholder",
+			"title": {
+				"label": "占位提示",
+				"tip": "属性: placeholder"
+			},
+			"defaultValue": "请选择",
+			"propType": "string"
+		}, {
+			"name": "mode",
+			"propType": {
+				"type": "oneOf",
+				"value": ["single", "multiple", "tag"]
+			},
+			"description": "选择器模式"
+		}, {
+			"name": "hasClear",
+			"title": {
+				"label": "清除按钮",
+				"tip": "属性: hasClear"
+			},
+			"propType": "bool",
+			"defaultValue": false
+		}, {
+			"name": "showSearch",
+			"title": {
+				"label": "可搜索",
+				"tip": "属性: showSearch"
+			},
+			"propType": "bool",
+			"defaultValue": false
+		}, {
+			"name": "dataSource"
+		}, {
+			"type": "group",
+			"title": "其他配置",
+			"display": "block",
+			"items": [{
+				"name": "notFoundContent",
+				"title": {
+					"label": "空文案",
+					"tip": "notFoundContent|弹层内容为空的文案"
+				},
+				"setter": "StringSetter",
+				"description": "弹层内容为空的文案"
+			}, {
+				"name": "hasBorder",
+				"title": {
+					"label": "边框",
+					"tip": "是否有边框"
+				},
+				"propType": "bool",
+				"setter": "BoolSetter",
+				"description": "是否有边框"
+			}, {
+				"name": "autoWidth",
+				"title": "下拉等宽",
+				"propType": "bool",
+				"setter": "BoolSetter"
+			}, {
+				"name": "hasArrow",
+				"title": "下拉箭头",
+				"propType": "bool",
+				"setter": "BoolSetter",
+				"description": "是否有下拉箭头",
+				"defaultValue": true
+			}]
+		}, {
+			"type": "group",
+			"title": "高级",
+			"display": "block",
+			"items": [{
+				"name": "id",
+				"title": {
+					"label": {
+						"type": "i18n",
+						"zh_CN": "唯一标识",
+						"en_US": "ID"
+					},
+					"tip": {
+						"type": "i18n",
+						"zh_CN": "属性: id | 说明: 唯一标识",
+						"en_US": "prop: id | description: switch id"
+					}
+				},
+				"setter": "StringSetter"
+			}, {
+				"name": "name",
+				"title": {
+					"label": {
+						"type": "i18n",
+						"zh_CN": "表单标识",
+						"en_US": "Name"
+					},
+					"tip": {
+						"type": "i18n",
+						"zh_CN": "属性: name | 说明: 表单标识",
+						"en_US": "prop: name | description: switch name"
+					}
+				},
+				"setter": "StringSetter"
+			}]
+		}],
+		"icon": "",
+		"category": "内容"
+	}, {
+		"componentName": "StepForm",
+		"category": "表单类",
+		"title": "步骤表单",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "procode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.4",
+			"exportName": "StepForm",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"snippets": [{
+			"title": "StepForm",
+			"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01HFWZfM24k4gYve7im_!!6000000007428-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "StepForm",
+				"props": {
+					"current": 0,
+					"operations": [{
+						"content": "上一步",
+						"action": "previous",
+						"type": "secondary"
+					}, {
+						"content": "下一步",
+						"action": "next",
+						"type": "primary"
+					}]
+				},
+				"children": [{
+					"componentName": "ProForm",
+					"props": {
+						"stepItemProps": {
+							"title": "StepItem"
+						}
+					},
+					"children": [{
+						"componentName": "ProFormItem",
+						"props": {
+							"primaryKey": "9683",
+							"label": "表单项",
+							"size": "medium",
+							"device": "desktop"
+						}
+					}, {
+						"componentName": "ProFormItem",
+						"props": {
+							"primaryKey": "5030",
+							"label": "表单项",
+							"size": "medium",
+							"device": "desktop"
+						}
+					}, {
+						"componentName": "ProFormItem",
+						"props": {
+							"primaryKey": "7511",
+							"label": "表单项",
+							"size": "medium",
+							"device": "desktop"
+						}
+					}]
+				}, {
+					"componentName": "ProForm",
+					"props": {
+						"stepItemProps": {
+							"title": "StepItem"
+						}
+					},
+					"children": [{
+						"componentName": "ProFormItem",
+						"props": {
+							"primaryKey": "264",
+							"label": "表单项",
+							"size": "medium",
+							"device": "desktop"
+						}
+					}, {
+						"componentName": "ProFormItem",
+						"props": {
+							"primaryKey": "6469",
+							"label": "表单项",
+							"size": "medium",
+							"device": "desktop"
+						}
+					}, {
+						"componentName": "ProFormItem",
+						"props": {
+							"primaryKey": "2115",
+							"label": "表单项",
+							"size": "medium",
+							"device": "desktop"
+						}
+					}]
+				}]
+			}
+		}]
+	}, {
+		"componentName": "Step.Item",
+		"title": "步骤项",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "Step",
+			"main": "",
+			"destructuring": true,
+			"subName": "Item"
+		},
+		"props": [{
+			"name": "icon",
+			"propType": "string",
+			"description": "图标"
+		}, {
+			"name": "title",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			},
+			"defaultValue": "步骤项",
+			"description": "标题"
+		}, {
+			"name": "content",
+			"title": {
+				"label": "内容",
+				"tip": "content|内容填充, shape为 arrow 时无效"
+			},
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			},
+			"description": "内容填充, shape为 arrow 时无效"
+		}, {
+			"name": "status",
+			"title": {
+				"label": "状态",
+				"tip": "status|步骤的状态，如不传，会根据外层的 Step 的 current 属性生成，可选值为 `wait`, `process`, `finish`"
+			},
+			"propType": {
+				"type": "oneOf",
+				"value": ["wait", "process", "finish"]
+			},
+			"description": "步骤的状态，如不传，会根据外层的 Step 的 current 属性生成，可选值为 `wait`, `process`, `finish`"
+		}, {
+			"name": "percent",
+			"propType": "number",
+			"description": "百分比"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用"
+		}, {
+			"name": "onClick",
+			"propType": "func",
+			"description": "点击步骤时的回调\n@param {Number} index 节点索引"
+		}, {
+			"name": "className",
+			"propType": "string",
+			"description": "自定义样式"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"category": "null",
+		"icon": ""
+	}, {
+		"componentName": "StoryPlaceholder",
+		"title": "需求占位",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "latest",
+			"exportName": "StoryPlaceholder",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"experimental": {
+			"callbacks": {}
+		},
+		"icon": "https://img.alicdn.com/imgextra/i3/O1CN01G7Lc8e1pZL7p4cdKc_!!6000000005374-2-tps-112-112.png",
+		"category": "基础元素",
+		"group": "精选组件",
+		"snippets": [{
+			"title": "需求占位",
+			"screenshot": "https://img.alicdn.com/tfs/TB160cKkP39YK4jSZPcXXXrUFXa-112-64.png",
+			"schema": {
+				"title": "需求占位",
+				"componentName": "StoryPlaceholder",
+				"props": {
+					"title": "需求占位描述",
+					"content": {
+						"subject": "需求标题",
+						"hideTitle": false,
+						"description": "<p><span>- 你可以在这里描述需求</span><br /><span>- 或者粘贴需求截图</span></p>"
+					}
+				}
+			}
+		}]
+	}, {
+		"componentName": "TabContainer",
+		"title": "选项卡",
+		"category": "布局容器类",
+		"group": "精选组件",
+		"docUrl": "",
+		"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01mh9LPG268B90t8DaA_!!6000000007616-55-tps-56-56.svg",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.24",
+			"exportName": "TabContainer",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": ""
+		},
+		"snippets": [{
+			"title": "选项卡",
+			"screenshot": "https://img.alicdn.com/imgextra/i4/O1CN01mh9LPG268B90t8DaA_!!6000000007616-55-tps-56-56.svg",
+			"schema": {
+				"componentName": "TabContainer",
+				"props": {
+					"shape": "pure",
+					"size": "medium",
+					"excessMode": "slide"
+				},
+				"children": [{
+					"componentName": "Tab.Item",
+					"props": {
+						"title": "标签项1",
+						"primaryKey": "tab-item-1"
+					}
+				}, {
+					"componentName": "Tab.Item",
+					"props": {
+						"title": "标签项2",
+						"primaryKey": "tab-item-2"
+					}
+				}]
+			}
+		}]
+	}, {
+		"componentName": "Tab.Item",
+		"title": "选项卡",
+		"docUrl": "",
+		"screenshot": "",
+		"devMode": "proCode",
+		"npm": {
+			"package": "@alife/fusion-ui",
+			"version": "0.1.6-beta.24",
+			"exportName": "TabContainer",
+			"main": "src/index.tsx",
+			"destructuring": true,
+			"subName": "Item"
+		},
+		"experimental": {
+			"hideSelectTools": true,
+			"callbacks": {}
+		}
+	}, {
+		"componentName": "Transfer",
+		"title": "穿梭框",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "Transfer",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "id",
+			"propType": "string",
+			"description": "请设置 id 以保证transfer的可访问性"
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}, {
+			"name": "rtl",
+			"propType": "bool"
+		}, {
+			"name": "mode",
+			"propType": {
+				"type": "oneOf",
+				"value": ["normal", "simple"]
+			},
+			"description": "移动选项模式",
+			"defaultValue": "normal"
+		}, {
+			"name": "dataSource",
+			"propType": "array",
+			"description": "数据源"
+		}, {
+			"name": "value",
+			"propType": "array",
+			"description": "当前值"
+		}, {
+			"name": "defaultValue",
+			"propType": "array",
+			"description": "默认值"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用",
+			"defaultValue": false
+		}, {
+			"name": "leftDisabled",
+			"propType": "bool",
+			"description": "是否禁用左侧面板",
+			"defaultValue": false
+		}, {
+			"name": "rightDisabled",
+			"propType": "bool",
+			"description": "是否禁用右侧面板",
+			"defaultValue": false
+		}, {
+			"name": "itemRender",
+			"propType": "func",
+			"description": "列表项渲染函数"
+		}, {
+			"name": "showSearch",
+			"propType": "bool",
+			"description": "是否显示搜索框",
+			"defaultValue": false
+		}, {
+			"name": "filter",
+			"propType": "func",
+			"description": "自定义搜索函数"
+		}, {
+			"name": "searchPlaceholder",
+			"propType": "string",
+			"description": "搜索框占位符"
+		}, {
+			"name": "notFoundContent",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			},
+			"description": "列表为空显示内容",
+			"defaultValue": "Not Found"
+		}, {
+			"name": "titles",
+			"propType": "array",
+			"description": "左右面板标题"
+		}, {
+			"name": "operations",
+			"propType": "array",
+			"description": "向右向左移动按钮显示内容"
+		}, {
+			"name": "defaultLeftChecked",
+			"propType": "array",
+			"description": "左面板默认选中值"
+		}, {
+			"name": "defaultRightChecked",
+			"propType": "array",
+			"description": "右面板默认选中值"
+		}, {
+			"name": "listClassName",
+			"propType": "string",
+			"description": "左右面板列表自定义样式类名"
+		}, {
+			"name": "listStyle",
+			"propType": "object",
+			"description": "左右面板列表自定义样式对象"
+		}, {
+			"name": "sortable",
+			"propType": "bool",
+			"description": "是否允许拖拽排序",
+			"defaultValue": false
+		}, {
+			"name": "children",
+			"propType": "func",
+			"description": "接收 children 自定义渲染列表"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "值发生改变的时候触发的回调函数"
+		}, {
+			"name": "onSearch",
+			"propType": "func",
+			"description": "搜索框输入时触发的回调函数"
+		}, {
+			"name": "onSort",
+			"propType": "func",
+			"description": "拖拽排序时触发的回调函数"
+		}],
+		"icon": "",
+		"category": "内容"
+	}, {
+		"componentName": "TreeSelect",
+		"isFormItemComponent": true,
+		"title": "树型选择控件",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "TreeSelect",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "back",
+			"title": " ",
+			"display": "plain"
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "dataSource",
+			"propType": {
+				"type": "Json"
+			},
+			"description": "数据源"
+		}, {
+			"name": "size",
+			"title": "尺寸",
+			"propType": {
+				"type": "oneOf",
+				"value": ["small", "medium", "large"]
+			},
+			"description": "选择框大小",
+			"defaultValue": "medium"
+		}, {
+			"name": "placeholder",
+			"title": "占位提示",
+			"propType": "string",
+			"description": "选择框占位符"
+		}, {
+			"name": "label",
+			"title": "内联文案",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			},
+			"description": "自定义内联label"
+		}, {
+			"name": "notFoundContent",
+			"title": "空提示",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			},
+			"description": "无数据时显示内容",
+			"defaultValue": "Not Found"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用",
+			"defaultValue": false
+		}, {
+			"name": "hasArrow",
+			"title": "下拉箭头",
+			"propType": "bool",
+			"description": "是否有下拉箭头",
+			"defaultValue": true
+		}, {
+			"name": "hasBorder",
+			"title": "边框",
+			"propType": "bool",
+			"description": "是否有边框",
+			"defaultValue": true
+		}, {
+			"name": "hasClear",
+			"title": "清空按钮",
+			"propType": "bool",
+			"description": "是否有清空按钮",
+			"defaultValue": false
+		}, {
+			"name": "readOnly",
+			"propType": "bool",
+			"description": "是否只读"
+		}, {
+			"name": "autoWidth",
+			"propType": "bool",
+			"description": "下拉框是否与选择器对齐",
+			"defaultValue": true
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "选中值改变时触发的回调函数\n@param {String|Array} value 选中的值，单选时返回单个值，多选时返回数组\n@param {Object|Array} data 选中的数据，包括 value, label, pos, key属性，单选时返回单个值，多选时返回数组，父子节点选中关联时，同时选中，只返回父节点"
+		}, {
+			"name": "showSearch",
+			"propType": "bool",
+			"description": "搜索框",
+			"defaultValue": false
+		}, {
+			"name": "onSearch",
+			"propType": "func",
+			"description": "在搜索框中输入时触发的回调函数\n@param {String} keyword 输入的关键字"
+		}, {
+			"name": "onSearchClear",
+			"propType": "func"
+		}, {
+			"name": "multiple",
+			"propType": "bool",
+			"description": "支持多选",
+			"defaultValue": false
+		}, {
+			"name": "treeCheckable",
+			"propType": "bool",
+			"description": "下拉框中的树是否支持勾选节点的复选框",
+			"defaultValue": false
+		}, {
+			"name": "treeCheckStrictly",
+			"propType": "bool",
+			"description": "下拉框中的树勾选节点复选框是否完全受控（父子节点选中状态不再关联）",
+			"defaultValue": false
+		}, {
+			"name": "treeCheckedStrategy",
+			"propType": {
+				"type": "oneOf",
+				"value": ["all", "parent", "child"]
+			},
+			"description": "定义选中时回填的方式\n@enumdesc 返回所有选中的节点, 父子节点都选中时只返回父节点, 父子节点都选中时只返回子节点",
+			"defaultValue": "parent"
+		}, {
+			"name": "treeDefaultExpandAll",
+			"propType": "bool",
+			"description": "下拉框中的树是否默认展开所有节点",
+			"defaultValue": false
+		}, {
+			"name": "treeLoadData",
+			"propType": "func",
+			"description": "下拉框中的树异步加载数据的函数，使用请参考[Tree的异步加载数据Demo](https://fusion.design/component/tree)\n@param {ReactElement} node 被点击展开的节点"
+		}, {
+			"name": "treeProps",
+			"propType": {
+				"type": "Json"
+			},
+			"description": "透传到 Tree 的属性对象"
+		}, {
+			"name": "defaultVisible",
+			"title": "初始显示",
+			"propType": "bool",
+			"description": "初始下拉框是否显示",
+			"defaultValue": false
+		}, {
+			"name": "visible",
+			"propType": "bool",
+			"description": "当前下拉框是否显示"
+		}, {
+			"name": "onVisibleChange",
+			"propType": "func",
+			"description": "下拉框显示或关闭时触发事件的回调函数\n@param {Boolean} visible 是否显示\n@param {String} type 触发显示关闭的操作类型"
+		}, {
+			"name": "popupStyle",
+			"propType": {
+				"type": "object"
+			},
+			"description": "下拉框自定义样式对象"
+		}, {
+			"name": "popupClassName",
+			"propType": "string",
+			"description": "下拉框样式自定义类名"
+		}, {
+			"name": "popupContainer",
+			"propType": "any",
+			"description": "下拉框挂载的容器节点"
+		}, {
+			"name": "popupProps",
+			"propType": {
+				"type": "object"
+			},
+			"description": "透传到 Popup 的属性对象"
+		}, {
+			"name": "followTrigger",
+			"propType": "bool",
+			"description": "是否跟随滚动"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "预览态"
+		}, {
+			"name": "renderPreview",
+			"propType": "func",
+			"description": "预览态模式下渲染的内容\n@param {Array<data>} value 选择值 { label: , value:}"
+		}, {
+			"name": "useVirtual",
+			"propType": "bool",
+			"description": "是否开启虚拟滚动"
+		}, {
+			"name": "style",
+			"propType": "object"
+		}, {
+			"type": "group",
+			"title": "高级",
+			"display": "block",
+			"items": [{
+				"name": "id",
+				"title": {
+					"label": {
+						"type": "i18n",
+						"zh_CN": "唯一标识",
+						"en_US": "ID"
+					},
+					"tip": {
+						"type": "i18n",
+						"zh_CN": "属性: id | 说明: 唯一标识",
+						"en_US": "prop: id | description: switch id"
+					}
+				},
+				"setter": "StringSetter"
+			}, {
+				"name": "name",
+				"title": {
+					"label": {
+						"type": "i18n",
+						"zh_CN": "表单标识",
+						"en_US": "Name"
+					},
+					"tip": {
+						"type": "i18n",
+						"zh_CN": "属性: name | 说明: 表单标识",
+						"en_US": "prop: name | description: switch name"
+					}
+				},
+				"setter": "StringSetter"
+			}]
+		}],
+		"icon": "",
+		"category": "内容"
+	}, {
+		"componentName": "Upload",
+		"isFormItemComponent": true,
+		"title": "上传",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "Upload",
+			"main": "",
+			"destructuring": true,
+			"subName": ""
+		},
+		"props": [{
+			"name": "action",
+			"propType": "string",
+			"description": "上传的地址"
+		}, {
+			"name": "value",
+			"propType": {
+				"type": "Json"
+			},
+			"description": "文件列表"
+		}, {
+			"name": "defaultValue",
+			"propType": "object",
+			"description": "默认文件列表"
+		}, {
+			"name": "shape",
+			"propType": {
+				"type": "oneOf",
+				"value": ["card"]
+			},
+			"description": "上传按钮形状"
+		}, {
+			"name": "listType",
+			"propType": {
+				"type": "oneOf",
+				"value": ["text", "image", "card"]
+			},
+			"description": "上传列表的样式"
+		}, {
+			"name": "name",
+			"propType": "string",
+			"description": "文件名字段"
+		}, {
+			"name": "data",
+			"propType": {
+				"type": "oneOfType",
+				"value": ["object", "func"]
+			},
+			"description": "上传额外传参"
+		}, {
+			"name": "formatter",
+			"propType": "func",
+			"title": {
+				"label": "数据格式化函数",
+				"tip": "数据格式化函数，配合自定义 action 使用，参数为服务器的响应数据，详见 [formatter](#formater)\n@param {Object} response 返回\n@param {File} file 文件对象"
+			}
+		}, {
+			"name": "limit",
+			"propType": "number",
+			"description": "最大文件上传个数",
+			"defaultValue": null
+		}, {
+			"name": "timeout",
+			"propType": "number",
+			"description": "设置上传超时,单位ms"
+		}, {
+			"name": "dragable",
+			"propType": "bool",
+			"description": "可选参数，是否支持拖拽上传，`ie10+` 支持。"
+		}, {
+			"name": "useDataURL",
+			"propType": "bool",
+			"description": "可选参数，是否本地预览"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "可选参数，是否禁用上传功能"
+		}, {
+			"name": "onSelect",
+			"propType": "func",
+			"description": "选择文件回调"
+		}, {
+			"name": "onProgress",
+			"propType": "func",
+			"description": "上传中"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "上传文件改变时的状态\n@param {Object} info 文件事件对象"
+		}, {
+			"name": "onSuccess",
+			"propType": "func",
+			"description": "可选参数，上传成功回调函数，参数为请求下响应信息以及文件\n@param {Object} file 文件\n@param {Array<Object>} value 值"
+		}, {
+			"name": "afterSelect",
+			"propType": "func",
+			"description": "可选参数, 用于校验文件,afterSelect仅在 autoUpload=false 的时候生效,autoUpload=true时,可以使用beforeUpload完全可以替代该功能.\n@param {Object} file\n@returns {Boolean} 返回false会阻止上传,其他则表示正常"
+		}, {
+			"name": "onRemove",
+			"propType": "func",
+			"description": "移除文件回调函数\n@param {Object} file 文件\n@returns {Boolean|Promise} 返回 false、Promise.resolve(false)、 Promise.reject() 将阻止文件删除"
+		}, {
+			"name": "onError",
+			"propType": "func",
+			"description": "可选参数，上传失败回调函数，参数为上传失败的信息、响应信息以及文件\n@param {Object} file 出错的文件\n@param {Array} value 当前值"
+		}, {
+			"name": "beforeUpload",
+			"propType": "func",
+			"title": {
+				"label": "开始上传时回调",
+				"tip": "可选参数, 详见 [beforeUpload](#beforeUpload)\n@param {Object} file 所有文件\n@param {Object} options 参数\n@returns {Boolean|Object|Promise} 返回值作用见demo"
+			}
+		}, {
+			"name": "onDrop",
+			"propType": "func",
+			"description": "放文件"
+		}, {
+			"name": "className",
+			"propType": "string",
+			"description": "自定义class"
+		}, {
+			"name": "style",
+			"propType": "object",
+			"description": "自定义内联样式"
+		}, {
+			"name": "autoUpload",
+			"propType": "bool",
+			"description": "自动上传",
+			"defaultValue": true
+		}, {
+			"name": "request",
+			"propType": "func",
+			"description": "自定义上传方法\n@param {Object} option\n@return {Object} object with abort method"
+		}, {
+			"name": "progressProps",
+			"propType": "object",
+			"description": "透传给Progress props"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "是否为预览态"
+		}, {
+			"name": "renderPreview",
+			"propType": "func",
+			"description": "预览态模式下渲染的内容\n@param {number} value 评分值"
+		}],
+		"experimental": {
+			"initialChildren": [{
+				"componentName": "Button",
+				"props": {
+					"children": "上传文件",
+					"type": "primary"
+				}
+			}],
+			"initials": [{
+				"name": "shape"
+			}]
+		},
+		"icon": "",
+		"category": "内容"
+	}, {
+		"componentName": "WeekPicker",
+		"title": "WeekPicker",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "DatePicker",
+			"main": "",
+			"destructuring": true,
+			"subName": "WeekPicker"
+		},
+		"props": [{
+			"name": "back",
+			"title": " ",
+			"display": "plain"
+		}, {
+			"name": "prefix",
+			"propType": "string",
+			"defaultValue": "next-"
+		}, {
+			"name": "rtl",
+			"propType": "bool",
+			"defaultValue": false
+		}, {
+			"name": "label",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			},
+			"description": "表单项内置标签"
+		}, {
+			"name": "state",
+			"propType": {
+				"type": "oneOf",
+				"value": ["success", "loading", "error"]
+			},
+			"description": "表单项状态"
+		}, {
+			"name": "placeholder",
+			"propType": "string",
+			"description": "输入提示"
+		}, {
+			"name": "defaultVisibleMonth",
+			"propType": "func",
+			"description": "默认展现的月\n@return {MomentObject} 返回包含指定月份的 moment 对象实例"
+		}, {
+			"name": "onVisibleMonthChange",
+			"propType": "func"
+		}, {
+			"name": "value",
+			"propType": {
+				"type": "instanceOf",
+				"value": "custom"
+			},
+			"description": "日期值（受控）moment 对象"
+		}, {
+			"name": "defaultValue",
+			"propType": {
+				"type": "instanceOf",
+				"value": "custom"
+			},
+			"description": "初始日期值，moment 对象"
+		}, {
+			"name": "format",
+			"propType": "string",
+			"description": "日期值的格式（用于限定用户输入和展示）",
+			"defaultValue": "YYYY-wo"
+		}, {
+			"name": "disabledDate",
+			"propType": "func",
+			"description": "禁用日期函数\n@param {MomentObject} 日期值\n@param {String} view 当前视图类型，year: 年， month: 月, date: 日\n@return {Boolean} 是否禁用"
+		}, {
+			"name": "footerRender",
+			"propType": "func",
+			"description": "自定义面板页脚\n@return {Node} 自定义的面板页脚组件"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "日期值改变时的回调\n@param {MomentObject|String} value 日期值"
+		}, {
+			"name": "size",
+			"propType": {
+				"type": "oneOf",
+				"value": ["small", "medium", "large"]
+			},
+			"description": "表单项尺寸",
+			"defaultValue": "medium"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用"
+		}, {
+			"name": "hasClear",
+			"propType": "bool",
+			"description": "是否显示清空按钮",
+			"defaultValue": true
+		}, {
+			"name": "visible",
+			"propType": "bool",
+			"description": "弹层显示状态"
+		}, {
+			"name": "defaultVisible",
+			"propType": "bool",
+			"description": "弹层默认是否显示",
+			"defaultValue": false
+		}, {
+			"name": "onVisibleChange",
+			"propType": "func",
+			"description": "弹层展示状态变化时的回调\n@param {Boolean} visible 弹层是否显示\n@param {String} type 触发弹层显示和隐藏的来源 calendarSelect 表示由日期表盘的选择触发； okBtnClick 表示由确认按钮触发； fromTrigger 表示由trigger的点击触发； docClick 表示由document的点击触发"
+		}, {
+			"name": "popupTriggerType",
+			"propType": {
+				"type": "oneOf",
+				"value": ["click", "hover"]
+			},
+			"description": "弹层触发方式",
+			"defaultValue": "click"
+		}, {
+			"name": "popupAlign",
+			"propType": "string",
+			"description": "弹层对齐方式,具体含义见 OverLay文档",
+			"defaultValue": "tl tl"
+		}, {
+			"name": "popupContainer",
+			"propType": "any",
+			"description": "弹层容器\n@param {Element} target 目标元素\n@return {Element} 弹层的容器元素"
+		}, {
+			"name": "popupStyle",
+			"propType": "object",
+			"description": "弹层自定义样式"
+		}, {
+			"name": "popupClassName",
+			"propType": "string",
+			"description": "弹层自定义样式类"
+		}, {
+			"name": "popupProps",
+			"propType": "object",
+			"description": "弹层其他属性"
+		}, {
+			"name": "followTrigger",
+			"propType": "bool",
+			"description": "是否跟随滚动"
+		}, {
+			"name": "inputProps",
+			"propType": "object",
+			"description": "表单项其他属性"
+		}, {
+			"name": "dateCellRender",
+			"propType": "func",
+			"description": "自定义日期渲染函数\n@param {Object} value 日期值（moment对象）\n@returns {ReactNode}"
+		}, {
+			"name": "monthCellRender",
+			"propType": "func",
+			"description": "自定义月份渲染函数\n@param {Object} calendarDate 对应 Calendar 返回的自定义日期对象\n@returns {ReactNode}"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "是否为预览态"
+		}, {
+			"name": "renderPreview",
+			"propType": "func",
+			"description": "预览态模式下渲染的内容\n@param {MomentObject} value 年份"
+		}, {
+			"name": "yearCellRender",
+			"propType": "func"
+		}, {
+			"name": "locale",
+			"propType": "object"
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "name",
+			"propType": "string"
+		}, {
+			"name": "popupComponent",
+			"propType": {
+				"type": "instanceOf",
+				"value": "elementType"
+			}
+		}, {
+			"name": "popupContent",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			}
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"category": "基础"
+	}, {
+		"componentName": "YearPicker",
+		"title": "YearPicker",
+		"docUrl": "",
+		"screenshot": "",
+		"npm": {
+			"package": "@alifd/next",
+			"version": "{{version}}",
+			"exportName": "DatePicker",
+			"main": "",
+			"destructuring": true,
+			"subName": "YearPicker"
+		},
+		"props": [{
+			"name": "back",
+			"title": " ",
+			"display": "plain"
+		}, {
+			"name": "prefix",
+			"propType": "string",
+			"defaultValue": "next-"
+		}, {
+			"name": "rtl",
+			"propType": "bool",
+			"defaultValue": false
+		}, {
+			"name": "label",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			},
+			"description": "表单项内置标签"
+		}, {
+			"name": "state",
+			"propType": {
+				"type": "oneOf",
+				"value": ["success", "loading", "error"]
+			},
+			"description": "表单项状态"
+		}, {
+			"name": "placeholder",
+			"propType": "string",
+			"description": "输入提示"
+		}, {
+			"name": "value",
+			"propType": {
+				"type": "instanceOf",
+				"value": "custom"
+			},
+			"description": "日期值（受控）moment 对象"
+		}, {
+			"name": "defaultValue",
+			"propType": {
+				"type": "instanceOf",
+				"value": "custom"
+			},
+			"description": "初始日期值，moment 对象"
+		}, {
+			"name": "format",
+			"propType": "string",
+			"description": "日期值的格式（用于限定用户输入和展示）",
+			"defaultValue": "YYYY"
+		}, {
+			"name": "disabledDate",
+			"propType": "func",
+			"description": "禁用日期函数\n@param {MomentObject} 日期值\n@param {String} view 当前视图类型，year: 年， month: 月, date: 日\n@return {Boolean} 是否禁用"
+		}, {
+			"name": "footerRender",
+			"propType": "func",
+			"description": "自定义面板页脚\n@return {Node} 自定义的面板页脚组件"
+		}, {
+			"name": "onChange",
+			"propType": "func",
+			"description": "日期值改变时的回调\n@param {MomentObject|String} value 日期值"
+		}, {
+			"name": "size",
+			"propType": {
+				"type": "oneOf",
+				"value": ["small", "medium", "large"]
+			},
+			"description": "表单项尺寸",
+			"defaultValue": "medium"
+		}, {
+			"name": "disabled",
+			"propType": "bool",
+			"description": "是否禁用"
+		}, {
+			"name": "hasClear",
+			"propType": "bool",
+			"description": "是否显示清空按钮",
+			"defaultValue": true
+		}, {
+			"name": "visible",
+			"propType": "bool",
+			"description": "弹层显示状态"
+		}, {
+			"name": "defaultVisible",
+			"propType": "bool",
+			"description": "弹层默认是否显示"
+		}, {
+			"name": "onVisibleChange",
+			"propType": "func",
+			"description": "弹层展示状态变化时的回调\n@param {Boolean} visible 弹层是否显示\n@param {String} reason 触发弹层显示和隐藏的来源 calendarSelect 表示由日期表盘的选择触发； fromTrigger 表示由trigger的点击触发； docClick 表示由document的点击触发"
+		}, {
+			"name": "popupTriggerType",
+			"propType": {
+				"type": "oneOf",
+				"value": ["click", "hover"]
+			},
+			"description": "弹层触发方式",
+			"defaultValue": "click"
+		}, {
+			"name": "popupAlign",
+			"propType": "string",
+			"description": "弹层对齐方式, 具体含义见 OverLay文档",
+			"defaultValue": "tl tl"
+		}, {
+			"name": "popupContainer",
+			"propType": "any",
+			"description": "弹层容器\n@param {Element} target 目标元素\n@return {Element} 弹层的容器元素"
+		}, {
+			"name": "popupStyle",
+			"propType": "object",
+			"description": "弹层自定义样式"
+		}, {
+			"name": "popupClassName",
+			"propType": "string",
+			"description": "弹层自定义样式类"
+		}, {
+			"name": "popupProps",
+			"propType": "object",
+			"description": "弹层其他属性"
+		}, {
+			"name": "followTrigger",
+			"propType": "bool",
+			"description": "是否跟随滚动"
+		}, {
+			"name": "inputProps",
+			"propType": "object",
+			"description": "表单项其他属性"
+		}, {
+			"name": "yearCellRender",
+			"propType": "func"
+		}, {
+			"name": "dateInputAriaLabel",
+			"propType": "string",
+			"description": "日期表单项的 aria-label 属性"
+		}, {
+			"name": "isPreview",
+			"propType": "bool",
+			"description": "是否为预览态"
+		}, {
+			"name": "renderPreview",
+			"propType": "func",
+			"description": "预览态模式下渲染的内容\n@param {MomentObject} value 年份"
+		}, {
+			"name": "locale",
+			"propType": "object"
+		}, {
+			"name": "className",
+			"propType": "string"
+		}, {
+			"name": "name",
+			"propType": "string"
+		}, {
+			"name": "popupComponent",
+			"propType": {
+				"type": "instanceOf",
+				"value": "elementType"
+			}
+		}, {
+			"name": "popupContent",
+			"propType": {
+				"type": "instanceOf",
+				"value": "node"
+			}
+		}, {
+			"name": "style",
+			"propType": "object"
+		}],
+		"category": "基础"
+	}],
+  "sort": {
+    "groupList": [
+      "精选组件",
+      "原子组件"
+    ],
+    "categoryList": [
+      "基础元素",
+      "布局容器类",
+      "表单类",
+      "表格类",
+      "帮助类",
+      "对话框类",
+      "业务类"
+    ]
+  },
+  "ignoreComponents": {
+    "@alife/fusion-ui": {
+      "StoryPlaceholder": 1,
+      "ColumnChart": 1
+    }
+  }
+}

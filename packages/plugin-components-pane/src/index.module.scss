@@ -1,0 +1,36 @@
+.lowcode-component-panel {
+  height: 100%;
+  border-top: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+
+  > .header {
+    margin: 12px 16px;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    .search {
+      width: 100%;
+    }
+  }
+
+  > .tabs {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  > .empty {
+    display: flex;
+    flex: auto;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 100px;
+      height: 100px;
+    }
+    .content {
+      line-height: 2;
+    }
+  }
+}

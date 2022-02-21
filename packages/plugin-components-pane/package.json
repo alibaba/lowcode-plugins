@@ -1,0 +1,60 @@
+{
+  "name": "@alilc/lowcode-plugin-components-pane",
+  "version": "1.0.2",
+  "description": "低代码组件面板",
+  "files": [
+    "es/",
+    "lib/"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "stylePath": "style.js",
+  "scripts": {
+    "start": "build-scripts start",
+    "build": "build-scripts build --skip-demo",
+    "f2elint-scan": "f2elint scan",
+    "f2elint-fix": "f2elint fix"
+  },
+  "keywords": [
+    "lowcode",
+    "plugin",
+    "components"
+  ],
+  "authors": [
+    {
+      "name": "gray.wjf"
+    },
+    {
+      "name": "金禅"
+    }
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.3",
+    "@alifd/next": "^1.23.12",
+    "@svgr/webpack": "^5.5.0",
+    "@types/react": "^16.9.13",
+    "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/parser": "^4.28.3",
+    "build-plugin-component": "^0.2.7-1",
+    "build-plugin-fusion": "^0.1.0",
+    "build-plugin-moment-locales": "^0.1.0",
+    "eventemitter3": "^4.0.7",
+    "f2elint": "^1.2.0",
+    "html-webpack-plugin": "^5.3.2",
+    "moment": "^2.29.1",
+    "react-dom": "^16.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "f2elint commit-file-scan",
+      "commit-msg": "f2elint commit-msg-scan"
+    }
+  },
+  "dependencies": {
+    "@alilc/lowcode-types": "^1.0.0",
+    "classnames": "^2.3.1",
+    "lodash.debounce": "^4.0.8",
+    "react": "^16.0.0"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "outDir": "build",
+    "module": "esnext",
+    "target": "es6",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "@types"],
+  "exclude": ["node_modules", "build", "lib", "es", ".vscode"]
+}
