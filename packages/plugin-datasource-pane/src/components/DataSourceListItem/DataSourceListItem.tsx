@@ -239,7 +239,7 @@ export class DataSourceListItemOperation extends PureComponent<DataSourceListIte
         key={icon}
         delay={100}
         trigger={
-          <Button size="small" onClick={this.handleOperationClick} text>
+          <Button iconSize="small" className={generateClassName('item-operate')} onClick={this.handleOperationClick} text>
             <Icon type={icon} />
           </Button>
         }

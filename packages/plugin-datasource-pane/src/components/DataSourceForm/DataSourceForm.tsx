@@ -132,6 +132,7 @@ const SCHEMA = {
       'x-component-props': {
         defaultPropertyKeys: [],
         addText: '选择添加',
+        autoWidth: false,
       },
       'x-decorator-props': {},
       properties: {

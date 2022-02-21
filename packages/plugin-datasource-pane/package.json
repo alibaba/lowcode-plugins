@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-datasource-pane",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "description": "低代码引擎数据源面板",
   "main": "lib/index.js",
   "files": [
@@ -58,5 +58,5 @@
     "traverse": "^0.6.6",
     "xstate": "^4.26.0"
   },
-  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.0-beta.1/build/index.html"
+  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.0/build/index.html"
 }

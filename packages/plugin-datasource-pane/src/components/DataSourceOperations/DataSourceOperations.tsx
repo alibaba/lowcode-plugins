@@ -52,13 +52,13 @@ export class DataSourceOperations extends PureComponent<DataSourceOperationsProp
       this.props;
 
     if (mode === 'sorting') {
-return [
-  <Button onClick={this.props.onFinishSort}>完成</Button>,
-  <Button text onClick={this.props.onCancelSort}>
-    取消
-  </Button>,
+      return [
+        <Button onClick={this.props.onFinishSort}>完成</Button>,
+        <Button text onClick={this.props.onCancelSort}>
+          取消
+        </Button>,
       ];
-}
+    }
     if (mode === 'exporting') {
       return [
         <Button

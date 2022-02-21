@@ -18,6 +18,7 @@ $cls-prefix: "lowcode-plugin-datasource-pane";
       text-overflow: ellipsis;
       white-space: nowrap;
       font-size: 12px;
+      font-weight: bold;
       .#{$cls-prefix}-item-typetag {
         font-weight: 700;
         margin-right: 4px;
@@ -34,6 +35,14 @@ $cls-prefix: "lowcode-plugin-datasource-pane";
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+    }
+  }
+
+  .#{$cls-prefix}-item-operate {
+    color: #8f9bb3 !important;
+
+    &:hover {
+      color: #5584ff !important;
     }
   }
 }

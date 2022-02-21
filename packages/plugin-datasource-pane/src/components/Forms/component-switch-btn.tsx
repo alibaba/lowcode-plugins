@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Button, Icon } from '@alifd/next';
+import { IconVariable } from '../icons/variable';
 import _get from 'lodash/get';
 import { connect, mapProps } from '@formily/react';
 import cn from 'classnames';
@@ -55,7 +56,7 @@ class ComponentSwitchBtnCompComp extends PureComponent<
         text
         onClick={this.handleSwitch}
       >
-        <Icon type="set" />
+        <IconVariable size={20} fill="#8f9bb3" />
       </Button>
     );
   }
