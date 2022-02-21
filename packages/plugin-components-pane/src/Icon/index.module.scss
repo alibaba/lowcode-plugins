@@ -1,0 +1,11 @@
+.icon {
+  display: inline-block;
+
+  width: 20px;
+  height: 20px;
+
+  > svg {
+    height: 100%;
+    width: 100%;
+  }
+}
