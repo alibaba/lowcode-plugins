@@ -3,7 +3,7 @@
     [
       "build-plugin-fusion",
       {
-        "themePackage": "@alife/theme-lowcode-light"
+        "themePackage": "@alifd/theme-lowcode-light"
       }
     ],
     ["@alilc/build-plugin-alt", {

@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.32",
-    "@alife/theme-lowcode-light": "^0.1.0",
+    "@alifd/theme-lowcode-light": "^0.2.1",
     "@alilc/build-plugin-alt": "^1.0.0",
     "@alilc/lowcode-engine": "^1.0.0",
     "@alilc/lowcode-shell": "^1.0.0",

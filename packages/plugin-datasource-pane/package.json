@@ -25,7 +25,7 @@
   "license": "MIT",
   "devDependencies": {
     "@alib/build-scripts": "^0.1.32",
-    "@alife/theme-lowcode-light": "^0.1.0",
+    "@alifd/theme-lowcode-light": "^0.2.1",
     "@alilc/build-plugin-alt": "beta",
     "@alilc/lowcode-engine": "beta",
     "@alilc/lowcode-types": "beta",
