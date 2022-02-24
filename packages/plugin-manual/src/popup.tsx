@@ -34,7 +34,11 @@ export function Documents() {
             <Tree
               defaultExpandAll={true}
               selectedKeys={selection}
-              onSelect={setSelection}
+              onSelect={(newSelection) => {
+                if (Array.isArray(newSelection) && newSelection.length > 0) {
+                  setSelection(newSelection)
+                }
+              }}
               isNodeBlock={{
                 defaultPadingLeft: 1,
                 indent: 1,
@@ -54,7 +58,7 @@ export function Documents() {
                     </>
                   )}
                   onClick={() => {
-                    window.open('http://lowcode-engine.cn/#/doc')
+                    window.open('http://lowcode-engine.cn/doc')
                   }}
                 />
                 <Tree.Node
@@ -69,7 +73,7 @@ export function Documents() {
                     </>
                   )}
                   onClick={() => {
-                    window.open('https://www.yuque.com/lce/doc/engine-changelog')
+                    window.open('http://lowcode-engine.cn/doc?url=engine-changelog')
                   }}
                 />
                 <Tree.Node
@@ -84,7 +88,7 @@ export function Documents() {
                     </>
                   )}
                   onClick={() => {
-                    window.open('https://www.yuque.com/lce/doc/engine-ext-changelog')
+                    window.open('http://lowcode-engine.cn/doc?url=engine-ext-changelog')
                   }}
                 />
                 <Tree.Node
