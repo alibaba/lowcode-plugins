@@ -104,7 +104,7 @@ export class DataSourceImport extends PureComponent<
     this.setState({ isCodeValid: false });
   };
 
-  handleEditorChange = (newValue) => {
+  handleEditorChange = (newValue: string) => {
     if (this.monacoRef) {
       if (
         !this.monacoRef
@@ -116,7 +116,7 @@ export class DataSourceImport extends PureComponent<
     }
   };
 
-  handleEditorDidMount = (isFullscreen, editor, monaco) => {
+  handleEditorDidMount = (isFullscreen: boolean, editor: MonacoEditor, monaco: MonacoEditor) => {
     this.monacoRef = monaco?.editor;
   };
 

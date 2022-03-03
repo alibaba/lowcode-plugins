@@ -4,13 +4,12 @@ import { FormLayout, FormItem } from '@formily/next';
 import type { VoidField } from '@formily/core';
 import {
   createSchemaField,
-  useForm,
   useField,
   useFieldSchema,
   observer,
 } from '@formily/react';
 import _pick from 'lodash/pick';
-import { JSFunction } from '.';
+import { JSFunction } from './jsFunction';
 import { RemoveBtn } from './form-lazy-obj-remove-btn';
 import { generateClassName } from '../../utils/misc';
 
@@ -26,13 +25,13 @@ export const FormLazyObj = observer((props: FormLazyObjProps) => {
   const field = useField<VoidField>();
   const [selectedProperties, setSelectedProperties] = useState<string[]>([]);
   const schema = useFieldSchema();
-  const form = useForm();
+
   useEffect(() => {}, [field]);
   const properties = useMemo(() => {
-    return Object.keys(schema.properties)
+    return Object.keys(schema.properties || {})
       .filter((i) => selectedProperties.indexOf(i) === -1)
       .map((propertyKey) => ({
-        label: schema.properties[propertyKey].title,
+        label: schema.properties?[propertyKey].title,
         value: propertyKey,
       }));
   }, [schema, selectedProperties]);
@@ -49,19 +48,19 @@ export const FormLazyObj = observer((props: FormLazyObjProps) => {
     if (properties.length === 0) return null;
     if (properties.length === 1) {
       return (
-        <Button onClick={handleAdd.bind(this, properties[0].value)}>
+        <Button onClick={() => handleAdd(properties[0].value)}>
           {addText}
         </Button>
       );
     }
     return (
-      <MenuButton label={addText} onItemClick={handleAdd}>
+      <MenuButton label={addText} onItemClick={handleAdd} autoWidth={false}>
         {properties.map((prop) => (
           <MenuButtonItem key={prop.value}>{prop.label}</MenuButtonItem>
         ))}
       </MenuButton>
     );
-  }, [properties, addText]);
+  }, [properties, addText, handleAdd]);
 
   const content = useMemo(() => {
     const SchemaField = createSchemaField({
@@ -69,7 +68,7 @@ export const FormLazyObj = observer((props: FormLazyObjProps) => {
       components: { JSFunction, FormLayout, FormItem },
     });
     const schemaJSON = schema.toJSON();
-    const properties = _pick(schemaJSON.properties, selectedProperties);
+    const schemaProperties = _pick(schemaJSON.properties, selectedProperties);
     return (
       <SchemaField
         schema={{
@@ -77,15 +76,14 @@ export const FormLazyObj = observer((props: FormLazyObjProps) => {
           type: 'void',
           'x-component': 'FormLayout',
           'x-component-props': {},
-          properties: Object.keys(properties).reduce((acc, cur) => {
+          properties: Object.keys(schemaProperties).reduce((acc, cur) => {
             acc[cur] = {
-              ...properties[cur],
+              ...schemaProperties[cur],
               'x-decorator-props': {
                 labelCol: 24,
                 labelAlign: 'left',
                 wrapperCol: 24,
                 layout: 'vertical',
-                // TODO not work
                 wrapperStyle: {
                   justifyContent: 'space-bewteen',
                   alignItems: 'flex-start',

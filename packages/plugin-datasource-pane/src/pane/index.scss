@@ -134,8 +134,8 @@ $cls-prefix: "lowcode-plugin-datasource-pane";
   border-right: 1px solid #ddd;
   left: 300px;
   top: -48px;
+  bottom: -48px;
   min-width: 600px;
-  height: 100%;
   display: flex;
   flex-direction: column;
   .#{$cls-prefix}-detail-header {

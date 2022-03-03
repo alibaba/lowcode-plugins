@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { DragSource, DropTarget } from 'react-dnd';
 import _uniqueId from 'lodash/uniqueId';
 import type { DataSourceInfoTag } from '../../types';
+import { DataSourcePanelMode } from 'src/pane';
 import { generateClassName } from '../../utils/misc';
 import { DataSourcePaneContext } from '../../utils/panel-context';
 
@@ -59,7 +60,7 @@ export interface DataSourceListItemProps {
   onStartDrag?: (id: string) => void;
   onDragOver?: (from: string, to: string) => void;
   onDrop?: (from: string, to: string) => void;
-  mode: 'sorting' | 'exporting' | 'normal';
+  mode: DataSourcePanelMode;
   onToggleSelect?: (id: string) => void;
   selected: boolean;
   renderInfoTags: (dataSource: DataSourceConfig) => DataSourceInfoTag[];
@@ -77,13 +78,10 @@ export class DataSourceListItem extends Component<DataSourceListItemProps> {
         );
       }
     }
-    // console.log('props.isDragging', `${this.props.dataSource.id} ${prevProps.isDragging} => ${this.props.isDragging}`);
-    // if (prevProps.isDragging !== this.props.isDragging && !this.props.isDragging) {}
     if (
       prevProps.isDragging !== this.props.isDragging &&
       this.props.isDragging
     ) {
-      // console.log('start drag 2', this.props.dataSource.id);
       this.props.onStartDrag?.(this.props.dataSource.id);
     }
     if (prevProps.isOver !== this.props.isOver && this.props.isOver) {
@@ -119,20 +117,20 @@ export class DataSourceListItem extends Component<DataSourceListItemProps> {
             generateClassName('list-item'),
             {
               [generateClassName('list-item-dragging')]: isDragging,
-              [generateClassName('list-item-sort')]: mode === 'sorting',
-              [generateClassName('list-item-export')]: mode === 'exporting',
+              [generateClassName('list-item-sort')]: mode === DataSourcePanelMode.SORTING,
+              [generateClassName('list-item-export')]: mode === DataSourcePanelMode.EXPORTING,
             },
             className,
           )}
           style={style}
         >
-          {mode === 'sorting' &&
+          {mode === DataSourcePanelMode.SORTING &&
             this.props.connectDragSource?.(
               <span className={generateClassName('list-item-drag-handle')}>
                 <DataSourceListItemDragHandler />
               </span>,
             )}
-          {mode === 'exporting' && (
+          {mode === DataSourcePanelMode.EXPORTING && (
             <Checkbox
               className={generateClassName('list-item-export-checkbox')}
               checked={selected}
@@ -306,11 +304,7 @@ export const DroppableDataSourceListItem = DropTarget(
       if (monitor.didDrop()) {
         return;
       }
-
       const item = monitor.getItem();
-
-      // console.log('drop', item);
-
       return { moved: true, from: item.id, to: props?.dataSource?.id };
     },
   },

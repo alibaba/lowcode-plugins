@@ -96,7 +96,7 @@ export class DataSourceImportPluginCode extends PureComponent<
     this.setState({ isCodeValid: false });
   };
 
-  handleEditorChange = (newValue) => {
+  handleEditorChange = (newValue: string) => {
     if (this.monacoRef) {
       if (
         !this.monacoRef

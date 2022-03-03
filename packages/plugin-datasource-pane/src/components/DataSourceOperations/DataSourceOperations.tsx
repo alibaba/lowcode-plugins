@@ -3,7 +3,7 @@ import { Button, MenuButton } from '@alifd/next';
 import { RuntimeDataSourceConfig as DataSourceConfig } from '@alilc/lowcode-datasource-types';
 import _isArray from 'lodash/isArray';
 import { generateClassName } from '../../utils/misc';
-import { DataSourcePaneImportPlugin, DataSourceType } from '../../types';
+import { DataSourcePaneImportPlugin, DataSourceType, DataSourcePanelMode } from '../../types';
 
 const { Item: MenuButtonItem } = MenuButton;
 
@@ -25,8 +25,9 @@ export interface DataSourceOperationsProps {
   onCancelSort?: () => void;
   onStartExport?: () => void;
   onFinishExport?: () => void;
+  onCancelExport?: () => void;
   selectedList: string[];
-  mode: 'sorting' | 'exporting' | 'normal';
+  mode: DataSourcePanelMode;
   empty: boolean;
 }
 
@@ -51,7 +52,7 @@ export class DataSourceOperations extends PureComponent<DataSourceOperationsProp
     const { importPlugins, dataSourceTypes, mode, selectedList, empty } =
       this.props;
 
-    if (mode === 'sorting') {
+    if (mode === DataSourcePanelMode.SORTING) {
       return [
         <Button onClick={this.props.onFinishSort}>完成</Button>,
         <Button text onClick={this.props.onCancelSort}>
@@ -59,7 +60,7 @@ export class DataSourceOperations extends PureComponent<DataSourceOperationsProp
         </Button>,
       ];
     }
-    if (mode === 'exporting') {
+    if (mode === DataSourcePanelMode.EXPORTING) {
       return [
         <Button
           disabled={selectedList.length === 0}
