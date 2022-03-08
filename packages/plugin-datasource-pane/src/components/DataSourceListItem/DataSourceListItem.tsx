@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { DragSource, DropTarget } from 'react-dnd';
 import _uniqueId from 'lodash/uniqueId';
 import type { DataSourceInfoTag } from '../../types';
-import { DataSourcePanelMode } from 'src/pane';
+import { DataSourcePanelMode } from '../../pane';
 import { generateClassName } from '../../utils/misc';
 import { DataSourcePaneContext } from '../../utils/panel-context';
 
