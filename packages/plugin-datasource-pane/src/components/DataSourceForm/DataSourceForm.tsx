@@ -21,7 +21,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import _mergeWith from 'lodash/mergeWith';
 import _get from 'lodash/get';
 import traverse from 'traverse';
-import { RuntimeDataSourceConfig as DataSourceConfig } from '@alilc/lowcode-datasource-types';
+
 import {
   ParamValue,
   JSFunction,
@@ -30,9 +30,10 @@ import {
   FormLazyObj,
   LowcodeExpression,
 } from '../Forms';
-import { DataSourceType } from '../../types';
 import { generateClassName } from '../../utils/misc';
 import { filterXDisplay } from '../../utils/filter-x-display';
+
+import { DataSourceFormProps, DataSourceFormMode } from '../../types';
 
 const SCHEMA = {
   type: 'object',
@@ -132,6 +133,7 @@ const SCHEMA = {
       'x-component-props': {
         defaultPropertyKeys: [],
         addText: '选择添加',
+        autoWidth: false,
       },
       'x-decorator-props': {},
       properties: {
@@ -176,14 +178,6 @@ const SCHEMA = {
   },
 };
 
-export interface DataSourceFormProps {
-  dataSourceType: DataSourceType;
-  dataSource?: DataSourceConfig;
-  dataSourceList?: DataSourceConfig[];
-  readonly?: boolean;
-}
-
-// export interface DataSourceFormState {}
 
 /**
  * 通过是否存在 ID 来决定读写状态
@@ -257,7 +251,7 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
   };
 
   deriveSchema = () => {
-    const { dataSourceType, dataSourceList = [] } = this.props;
+    const { dataSourceType, dataSourceList = [], mode } = this.props;
 
     // 添加校验规则
     // TODO 返回对象会报错
@@ -285,11 +279,12 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
     // 过滤 x-display 值为隐藏的属性
     filterXDisplay(formSchema);
 
-    console.log('new schema', formSchema, dataSourceType);
-    formSchema.properties.id['x-validator'] = {
-      validateDataSourceId: true,
-      message: '该数据源已存在',
-    };
+    if (mode === DataSourceFormMode.CREATE) {
+      formSchema.properties.id['x-validator'] = {
+        validateDataSourceId: true,
+        message: '该数据源已存在',
+      };
+    }
 
     if (_get(formSchema, 'properties.options.properties.params')) {
       formSchema.properties.options.properties.params = {
@@ -501,32 +496,6 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
           <SchemaField
             schema={_thru(this.deriveSchema(), (arg) => {
               return arg;
-              // return {
-              //   type: 'object',
-              //   properties: {
-              //     layout: {
-              //       type: 'void',
-              //       'x-component': 'FormLayout',
-              //       'x-component-props': {
-              //         labelCol: 6,
-              //         wrapperCol: 10,
-              //         layout: 'vertical',
-              //       },
-              //       properties: {
-              //         input: {
-              //           type: 'string',
-              //           title: '输入框',
-              //           required: true,
-              //           'x-decorator': 'FormItem',
-              //           'x-decorator-props': {
-              //             tooltip: <div>123</div>,
-              //           },
-              //           'x-component': 'Input',
-              //         },
-              //       },
-              //     },
-              //   },
-              // };
             })}
           />
         </Form>

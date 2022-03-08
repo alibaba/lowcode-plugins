@@ -11,7 +11,7 @@ export interface DataSourceListProps {
   dataSource: DataSourceConfig[];
   onOperationClick?: (operationType: string, dataSourceId: string) => void;
   onToggleSelect?: (dataSourceId: string) => void;
-  renderItemInfoTags: (dataSource: DataSourceConfig) => DataSourceInfoTag[];
+  renderItemInfoTags?: (dataSource: DataSourceConfig) => DataSourceInfoTag[];
 }
 
 interface DataSourceListState {

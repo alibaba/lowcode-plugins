@@ -16,7 +16,7 @@ export interface Options {
 const plugin = (ctx: ILowCodePluginContext) => {
   return {
     name: 'com.alibaba.lowcode.datasource.pane',
-    width: 600,
+    width: 300,
     // 依赖的插件（插件名数组）
     dep: [],
     // 插件对外暴露的数据和方法
@@ -36,7 +36,7 @@ const plugin = (ctx: ILowCodePluginContext) => {
           description: '数据源',
         },
         panelProps: {
-          width: '600px',
+          width: '300px',
           // title: '源码面板',
         },
         content: (

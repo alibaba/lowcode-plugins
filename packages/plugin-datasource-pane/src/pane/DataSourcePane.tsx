@@ -20,6 +20,7 @@ import { generateClassName } from '../utils/misc';
 import { DataSourceForm } from '../components/DataSourceForm';
 import { DataSourceExport as ExportDetail } from '../components/DataSourceExport';
 import { DataSourceImport as ImportDetail } from '../components/DataSourceImport';
+import { DataSourcePanelMode } from '../types';
 import type {
   DataSourceInfoTag,
   DataSourcePaneImportPlugin,
@@ -54,6 +55,7 @@ export interface DataSourcePaneProps {
 export interface DataSourcePaneState {
   // TOOD
   current: any;
+  listMode: DataSourcePanelMode;
 }
 
 export class DataSourcePane extends PureComponent<
@@ -67,17 +69,21 @@ export class DataSourcePane extends PureComponent<
   state: DataSourcePaneState = {
     // TODO
     current: createStateMachine(this.props.initialSchema?.list).initialState,
+    listMode: DataSourcePanelMode.NORMAL,
   };
 
-  detailRef = createRef<DataSourceForm>();
+  detailRef? = createRef<DataSourceForm>();
+
+  exportRef? = createRef<ExportDetail>();
+
+  importRef? = createRef<ImportDetail>();
 
   private send = (...args: any[]) => {
     this.context.stateService.send(...args);
   };
 
   componentDidMount() {
-    this.serviceS = this.context?.stateService?.subscribe?.((state) => {
-      console.info('state change', state);
+    this.serviceS = this.context?.stateService?.subscribe?.((state: any) => {
       this.setState({ current: state });
       if (state.changed && state.value === 'idle') {
         // TODO add hook
@@ -110,12 +116,10 @@ export class DataSourcePane extends PureComponent<
   };
 
   handleStartExport = () => {
-    // this.setState({ listMode: 'exporting' });
     this.send('START_EXPORT');
   };
 
   handleFinishExport = () => {
-    // this.setState({ listMode: 'normal' });
     // TODO
     const { context } = this.state.current;
     const target = context.dataSourceList.filter(
@@ -185,7 +189,7 @@ export class DataSourcePane extends PureComponent<
   handleOperationFinish = () => {
     const { current } = this.state;
     if (current.matches('detail.create')) {
-      this.detailRef.current?.submit().then((data) => {
+      this.detailRef?.current?.submit().then((data) => {
         if (data) {
           this.send({
             type: 'FINISH_CREATE',
@@ -194,31 +198,31 @@ export class DataSourcePane extends PureComponent<
         }
       });
     } else if (current.matches('detail.edit')) {
-      this.detailRef.current?.submit().then((data) => {
+      this.detailRef?.current?.submit().then((data) => {
         this.send({
           type: 'FINISH_EDIT',
           payload: data,
         });
       });
     } else if (current.matches('detail.export')) {
-      this.detailRef.current?.submit().then(() => {
+      this.exportRef?.current?.submit().then(() => {
         this.send('FINISH_EDIT');
       });
     } else if (current.matches('detail.import')) {
-      this.detailRef.current?.submit().then((data) => {
+      this.importRef?.current?.submit().then((data) => {
         const importDataSourceList = () => {
           this.send({
             type: 'FINISH_IMPORT',
-            payload: toImport,
+            payload: data,
           });
         };
-        if (!_isArray(toImport) || toImport.length === 0) {
+        if (!_isArray(data) || data.length === 0) {
           Message.error('没有找到可导入的数据源');
           return;
         }
-        const repeatedDataSourceList = toImport.filter(
-          (item) => !!this.state.dataSourceList.find(
-              (dataSource) => dataSource.id === item.id,
+        const repeatedDataSourceList = data.filter(
+          (item) => !!this.state.current.dataSourceList.find(
+              (dataSource: DataSourceConfig) => dataSource.id === item.id,
             ),
         );
         if (repeatedDataSourceList.length > 0) {
@@ -237,7 +241,7 @@ export class DataSourcePane extends PureComponent<
     }
   };
 
-  renderDetail = (type: string) => {
+  renderDetail = () => {
     const { current } = this.state;
     const { dataSourceTypes = [] } = this.props;
     let content = null;
@@ -249,6 +253,7 @@ export class DataSourcePane extends PureComponent<
           dataSourceType={current.context.detail?.data?.dataSourceType}
           dataSource={current.context.detail?.data?.dataSource}
           dataSourceList={current.context.dataSourceList}
+          mode="edit"
         />
       );
     } else if (current.matches('detail.view')) {
@@ -268,17 +273,18 @@ export class DataSourcePane extends PureComponent<
           dataSourceType={current.context.detail.data.dataSourceType}
           dataSource={current.context.detail.data.dataSource}
           dataSourceList={current.context.dataSourceList}
+          mode="create"
         />
       );
     } else if (current.matches('detail.import')) {
       // TODO
       // pluginName
-      content = <ImportDetail ref={this.detailRef} />;
+      content = <ImportDetail dataSourceTypes={dataSourceTypes} ref={this.importRef} />;
     } else if (current.matches('detail.export')) {
       // TODO
       content = (
         <ExportDetail
-          ref={this.detailRef}
+          ref={this.exportRef}
           dataSourceTypes={dataSourceTypes}
           dataSourceList={current.context.detail.data.dataSourceList}
         />
@@ -318,7 +324,7 @@ export class DataSourcePane extends PureComponent<
       dataSourceTypes = [],
       importPlugins,
     } = this.props;
-    const { current } = this.state;
+    const { current, listMode } = this.state;
 
     if (!dataSourceTypes || dataSourceTypes.length === 0) {
       return (
@@ -326,11 +332,12 @@ export class DataSourcePane extends PureComponent<
       );
     }
 
-    let listMode = 'normal';
+    let mode: DataSourcePanelMode = listMode;
+
     if (current.matches('sort')) {
-      listMode = 'sorting';
+      mode = DataSourcePanelMode.SORTING;
     } else if (current.matches('export')) {
-      listMode = 'exporting';
+      mode = DataSourcePanelMode.EXPORTING;
     }
 
     const isEmpty = current.context.dataSourceList.length === 0;
@@ -341,16 +348,17 @@ export class DataSourcePane extends PureComponent<
           className={cn(generateClassName('container'), className)}
           style={style}
         >
-          {/* <div className={generateClassName('title')}>
-              数据源
-              {helpLink && <Button component="a" href={helpLink}>使用帮助</Button>}
-          </div> */}
+          <div className={generateClassName('title')}>
+            数据源
+            {helpLink && <Button component="a" href={helpLink}>使用帮助</Button>}
+          </div>
           <DataSourceFilter
             key={current.context.dataSourceListFilter.renderKey}
             dataSourceTypes={dataSourceTypes}
             onFilter={this.handleFilterChange}
           />
           <DataSourceOperations
+            dataSource={current.context.dataSourceList}
             empty={isEmpty}
             importPlugins={importPlugins}
             dataSourceTypes={dataSourceTypes}
@@ -362,13 +370,13 @@ export class DataSourcePane extends PureComponent<
             onCancelSort={this.handleCancelSort}
             onFinishSort={this.handleFinishSort}
             onImport={this.handleImport}
-            mode={listMode}
+            mode={mode}
             selectedList={current.context.export.selectedDataSourceIdList}
           />
           <div className={generateClassName('list')}>
             <DataSourceList
               renderItemInfoTags={renderDataSourceInfoTags}
-              dataSource={current.context.dataSourceList.filter((i) => {
+              dataSource={current.context.dataSourceList.filter((i: DataSourceConfig) => {
                 return (
                   i.id.indexOf(current.context.dataSourceListFilter.keyword) !==
                     -1 &&

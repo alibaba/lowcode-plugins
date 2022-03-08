@@ -1,7 +1,11 @@
 import _isArray from 'lodash/isArray';
 import _isPlainObject from 'lodash/isPlainObject';
+import {
+  InterpretDataSourceConfig,
+} from '@alilc/lowcode-datasource-types';
+import { isJSFunction } from '@alilc/lowcode-types';
 
-const DATASOURCE_HANDLER_NAME_LIST = [
+export const DATASOURCE_HANDLER_NAME_LIST = [
   'dataHandler',
   'errorHandler',
   'willFetch',
@@ -16,9 +20,9 @@ export function isSchemaValid(schema: any) {
   if (!_isPlainObject(schema)) return false;
   if (schema.list && !_isArray(schema.list)) return false;
   if (_isArray(schema?.list)) {
-    return schema.list.every((dataSource) => {
+    return schema.list.every((dataSource: InterpretDataSourceConfig) => {
       return DATASOURCE_HANDLER_NAME_LIST.every((dataSourceHandlerName) => {
-        if (dataSource?.[dataSourceHandlerName]?.type === 'JSFunction') {
+        if (isJSFunction(dataSource?.[dataSourceHandlerName])) {
           return true;
         }
         if (!(dataSourceHandlerName in dataSource)) {
@@ -42,11 +46,11 @@ export function correctSchema(schema: any) {
     ...schema,
   };
   if (_isArray(res?.list)) {
-    res.list = res.list.map((dataSource) => {
+    res.list = res.list.map((dataSource: InterpretDataSourceConfig) => {
       const nextDataSource = { ...dataSource };
       DATASOURCE_HANDLER_NAME_LIST.forEach((dataSourceHandlerName) => {
         if (
-          nextDataSource?.[dataSourceHandlerName]?.type !== 'JSFunction' &&
+          isJSFunction(nextDataSource?.[dataSourceHandlerName]) &&
           dataSourceHandlerName in nextDataSource
         ) {
           delete nextDataSource[dataSourceHandlerName];

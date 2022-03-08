@@ -2,17 +2,20 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Select } from '@alifd/next';
 
-interface Color {
-    rgb: any;
-    onChange: () => void;
-}
 
 export interface PluginProps {
     value: string;
     onChange: any;
 }
 
-export default class ClassNameView extends PureComponent<PluginProps> {
+export interface ClassNameViewState {
+  dataSource: Array<{
+    value: string;
+    label: string;
+  }>;
+  selectValue: string[];
+}
+export default class ClassNameView extends PureComponent<PluginProps, ClassNameViewState> {
     static display = 'ClassNameSetter';
 
     static propTypes = {
@@ -29,10 +32,10 @@ export default class ClassNameView extends PureComponent<PluginProps> {
         const { project } = this.context;
         const schema = project.exportSchema();
         const { css } = schema.componentsTree[0];
-        const classNameList = [];
+        const classNameList: string[] = [];
         const re = /\.?\w+[^{]+\{[^}]*\}/g;
         const list = css.match(re);
-        list.map((item) => {
+        list.map((item: string) => {
         if (item[0] === '.') {
             const className = item.substring(1, item.indexOf('{'));
             classNameList.push(className);
@@ -45,7 +48,7 @@ export default class ClassNameView extends PureComponent<PluginProps> {
     };
 
 
-  handleChange = (value) => {
+  handleChange = (value: string[]) => {
     const { onChange } = this.props;
     onChange(value.join(' '));
     this.setState({
@@ -57,7 +60,10 @@ export default class ClassNameView extends PureComponent<PluginProps> {
   componentWillMount() {
     const { value } = this.props;
     const classnameList = this.getClassNameList();
-    const dataSource = [];
+    const dataSource: Array<{
+      label: string;
+      value: string;
+    }> = [];
     classnameList.map((item) => {
       dataSource.push({
         value: item,
@@ -68,7 +74,7 @@ export default class ClassNameView extends PureComponent<PluginProps> {
     });
 
 
-    let selectValue = [];
+    let selectValue: string[] = [];
     if (value && value !== '') {
       selectValue = value.split(' ');
     }
