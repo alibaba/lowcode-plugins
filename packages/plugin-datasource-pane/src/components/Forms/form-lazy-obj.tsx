@@ -31,7 +31,7 @@ export const FormLazyObj = observer((props: FormLazyObjProps) => {
     return Object.keys(schema.properties || {})
       .filter((i) => selectedProperties.indexOf(i) === -1)
       .map((propertyKey) => ({
-        label: schema.properties?[propertyKey].title,
+        label: schema.properties?.[propertyKey].title,
         value: propertyKey,
       }));
   }, [schema, selectedProperties]);
