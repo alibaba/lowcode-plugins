@@ -11,7 +11,7 @@
     {
       "title": "容器",
       "componentName": "Block",
-      "docUrl": "http://gitlab.alibaba-inc.com/vision-components/vc-block/blob/master/README.md",
+      "docUrl": "http://github.com/vision-components/vc-block/blob/master/README.md",
       "category": null,
       "isContainer": true
     },
@@ -737,7 +737,7 @@
       "canUseCondition": false,
       "canLoop": false,
       "rectSelector": "div.general-editor-fusion-dialog",
-      "docUrl": "http://gitlab.alibaba-inc.com/vision-components/vc-fusion-dialog/blob/master/README.md"
+      "docUrl": "http://github.com/vision-components/vc-fusion-dialog/blob/master/README.md"
     },
     {
       "title": "Iframe",
@@ -982,7 +982,7 @@
     {
       "title": "低代码业务组件",
       "componentName": "Component",
-      "docUrl": "http://gitlab.alibaba-inc.com/vision-components/vc-component/blob/master/README.md",
+      "docUrl": "http://github.com/vision-components/vc-component/blob/master/README.md",
       "category": null,
       "isContainer": true,
       "canUseCondition": false,
