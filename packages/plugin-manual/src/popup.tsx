@@ -12,7 +12,7 @@ export function Documents() {
 
   useEffect(() => {
     setLoading(true)
-    fetch('http://lowcode-engine.cn/api/get_usage')
+    fetch('https://lowcode-engine.cn/api/get_usage')
       .then((res) => res.json())
       .then((val) => {
         const menu = val.data.filter((a: any) => !isNaN(parseInt(a.title)))
@@ -58,7 +58,7 @@ export function Documents() {
                     </>
                   )}
                   onClick={() => {
-                    window.open('http://lowcode-engine.cn/doc')
+                    window.open('https://lowcode-engine.cn/doc')
                   }}
                 />
                 <Tree.Node
@@ -73,7 +73,7 @@ export function Documents() {
                     </>
                   )}
                   onClick={() => {
-                    window.open('http://lowcode-engine.cn/doc?url=engine-changelog')
+                    window.open('https://lowcode-engine.cn/doc?url=engine-changelog')
                   }}
                 />
                 <Tree.Node
@@ -88,7 +88,7 @@ export function Documents() {
                     </>
                   )}
                   onClick={() => {
-                    window.open('http://lowcode-engine.cn/doc?url=engine-ext-changelog')
+                    window.open('https://lowcode-engine.cn/doc?url=engine-ext-changelog')
                   }}
                 />
                 <Tree.Node
