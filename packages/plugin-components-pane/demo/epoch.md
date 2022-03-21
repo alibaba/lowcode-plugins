@@ -7,7 +7,7 @@ order: 3
 
 ````jsx
 import React, { Component } from 'react';
-import ComponentPane, { PaneIcon } from '@alife/lowcode-plugin-components-pane';
+import ComponentPane, { PaneIcon } from '@alilc/lowcode-plugin-components-pane';
 import Editor from '../schema/editor';
 import mock from '../schema/mock2.json';
 

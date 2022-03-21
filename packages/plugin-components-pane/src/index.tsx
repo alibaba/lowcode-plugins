@@ -202,7 +202,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
   }
 
   renderContent() {
-    const { filter = [] } = this.state;
+    const { filter = [], keyword } = this.state;
     const hasContent = filter.filter(item => {
       return item?.categories?.filter(category => {
         return category?.components?.length;
@@ -210,6 +210,40 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
     }).length;
     if (!hasContent) {
       return this.renderEmptyContent();
+    }
+    if (keyword) {
+      return (
+        <div ref={this.registerAdditive}>
+          {filter.map((group) => {
+            const { categories } = group;
+            {return categories.map((category) => {
+              const { components } = category;
+              const cname = this.t(category.name);
+              return (
+                <Category key={cname} name={cname}>
+                  <List>
+                    {components.map((component) => {
+                      const { componentName, snippets = [] } = component;
+                      return snippets.filter(snippet => snippet.id).map(snippet => {
+                        return (
+                          <Component
+                            data={{
+                              title: snippet.title || component.title,
+                              icon: snippet.screenshot || component.icon,
+                              snippets: [snippet]
+                            }}
+                            key={`${this.t(group.name)}_${this.t(componentName)}_${this.t(snippet.title)}`}
+                          />
+                        );
+                      });
+                    })}
+                  </List>
+                </Category>
+              );
+            })}
+          })}
+        </div>
+      )
     }
     return (
       <Tab className={cx('tabs')}>
@@ -260,6 +294,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
             placeholder="搜索组件"
             shape="simple"
             hasClear
+            autoFocus
             onSearch={this.handleSearch}
             onChange={this.handleSearch}
           />
