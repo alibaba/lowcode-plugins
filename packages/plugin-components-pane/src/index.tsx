@@ -294,6 +294,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
             placeholder="搜索组件"
             shape="simple"
             hasClear
+            autoFocus
             onSearch={this.handleSearch}
             onChange={this.handleSearch}
           />
