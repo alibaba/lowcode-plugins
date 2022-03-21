@@ -9,7 +9,7 @@ order: 1
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Icon } from '@alifd/next';
-import ComponentPane, { PaneIcon } from '@alife/lowcode-plugin-components-pane';
+import ComponentPane, { PaneIcon } from '@alilc/lowcode-plugin-components-pane';
 import './index.scss';
 
 const packages = [
