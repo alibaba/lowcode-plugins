@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-components-pane",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "低代码组件面板",
   "files": [
     "es/",
@@ -13,7 +13,8 @@
     "start": "build-scripts start",
     "build": "build-scripts build --skip-demo",
     "f2elint-scan": "f2elint scan",
-    "f2elint-fix": "f2elint fix"
+    "f2elint-fix": "f2elint fix",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "lowcode",

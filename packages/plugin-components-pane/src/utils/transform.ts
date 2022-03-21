@@ -48,7 +48,7 @@ export interface SortedGroups {
 }
 
 export interface IgnoreComponents {
-  [package: string]: string[];
+  [key: string]: string[];
 }
 
 export default function transform(raw: any) {
