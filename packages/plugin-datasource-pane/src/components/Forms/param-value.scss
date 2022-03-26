@@ -10,6 +10,12 @@ $cls-prefix: "lowcode-plugin-datasource-pane";
   }
 }
 
+// .#{$cls-prefix}-component-switchbtn{
+//   position: absolute;
+//   bottom: 0;
+//   right: 0;
+// }
+
 .#{$cls-prefix}-universal-value-typeswitch.next-btn-group {
   .next-btn {
     padding: 0 2px;

@@ -161,6 +161,10 @@ $cls-prefix: "lowcode-plugin-datasource-pane";
     flex: 1 1 auto;
     overflow-y: auto;
     padding: 8px;
+
+    .next-formily-item-addon-after {
+      position: relative;
+    }
   }
 }
 
@@ -177,9 +181,12 @@ $cls-prefix: "lowcode-plugin-datasource-pane";
     width: 42px;
   }
   .#{$cls-prefix}-component-switchbtn {
-    margin-left: -40px;
-    left: 40px;
-    position: relative;
+    position: absolute;
+    right: -20px;
+    bottom: 5px;
+    // margin-left: -40px;
+    // left: 40px;
+    // position: relative;
   }
 }
 

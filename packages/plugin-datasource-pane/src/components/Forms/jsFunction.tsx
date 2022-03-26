@@ -1,15 +1,13 @@
 import React, { PureComponent } from 'react';
 import { connect } from '@formily/react';
+import { JSFunction as IJSFunction } from '@alilc/lowcode-types';
 import MonacoEditor from '@alilc/lowcode-plugin-base-monaco-editor';
 import _noop from 'lodash/noop';
-import { editor } from 'monaco-editor';
+// import { editor } from 'monaco-editor';
 
 export interface JSFunctionProps {
   className: string;
-  value: {
-    type: 'JSFunction';
-    value: string;
-  };
+  value: IJSFunction;
   onChange?: (val: any) => void;
 }
 
@@ -25,37 +23,29 @@ export class JSFunctionComp extends PureComponent<
     onChange: _noop,
   };
 
-  private monacoRef: any = null;
+  // private monacoRef: any = null;
 
-  handleEditorChange = (newValue) => {
-    if (this.monacoRef) {
-      if (
-        !(this.monacoRef as any)
-          .getModelMarkers()
-          .find((marker: editor.IMarker) => marker.owner === 'json')
-      ) {
-        this.props.onChange?.({
-          type: 'JSFunction',
-          value: newValue,
-        });
-      }
-    }
+  handleEditorChange = (newValue: string) => {
+    this.props.onChange?.({
+      type: 'JSFunction',
+      value: newValue,
+    });
   };
 
-  handleEditorDidMount = (isFullscreen, editor, monaco) => {
-    this.monacoRef = monaco?.editor;
-  };
+  // handleEditorDidMount = (isFullscreen: boolean, editor, monaco) => {
+  //   this.monacoRef = monaco?.editor;
+  // };
 
   render() {
-    const { value } = this.props;
+    const { value, className } = this.props;
     return (
-      <div>
+      <div className={className}>
         <MonacoEditor
           theme="vs-vision"
           value={value?.value ?? ''}
           language="javascript"
           onChange={this.handleEditorChange}
-          editorDidMount={this.handleEditorDidMount}
+          // editorDidMount={this.handleEditorDidMount}
         />
       </div>
     );
