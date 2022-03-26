@@ -296,25 +296,18 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
         },
         'x-decorator': 'FormItem',
         items: {
-          type: 'void',
-          'x-component': 'Space',
+          type: 'object',
+          // 'x-component': 'Space',
           properties: {
-            sort: {
-              type: 'void',
-              'x-decorator': 'FormItem',
-              'x-component': 'ArrayItems.SortHandle',
-            },
-            params: {
+            space: {
               type: 'void',
               'x-component': 'Space',
-              'x-component-props': {
-                /* direction: "vertical",
-                align: "start",
-                style: {
-                  alignItems: "flex-start",
-                }, */
-              },
               properties: {
+                sort: {
+                  type: 'void',
+                  'x-decorator': 'FormItem',
+                  'x-component': 'ArrayItems.SortHandle',
+                },
                 name: {
                   title: '',
                   type: 'string',
@@ -334,19 +327,19 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
                   // type: "string",
                   'x-component': 'ParamValue',
                   'x-component-props': {
-                    // types: ["string", "boolean", "expression", "number"],
-                    // placeholder: "value",
+                    types: ['string', 'boolean', 'expression'],
+                    placeholder: 'value',
                   },
                 },
+                remove: {
+                  type: 'void',
+                  'x-decorator': 'FormItem',
+                  'x-component': 'ArrayItems.Remove',
+                },
+              },
               },
             },
-            remove: {
-              type: 'void',
-              'x-decorator': 'FormItem',
-              'x-component': 'ArrayItems.Remove',
-            },
           },
-        },
         properties: {
           addition: {
             type: 'void',
@@ -397,7 +390,7 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
               // type: "string",
               'x-component': 'ParamValue',
               'x-component-props': {
-                // types: ["string", "boolean", "expression", "number"],
+                types: ['string', 'boolean', 'expression'],
                 // placeholder: "value",
               },
             },

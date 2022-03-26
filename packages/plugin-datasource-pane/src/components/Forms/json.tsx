@@ -2,10 +2,10 @@ import React, { PureComponent } from 'react';
 import { connect } from '@formily/react';
 import MonacoEditor from '@alilc/lowcode-plugin-base-monaco-editor';
 import _noop from 'lodash/noop';
-import { editor } from 'monaco-editor';
+// import { editor } from 'monaco-editor';
 
 export interface JSONProps {
-  className: string;
+  className?: string;
   value: Record<string, any>;
   onChange?: (val: any) => void;
 }
@@ -19,37 +19,26 @@ export class JSONComp extends PureComponent<JSONProps, JSONState> {
     onChange: _noop,
   };
 
-  private monacoRef: any = null;
+  // private monacoRef: any = null;
 
-  handleEditorChange = (newValue) => {
-    if (this.monacoRef) {
-      if (
-        !(this.monacoRef as any)
-          .getModelMarkers()
-          .find((marker: editor.IMarker) => marker.owner === 'json')
-      ) {
-        this.props.onChange?.({
-          type: 'JSON',
-          value: newValue,
-        });
-      }
-    }
+  handleEditorChange = (newValue: string) => {
+    this.props.onChange?.(newValue);
   };
 
-  handleEditorDidMount = (isFullscreen, editor, monaco) => {
-    this.monacoRef = monaco?.editor;
-  };
+  // handleEditorDidMount = (editor) => {
+  //   this.monacoRef = editor;
+  // };
 
   render() {
-    const { value } = this.props;
+    const { value, className } = this.props;
     return (
-      <div style={{ width: '100%', height: 150 }}>
+      <div className={className} style={{ width: '100%', height: 150 }}>
         <MonacoEditor
           theme="vs-vision"
           value={value ?? ''}
           language="json"
           onChange={this.handleEditorChange}
-          editorDidMount={this.handleEditorDidMount}
+          // editorDidMount={this.handleEditorDidMount}
         />
       </div>
     );

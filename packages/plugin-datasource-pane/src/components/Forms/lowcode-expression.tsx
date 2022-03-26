@@ -26,9 +26,9 @@ export class LowcodeExpressionComp extends PureComponent<LowcodeExpressionProps>
   };
 
   render() {
-    const { value } = this.props;
+    const { value, className } = this.props;
     return (
-      <div>
+      <div className={className}>
         <EditorContext.Consumer>
           {({ setters }) => {
             const ExpressionSetter = setters?.getSetter('ExpressionSetter').component;

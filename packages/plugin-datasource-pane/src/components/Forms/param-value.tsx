@@ -10,6 +10,7 @@ import {
   Switch,
 } from '@alifd/next';
 import { connect } from '@formily/react';
+import { JSExpression, isJSExpression } from '@alilc/lowcode-types';
 import _isPlainObject from 'lodash/isPlainObject';
 import _isArray from 'lodash/isArray';
 import _isNumber from 'lodash/isNumber';
@@ -21,6 +22,15 @@ import { JSONComp } from './json';
 import './param-value.scss';
 
 const { Group: RadioGroup } = Radio;
+
+enum ParamValueEnum {
+  STRING ='string',
+  NUMBER ='number',
+  BOOLEAN ='boolean',
+  EXPRSSION ='expression',
+  JSON ='json',
+  JSONSTRING = 'jsonstring',
+}
 
 type ParamValueType =
   | 'string'
@@ -40,7 +50,11 @@ export interface ParamValueProps {
 
 export interface ParamValueState {
   type: ParamValueType;
-  value: string | number | { type: 'JSFunction'; value: string } | boolean;
+  value: string | number | JSExpression | boolean;
+}
+
+function isBoolean(val: boolean | string) {
+  return _isBoolean(val) || val === 'true' || val === 'false';
 }
 
 const TYPE_LABEL_MAP = {
@@ -86,6 +100,14 @@ class ParamValueComp extends PureComponent<ParamValueProps, ParamValueState> {
 
   // @todo 需要再 bind 一次？
   handleChange = (value: any) => {
+    const { type } = this.state;
+    if (type === 'json') {
+      this.props.onChange?.({
+        type: 'JSExpression',
+        value,
+      });
+      return;
+    }
     this.setState({
       value,
     });
@@ -101,27 +123,50 @@ class ParamValueComp extends PureComponent<ParamValueProps, ParamValueState> {
       const currentTypeIndex = this.props.types.indexOf(type);
       nextRealType = types[(currentTypeIndex + 1) % types.length];
     }
-    if (nextRealType === 'string') {
-      nextValue = nextValue.toString();
-    } else if (nextRealType === 'number') {
-      nextValue *= 1;
-    } else if (nextRealType === 'boolean') {
-      nextValue =
-        nextValue === 'true' ||
-        (nextValue && nextValue.value === 'true') ||
-        false;
-    } else if (nextRealType === 'expression') {
-      // ExpressionSetter 的 value 接受 string
-      nextValue = String(nextValue);
-    } else if (nextRealType === 'jsonstring') {
-      nextValue = '';
-    } else if (nextRealType === 'object') {
-      nextValue = safeParse(nextValue);
+    switch (nextRealType) {
+      case ParamValueEnum.STRING:
+        if (isJSExpression(nextValue)) {
+          nextValue = nextValue.value;
+        }
+        // nextValue = nextValue.toString();
+        break;
+      case ParamValueEnum.NUMBER:
+        nextValue *= 1;
+        break;
+      case ParamValueEnum.BOOLEAN:
+        if (isBoolean(nextValue)) {
+          nextValue = nextValue === 'true' || (nextValue && nextValue.value === 'true') || false;
+        }
+        break;
+      case ParamValueEnum.JSONSTRING:
+        nextValue = '';
+        break;
+      case ParamValueEnum.JSON:
+        if (isJSExpression(nextValue)) {
+          nextValue = nextValue.value;
+        }
+        break;
+      case ParamValueEnum.EXPRSSION:
+        if (!isJSExpression(nextValue)) {
+          nextValue = {
+            type: 'JSExpression',
+            value: nextValue,
+          };
+        }
+        break;
+      default:
     }
     this.setState({
       type: nextRealType as ParamValueType,
       value: nextValue,
     });
+    if (nextRealType === 'json') {
+      this.props.onChange?.({
+        type: 'JSExpression',
+        value: nextValue,
+      });
+      return;
+    }
     this.props.onChange?.(nextValue);
   };
 
@@ -129,12 +174,9 @@ class ParamValueComp extends PureComponent<ParamValueProps, ParamValueState> {
     const handleSwitch = () => {
       this.handleTypeChange();
     };
-    const handleSwitchTo = (type) => {
+    const handleSwitchTo = (type: string) => {
       this.handleTypeChange(type);
     };
-    /* return (
-      <Button text onClick={handleClick}><Icon type="switch" /></Button>
-    ); */
     return (
       <Button.Group className={generateClassName('universal-value-typeswitch')}>
         <Button onClick={handleSwitch}>
@@ -153,7 +195,7 @@ class ParamValueComp extends PureComponent<ParamValueProps, ParamValueState> {
     const { type } = this.state;
     const { types } = this.props;
 
-    if (_isArray(types) && types.length > 2) {
+    if (_isArray(types) && types.length > 1) {
       return (
         <Select
           followTrigger
@@ -167,21 +209,21 @@ class ParamValueComp extends PureComponent<ParamValueProps, ParamValueState> {
         />
       );
     }
-    if (_isArray(types) && types.length > 1) {
-      return (
-        <RadioGroup
-          className="param-value-type"
-          shape="button"
-          size="small"
-          onChange={this.handleTypeChange}
-          value={type}
-        >
-          {types.map((item) => (
-            <Radio value={item}>TYPE_LABEL_MAP[item]</Radio>
-          ))}
-        </RadioGroup>
-      );
-    }
+    // if (_isArray(types) && types.length > 1) {
+    //   return (
+    //     <RadioGroup
+    //       className="param-value-type"
+    //       shape="button"
+    //       size="small"
+    //       onChange={this.handleTypeChange}
+    //       value={type}
+    //     >
+    //       {types.map((item) => (
+    //         <Radio value={item}>TYPE_LABEL_MAP[item]</Radio>
+    //       ))}
+    //     </RadioGroup>
+    //   );
+    // }
     return null;
   };
 
@@ -198,21 +240,21 @@ class ParamValueComp extends PureComponent<ParamValueProps, ParamValueState> {
           <Input
             className={generateClassName('universal-value-string')}
             onChange={this.handleChange}
-            value={value}
+            value={value as string}
           />
         )}
         {type === 'boolean' && (
           <Switch
             className={generateClassName('universal-value-boolean')}
             onChange={this.handleChange}
-            checked={value}
+            checked={value as boolean}
           />
         )}
         {type === 'number' && (
           <NumberPicker
             className={generateClassName('universal-value-number')}
             onChange={this.handleChange}
-            value={value}
+            value={value as string}
           />
         )}
         {type === 'jsonstring' && (
@@ -222,7 +264,7 @@ class ParamValueComp extends PureComponent<ParamValueProps, ParamValueState> {
         )}
         {type === 'json' && (
           <span className={generateClassName('universal-value-json')}>
-            <JSONComp onChange={this.handleChange} value={value} />
+            <JSONComp onChange={this.handleChange} value={value as Record<string, any>} />
           </span>
         )}
         {type === 'expression' && (
@@ -252,3 +294,5 @@ class ParamValueComp extends PureComponent<ParamValueProps, ParamValueState> {
 }
 
 export const ParamValue = connect(ParamValueComp);
+
+ParamValue.displayName = 'ParamValue';

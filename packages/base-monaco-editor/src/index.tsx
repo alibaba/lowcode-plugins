@@ -113,14 +113,14 @@ const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
   return (
     <div className={className} style={props.style}>
       {loading && <span className="loading">{WORD_EDITOR_INITIALIZING}</span>}
-        
-        <div
-          ref={containerRef}
-          className="react-monaco-editor-container"
-          style={isFullScreen ? fullScreenStyle : style}
-        >
-          {supportFullScreen && <div className={fullScreenClassName} onClick={fullScreen}></div>}
-        </div>
+
+      <div
+        ref={containerRef}
+        className="react-monaco-editor-container"
+        style={isFullScreen ? fullScreenStyle : style}
+      >
+        {supportFullScreen && <div className={fullScreenClassName} onClick={fullScreen} />}
+      </div>
     </div>
   );
 };
