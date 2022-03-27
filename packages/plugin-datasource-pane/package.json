@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-datasource-pane",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "低代码引擎数据源面板",
   "main": "lib/index.js",
   "files": [
@@ -26,7 +26,8 @@
   "devDependencies": {
     "@alib/build-scripts": "^0.1.32",
     "@alifd/theme-lowcode-light": "^0.2.1",
-    "@alilc/build-plugin-alt": "beta",
+    "@alilc/build-plugin-alt": "^1.0.0",
+    "@alilc/lowcode-shell": "^1.0.0",
     "@alilc/lowcode-engine": "beta",
     "@alilc/lowcode-types": "beta",
     "@types/babel-types": "^7.0.9",
@@ -42,6 +43,19 @@
     "moment": "^2.29.1"
   },
   "dependencies": {
+    "@alifd/next": "^1.25.13",
+    "@babel/core": "^7.15.8",
+    "@babel/parser": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/standalone": "^7.15.8",
+    "@babel/traverse": "^7.15.4",
+    "@babel/types": "^7.15.6",
+    "babel-plugin-transform-remove-strict-mode": "^0.0.2",
+    "classnames": "^2.3.1",
+    "js-beautify": "^1.14.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
     "@alilc/lowcode-plugin-base-monaco-editor": "^1.0.0",
     "@alilc/lowcode-types": "^1.0.0-beta.3",
     "@formily/core": "^2.0.0-rc.3",
@@ -59,5 +73,5 @@
     "traverse": "^0.6.6",
     "xstate": "^4.26.0"
   },
-  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.2/build/index.html"
+  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.3/build/index.html"
 }
