@@ -1,8 +1,12 @@
 .lowcode-plugin-undo-redo {
   .next-btn-ghost.next-btn-dark {
     color: #3c3c3c;
+    &:hover {
+      color: #0a0a0a;
+    }
   }
-  .next-btn-ghost.next-btn-dark[disabled] {
+  .next-btn-ghost.next-btn-dark[disabled],
+  .next-btn-ghost.next-btn-dark[disabled]:hover {
     color: #ccc;
   }
 }
