@@ -1,11 +1,9 @@
-import * as React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ILowCodePluginContext, project } from '@alilc/lowcode-engine';
 import { Button, Icon } from '@alifd/next';
 import { PluginProps } from '@alilc/lowcode-types';
 import { History } from '@alilc/lowcode-shell';
 import './index.scss';
-
-const { useEffect, useRef, useState } = React;
 
 export interface IUndoRedoProps extends PluginProps {
   logo?: string;
@@ -14,7 +12,7 @@ export interface IUndoRedoProps extends PluginProps {
 const UndoRedo: React.FC<IUndoRedoProps> = () => {
   const [undoEnable, setUndoEnable] = useState<boolean>(false);
   const [redoEnable, setRedoEnable] = useState<boolean>(false);
-  const historyRef = useRef<History>(null);
+  const historyRef = useRef<History | null>(null);
 
   useEffect(() => {
     project.onChangeDocument((doc) => {
@@ -22,7 +20,7 @@ const UndoRedo: React.FC<IUndoRedoProps> = () => {
       updateState(historyRef.current.getState() || 0);
 
       historyRef.current.onChangeState(() => {
-        updateState(historyRef.current.getState() || 0);
+        updateState(historyRef.current?.getState() || 0);
       });
     });
   }, []);
