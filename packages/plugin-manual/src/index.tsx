@@ -12,14 +12,14 @@ const PluginManual = (ctx: ILowCodePluginContext) => {
     dep: [],
     // 插件对外暴露的数据和方法
     exports() {
-      return { }
+      return {};
     },
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     init() {
       // 往引擎增加面板
       ctx.skeleton.add({
         area: 'leftArea',
-        name: 'demoPane',
+        name: 'manualPane',
         type: 'PanelDock',
         props: {
           align: 'bottom',
@@ -36,7 +36,7 @@ const PluginManual = (ctx: ILowCodePluginContext) => {
                 width: window.innerWidth - 300,
               },
               footer: false,
-            })
+            });
           },
         },
       });
