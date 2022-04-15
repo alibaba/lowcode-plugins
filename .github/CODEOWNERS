@@ -1,0 +1,14 @@
+# ref: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence
+* @leoyuan @alvarto
+
+/packages/plugin-manual/ @alvarto
+/packages/base-monaco-editor/ @alvarto
+/packages/plugin-code-editor/ @alvarto
+/packages/plugin-schema/ @alvarto
+/packages/plugin-components-pane/ @mark-ck
+/packages/plugin-datasource-pane/ @xingmolu
+/packages/plugin-zh-en/ @leoyuan
+/packages/plugin-undo-redo/ @leoyuan
