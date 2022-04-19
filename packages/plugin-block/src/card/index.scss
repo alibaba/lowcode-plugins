@@ -1,0 +1,32 @@
+.block-card {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  height: 150px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border-right: 1px solid #eaeaea;
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  box-shadow: 0 0 0 0 rgb(0 0 0 / 15%);
+  transition: box-shadow 0.2s ease;
+
+  .next-divider-hoz {
+    margin-bottom: 0 !important;
+  }
+
+  .block-card-screenshot {
+    display: flex;
+    padding: 10px;
+    background: gainsboro;
+    img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+    }
+  }
+
+}

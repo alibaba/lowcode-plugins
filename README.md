@@ -25,3 +25,5 @@
 - plugin-schema
 - plugin-undo-redo
 - plugin-zh-cn
+- plugin-block
+- action-block
