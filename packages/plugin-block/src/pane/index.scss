@@ -1,0 +1,13 @@
+.block-pane {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.block-pane-loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
