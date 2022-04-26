@@ -1,3 +1,7 @@
+## 1.0.1 / 2022-04-26
+
+* Fix [schema export issue](https://github.com/alibaba/lowcode-engine/issues/367)
+
 ## 1.0.0 / 2022-02-16
 
 * publish following changes

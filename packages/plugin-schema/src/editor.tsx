@@ -4,6 +4,7 @@ import MonacoEditor from '@alilc/lowcode-plugin-base-monaco-editor';
 
 import { Dialog, Message, Button } from '@alifd/next';
 
+import { common } from '@alilc/lowcode-engine'
 import { Project, Skeleton, Event } from '@alilc/lowcode-shell';
 import { IEditorInstance } from '@alilc/lowcode-plugin-base-monaco-editor/lib/helper';
 
@@ -16,7 +17,7 @@ interface PluginCodeDiffProps {
 export default function PluginSchema({ project, skeleton, event }: PluginCodeDiffProps) {
   const [editorSize, setEditorSize] = useState({ width: 0, height: 0 });
   const [schemaValue, setSchemaValue] = useState(() => {
-    const schema = project.exportSchema()
+    const schema = project.exportSchema(common.designerCabin.TransformStage.Save)
     return schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : ''
   });
   const monacoEditorRef = useRef<IEditorInstance>();
@@ -31,7 +32,7 @@ export default function PluginSchema({ project, skeleton, event }: PluginCodeDif
   useEffect(() => {
     event.on('skeleton.panel-dock.active', (pluginName) => {
       if (pluginName == 'LowcodePluginAliLowcodePluginSchema') {
-        const schema = project.exportSchema()
+        const schema = project.exportSchema(common.designerCabin.TransformStage.Save)
         const str = schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : ''
         setSchemaValue(str);
       }
@@ -60,7 +61,7 @@ export default function PluginSchema({ project, skeleton, event }: PluginCodeDif
         }
     
         project.importSchema({
-          ...project.exportSchema(),
+          ...project.exportSchema(common.designerCabin.TransformStage.Save),
           componentsTree: [json],
         });
         Message.success('Schema Saved!');
