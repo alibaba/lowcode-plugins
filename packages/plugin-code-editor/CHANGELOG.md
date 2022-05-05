@@ -1,3 +1,7 @@
+## 1.0.2 / 2022-05-05
+
+* Fix [schema export issue](https://github.com/alibaba/lowcode-engine/issues/416)
+
 ## 1.0.1
 
 - 修正和 ext 的联动

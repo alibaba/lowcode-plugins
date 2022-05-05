@@ -4,6 +4,7 @@ import { Dialog, Message } from '@alifd/next';
 import { JsEditor, CssEditor } from '../components';
 import { schema2JsCode, schema2CssCode } from '../utils';
 import { WORDS, TAB_KEY } from '../config';
+import { common } from '@alilc/lowcode-engine';
 
 import { FunctionEventParams } from '../types';
 import { Project, Event, Skeleton } from '@alilc/lowcode-shell';
@@ -27,7 +28,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
   const cssEditorRef = useRef<CssEditor>(null);
   const saveSchemaRef = useRef<() => void>(); // save code to schema
 
-  const [schema, setSchema] = useState(() => project.exportSchema());
+  const [schema, setSchema] = useState(() => project.exportSchema(common.designerCabin.TransformStage.Save));
 
   const jsCode = useMemo(() => {
     return schema2JsCode(schema);
@@ -40,7 +41,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
   useEffect(() => {
     saveSchemaRef.current = () => {
       try {
-        const currentSchema = lowcodeProjectRef.current?.exportSchema();
+        const currentSchema = lowcodeProjectRef.current?.exportSchema(common.designerCabin.TransformStage.Save);
         const pageNode = currentSchema.componentsTree[0];
         const { state, methods, lifeCycles, originCode = '' } = jsEditorRef.current?.getSchemaFromCode() ?? {};
         const css = cssEditorRef.current?.getBeautifiedCSS() ?? cssCode;
@@ -48,7 +49,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
         pageNode.methods = methods;
         pageNode.lifeCycles = lifeCycles;
         pageNode.originCode = originCode;
-  
+
         pageNode.css = css;
         lowcodeProjectRef.current?.importSchema(currentSchema);
 
@@ -69,7 +70,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
               </>
             ),
             onOk: () => {
-              skeletonRef.current?.showPanel("codeEditor")
+              skeletonRef.current?.showPanel('codeEditor');
             },
           });
         }
@@ -94,8 +95,8 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
   useEffect(() => {
     // load schema on open
     eventRef.current?.on('skeleton.panel-dock.active', (pluginName) => {
-      if (pluginName == 'codeEditor') {
-        const schema = lowcodeProjectRef.current?.exportSchema()
+      if (pluginName === 'codeEditor') {
+        const schema = lowcodeProjectRef.current?.exportSchema(common.designerCabin.TransformStage.Save);
         if (!schema) {
           return;
         }
@@ -106,7 +107,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
         cssEditorRef.current?._updateCode(cssCode);
       }
     });
-    
+
     // save schema when panel closed
     eventRef.current?.on('skeleton.panel-dock.unactive', (pluginName) => {
       if (pluginName === 'codeEditor') {
@@ -115,17 +116,17 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
     });
 
     // focus function by functionName
-    eventRef.current?.on('common:codeEditor.focusByFunction', (params: FunctionEventParams) => {
+    eventRef.current?.on('common:codeEditor.focusByFunction', (params) => {
       setActiveKey(TAB_KEY.JS);
       setTimeout(() => {
-        jsEditorRef.current?.focusByFunctionName(params);
+        jsEditorRef.current?.focusByFunctionName(params as FunctionEventParams);
       }, 100);
     });
 
-    eventRef.current?.on('common:codeEditor.addFunction', (params: FunctionEventParams) => {
+    eventRef.current?.on('common:codeEditor.addFunction', (params) => {
       setActiveKey(TAB_KEY.JS);
       setTimeout(() => {
-        jsEditorRef.current?.addFunction(params);
+        jsEditorRef.current?.addFunction(params as FunctionEventParams);
       }, 100);
     });
   }, []);
