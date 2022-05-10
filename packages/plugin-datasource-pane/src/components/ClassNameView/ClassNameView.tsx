@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Select } from '@alifd/next';
-
+import { common } from '@alilc/lowcode-engine';
 
 export interface PluginProps {
     value: string;
@@ -30,7 +30,7 @@ export default class ClassNameView extends PureComponent<PluginProps, ClassNameV
 
     getClassNameList = () => {
         const { project } = this.context;
-        const schema = project.exportSchema();
+        const schema = project.exportSchema(common.designerCabin.TransformStage.Save);
         const { css } = schema.componentsTree[0];
         const classNameList: string[] = [];
         const re = /\.?\w+[^{]+\{[^}]*\}/g;

@@ -24,6 +24,7 @@ import { isSchemaValid, correctSchema } from '../utils/schema';
 import { createStateService } from '../utils/stateMachine';
 import { DataSourcePaneContext } from '../utils/panel-context';
 import { mergeTwoObjectListByKey } from '../utils/misc';
+import { common } from '@alilc/lowcode-engine';
 
 import './index.scss';
 
@@ -119,7 +120,7 @@ export default class DataSourcePanePlugin extends PureComponent<
   handleSchemaChange = (schema: DataSource) => {
     const { project, onSchemaChange } = this.props;
     if (project) {
-      const docSchema = project.exportSchema();
+      const docSchema = project.exportSchema(common.designerCabin.TransformStage.Save);
       if (!_isEmpty(docSchema)) {
         _set(docSchema, 'componentsTree[0].dataSource', schema);
         project.importSchema(docSchema);
@@ -148,7 +149,7 @@ export default class DataSourcePanePlugin extends PureComponent<
 
     if (!active) return null;
 
-    const projectSchema = project.exportSchema() ?? {};
+    const projectSchema = project.exportSchema(common.designerCabin.TransformStage.Save) ?? {};
     let schema = defaultSchema;
     if (_isFunction(defaultSchema)) {
       schema = defaultSchema();
