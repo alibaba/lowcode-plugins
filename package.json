@@ -10,6 +10,7 @@
     ]
   },
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "dev": "npm run bootstrap && npm run build && cooking watch -c build/cooking.demo.js -p",
     "build": "./scripts/build.sh",
     "clean": "rm -rf ./packages/*/lib ./packages/*/es ./packages/*/dist ./packages/*/build",
