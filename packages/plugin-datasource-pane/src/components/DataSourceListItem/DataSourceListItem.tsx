@@ -189,6 +189,7 @@ export class DataSourceListItem extends Component<DataSourceListItemProps> {
               }
               return (
                 <Tag
+                  key={_uniqueId('ds-tag-')}
                   style={{ maxWidth: tag.maxWidth || 120 }}
                   size="small"
                   type={tag.type || 'normal'}
