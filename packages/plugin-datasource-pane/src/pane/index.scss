@@ -4,7 +4,7 @@ $cls-prefix: "lowcode-plugin-datasource-pane";
 
 .#{$cls-prefix}-container {
   overflow-y: auto;
-  margin: 8px;
+  padding: 8px;
   height: 100%;
   >.next-tabs {
     display: flex;
