@@ -10,6 +10,7 @@ import {
 } from './helper';
 
 export * from './monaco';
+export * from './controller';
 
 const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
   const { onChange, enableOutline, width, height, language, supportFullScreen } = props;
