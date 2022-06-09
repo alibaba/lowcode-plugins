@@ -1,9 +1,9 @@
 ## 1.1.0-beta.0
 
 - 重构 type / path / value 联动，彻底修复 monaco 在多文件模式下覆盖多个 path 值的 bug
-- 修复 ts 类型问题 @wangshihao111
-- 添加 configure 方法，支持配置是否开启 monaco 单例模式 @wangshihao111
-- 新增插件参数：`enhancers`，用于强化编辑器功能 @wangshihao111
+- 修复 ts 类型问题 [@wangshihao111](https://github.com/wangshihao111)
+- 添加 configure 方法，支持配置是否开启 monaco 单例模式 [@wangshihao111](https://github.com/wangshihao111)
+- 新增插件参数：`enhancers`，用于强化编辑器功能 [@wangshihao111](https://github.com/wangshihao111)
 
 ## 1.0.0
 
