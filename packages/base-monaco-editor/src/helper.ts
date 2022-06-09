@@ -1,12 +1,7 @@
 /* eslint-disable no-empty */
 import { useEffect, useState, useRef, CSSProperties } from 'react';
 import loader from '@monaco-editor/loader';
-
-loader.config({
-  paths: {
-    vs: 'https://g.alicdn.com/code/lib/monaco-editor/0.31.1/min/vs',
-  },
-});
+import { getMonaco } from './monaco';
 
 type IAmbigousFn = (...args: any[]) => any;
 
@@ -52,7 +47,7 @@ export interface IMonacoInstance {
   [otherKeys: string]: any;
 }
 
-type ICodeEditorViewState = {
+interface ICodeEditorViewState {
   contributionsState: any;
   cursorState: any;
   viewState: any;
@@ -154,7 +149,7 @@ export const useEditor = (type: 'single' | 'diff', props: IGeneralManacoEditorPr
   const editorWillMountRef = useRef<ISingleMonacoEditorProps['editorWillMount']>();
 
   const decomposeRef = useRef(false);
-  const viewStatusRef = useRef<Map<any, ICodeEditorViewState>>(new Map())
+  const viewStatusRef = useRef<Map<any, ICodeEditorViewState>>(new Map());
 
   useEffect(() => {
     editorDidMountRef.current = editorDidMount;
@@ -185,7 +180,7 @@ export const useEditor = (type: 'single' | 'diff', props: IGeneralManacoEditorPr
       loader.config(requireConfigRef.current);
     }
 
-    loader.init()
+    getMonaco(requireConfigRef.current)
       .then((monaco: any) => {
         // 兼容旧版本 monaco-editor 写死 MonacoEnvironment 的问题
         (window as any).MonacoEnvironment = undefined;
@@ -209,7 +204,7 @@ export const useEditor = (type: 'single' | 'diff', props: IGeneralManacoEditorPr
             monaco,
             valueRef.current ?? defaultValueRef.current ?? '',
             languageRef.current,
-            pathRef.current
+            pathRef.current,
           );
           editor = monaco.editor.create(containerRef.current, {
             automaticLayout: true,
@@ -268,7 +263,7 @@ export const useEditor = (type: 'single' | 'diff', props: IGeneralManacoEditorPr
       ? editorRef.current.getModifiedEditor()
       : editorRef.current;
 
-    const nextValue = value ?? defaultValueRef.current ?? ''
+    const nextValue = value ?? defaultValueRef.current ?? '';
     if (editor?.getOption?.(monacoRef.current?.editor.EditorOption.readOnly)) {
       editor?.setValue(nextValue);
     } else if (value !== editor?.getValue()) {
@@ -330,7 +325,7 @@ export const useEditor = (type: 'single' | 'diff', props: IGeneralManacoEditorPr
     if (valueRef.current !== null && valueRef.current !== undefined && model.getValue() !== valueRef.current) {
       model.setValue(valueRef.current);
     }
-    
+
     if (model !== editorRef.current.getModel()) {
       saveViewState && viewStatusRef.current.set(previousPath, editorRef.current.saveViewState());
       editorRef.current.setModel(model);
@@ -365,9 +360,9 @@ function getOrCreateModel(monaco: IMonacoInstance, value?: string, language?: st
 }
 
 function usePrevious<T>(value: T) {
-  const ref = useRef<T>()
+  const ref = useRef<T>();
   useEffect(() => {
-    ref.current = value
-  }, [value])
-  return ref.current
+    ref.current = value;
+  }, [value]);
+  return ref.current;
 }

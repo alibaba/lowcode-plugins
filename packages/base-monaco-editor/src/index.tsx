@@ -9,6 +9,8 @@ import {
   INITIAL_OPTIONS,
 } from './helper';
 
+export * from './monaco';
+
 const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
   const { onChange, enableOutline, width, height, language, supportFullScreen } = props;
   const onChangeRef = useRef(onChange);
