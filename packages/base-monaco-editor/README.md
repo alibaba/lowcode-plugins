@@ -125,6 +125,24 @@ function App() {
 ReactDOM.render(<App />, mountNode);
 ```
 
+### Using controller
+
+```ts
+import { controller } from '@alilc/lowcode-plugin-base-monaco-editor';
+
+// configure Monaco to be singleton
+controller.updateMeta({ singleton: true });
+
+// Get all metadata
+controller.getMeta();
+
+// register a custom method
+controller.registerMethod('methodName', (a, b, c) => { });
+
+// call custom methods
+const ret = controller.call('methodName', a, b, c);
+```
+
 ## Citation
 
 This is forked from [monaco-react](https://github.com/suren-atoyan/monaco-react). Thanks for [suren-atoyan](https://github.com/suren-atoyan)'s effort for making monaco editor appoachable.
