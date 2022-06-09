@@ -1,7 +1,7 @@
 import loader, { Monaco } from '@monaco-editor/loader';
 //@ts-ignore
 import isEqual from 'lodash/isEqual';
-import { controller } from './controller';
+import { controller, EditorMeta } from './controller';
 
 export const getSingletonMonaco = (() => {
   let monaco: Monaco;
@@ -46,4 +46,8 @@ export function getMonaco(config?: any) {
   return controller.getMeta().singleton
     ? getSingletonMonaco(monacoConfig)
     : getCommonMonaco(monacoConfig);
+}
+
+export function configure(config: EditorMeta) {
+  controller.updateMeta(config);
 }

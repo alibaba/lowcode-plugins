@@ -1,0 +1,30 @@
+{
+  "name": "@alilc/lowcode-plugin-simulator-select",
+  "version": "1.0.0",
+  "description": "画布切换",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "build-scripts start",
+    "build": "build-scripts build --skip-demo",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lowcode",
+    "simulator"
+  ],
+  "dependencies": {
+    "@alifd/next": "^1.25.0"
+  },
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.18",
+    "@alilc/build-plugin-alt": "^1.1.0",
+    "@alilc/lowcode-engine": "^1.0.0",
+    "@types/react": "^16.8.1",
+    "build-plugin-component": "^1.1.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
+  },
+  "author": "mark.ck",
+  "license": "ISC"
+}

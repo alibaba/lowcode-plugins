@@ -5,7 +5,7 @@
 * @leoyuan @alvarto
 
 /packages/plugin-manual/ @alvarto
-/packages/base-monaco-editor/ @alvarto
+/packages/base-monaco-editor/ @alvarto @wangshihao111
 /packages/plugin-code-editor/ @alvarto
 /packages/plugin-schema/ @alvarto
 /packages/plugin-components-pane/ @mark-ck

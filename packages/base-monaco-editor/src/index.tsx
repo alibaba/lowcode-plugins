@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useRef, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
+import type { editor } from 'monaco-editor';
 import {
   ISingleMonacoEditorProps,
   WORD_EDITOR_INITIALIZING,
@@ -26,7 +27,7 @@ const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
     monacoRef,
     editorRef,
     valueRef,
-  } = useEditor('single', props);
+  } = useEditor<editor.IStandaloneCodeEditor>('single', props);
   const subscriptionRef = useRef(null);
 
   const className = classNames('ve-code-control', props.className, {
@@ -52,9 +53,10 @@ const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
 
   useEffect(() => {
     if (isEditorReady) {
+      const editorInstance = editorRef.current;
       subscriptionRef.current?.dispose();
-      subscriptionRef.current = editorRef.current?.onDidChangeModelContent((event: any) => {
-        const editorValue = editorRef.current?.getModel().getValue();
+      subscriptionRef.current = editorInstance?.onDidChangeModelContent((event: any) => {
+        const editorValue = editorInstance?.getModel().getValue();
 
         if (valueRef.current !== editorValue) {
           onChangeRef.current?.(editorValue, event);
@@ -65,8 +67,9 @@ const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
 
   useEffect(() => {
     return () => {
+      const editorInstance = editorRef.current;
       subscriptionRef.current?.dispose();
-      editorRef.current?.getModel()?.dispose();
+      editorInstance?.getModel()?.dispose();
       // eslint-disable-next-line react-hooks/exhaustive-deps
       editorRef.current?.dispose();
     };
@@ -77,10 +80,11 @@ const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
       return;
     }
 
-    monacoRef.current?.editor.setModelLanguage(editorRef.current?.getModel(), language);
+    monacoRef.current?.editor.setModelLanguage((editorRef.current)?.getModel(), language);
   }, [editorRef, isEditorReady, language, monacoRef]);
 
   const fullScreen = () => {
+    const editorInstance = editorRef.current;
     if (!isFullScreen) {
       setIsFullScreen(true);
       setFullScreenStyle({
@@ -94,22 +98,22 @@ const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
         zIndex: 9998,
       });
       // 更新小地图配置
-      editorRef.current?.updateOptions({
-        ...editorRef.current?.getOptions(),
+      editorInstance?.updateOptions({
+        ...editorInstance?.getOptions(),
         minimap: {
           enabled: true,
         },
       });
-      editorRef.current?.layout();
+      editorInstance?.layout();
     } else {
       setIsFullScreen(false);
-      editorRef.current?.updateOptions({
-        ...editorRef.current?.getOptions(),
+      editorInstance?.updateOptions({
+        ...editorInstance?.getOptions(),
         minimap: {
           enabled: false,
         },
       });
-      editorRef.current?.layout();
+      editorInstance?.layout();
     }
   };
 
@@ -131,7 +135,7 @@ const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
 const DiffMonacoEditor = (props: IDiffMonacoEditorProps) => {
   const { enableOutline, width, height, language, original } = props;
 
-  const { isEditorReady, focused, loading, containerRef, monacoRef, editorRef } = useEditor(
+  const { isEditorReady, focused, loading, containerRef, monacoRef, editorRef } = useEditor<editor.IStandaloneDiffEditor>(
     'diff',
     props,
   );
@@ -149,7 +153,7 @@ const DiffMonacoEditor = (props: IDiffMonacoEditorProps) => {
     if (!isEditorReady) {
       return;
     }
-    editorRef.current.getModel().original.setValue(original ?? '');
+    (editorRef.current).getModel().original.setValue(original ?? '');
   }, [editorRef, isEditorReady, original]);
 
   useEffect(() => {
