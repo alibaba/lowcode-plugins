@@ -126,4 +126,4 @@ WIP
 
 # 参考
 
-* [搭建协议规范](https://yuque.antfin-inc.com/mo/spec/spec-low-code-building-schema)
+* [搭建协议规范](https://lowcode-engine.cn/lowcode)
