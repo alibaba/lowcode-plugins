@@ -1,3 +1,7 @@
+## 1.1.0-beta.2
+
+- 去除 `overflow: visible` 样式，避免动作面板遮住按钮
+
 ## 1.1.0-beta.1
 
 - 添加 controller 实例，可用作中间交换介质，解决与代码编辑相关的插件间的协作问题 [@wangshihao111](https://github.com/wangshihao111)
