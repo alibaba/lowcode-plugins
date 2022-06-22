@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Publish following changes
+
 ## 1.1.0-beta.3
 
 - 去除 `overflow: visible` 样式，避免动作面板遮住按钮
