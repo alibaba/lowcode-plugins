@@ -1,3 +1,7 @@
+## 1.1.1
+
+- 避免 UIPaaS 中的样式冲突，将 `.ve-code-control` 替换为 `.lc-code-control`
+
 ## 1.1.0
 
 - Publish following changes

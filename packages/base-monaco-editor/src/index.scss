@@ -1,4 +1,4 @@
-.ve-code-control {
+.lc-code-control {
   position: relative;
   box-sizing: content-box;
   border-radius: 3px;
@@ -6,26 +6,26 @@
   border: 1px solid transparent;
 }
 
-.ve-code-control:hover {
+.lc-code-control:hover {
   border-color: var(--color-field-border-hover, rgba(31, 56, 88, 0.1));
 }
 
-.ve-code-control.ve-focused {
+.lc-code-control.ve-focused {
   border-color: var(--color-field-border-active, rgba(31, 56, 88, 0.15));
 }
 
-.ve-code-control.ve-outline {
+.lc-code-control.ve-outline {
   border: 1px solid var(--color-field-border, rgba(31, 56, 88, 0.05)) !important;
 }
 
-.ve-code-control .react-monaco-editor-container {
+.lc-code-control .react-monaco-editor-container {
   min-height: 100px;
   height: 100%;
   width: 100%;
   background: transparent;
 }
 
-.ve-code-control .base-monaco-full-screen-icon,
+.lc-code-control .base-monaco-full-screen-icon,
 .base-monaco-full-screen-icon-cancel {
   width: 20px;
   height: 20px;
@@ -47,7 +47,7 @@
   right: 138px;
 }
 
-.ve-code-control .loading {
+.lc-code-control .loading {
   position: absolute;
   display: flex;
   align-items: center;
@@ -67,7 +67,7 @@
   }
 }
 
-.ve-code-control .syntaxTips {
+.lc-code-control .syntaxTips {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -81,12 +81,12 @@
   box-sizing: border-box;
 }
 
-.ve-code-control .syntaxTips:hover {
+.lc-code-control .syntaxTips:hover {
   max-height: 50%;
   overflow: auto;
 }
 
-.ve-code-control .syntaxTips .infoIcon {
+.lc-code-control .syntaxTips .infoIcon {
   position: absolute;
   width: 20px;
   height: 16px;

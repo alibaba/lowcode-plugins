@@ -30,7 +30,7 @@ const SingleMonacoEditor = (props: ISingleMonacoEditorProps) => {
   } = useEditor<editor.IStandaloneCodeEditor>('single', props);
   const subscriptionRef = useRef(null);
 
-  const className = classNames('ve-code-control', props.className, {
+  const className = classNames('lc-code-control', props.className, {
     've-focused': focused,
     've-outline': enableOutline,
   });
@@ -140,7 +140,7 @@ const DiffMonacoEditor = (props: IDiffMonacoEditorProps) => {
     props,
   );
 
-  const className = classNames('ve-code-control', props.className, {
+  const className = classNames('lc-code-control', props.className, {
     've-focused': focused,
     've-outline': enableOutline,
   });
