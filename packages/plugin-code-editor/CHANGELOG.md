@@ -1,3 +1,7 @@
+## 1.0.3 / 2022-07-11
+
+- Fix 源码面板高度塌陷的 [bug](https://github.com/alibaba/lowcode-engine/issues/803)
+
 ## 1.0.2 / 2022-05-05
 
 * Fix [schema export issue](https://github.com/alibaba/lowcode-engine/issues/416)
