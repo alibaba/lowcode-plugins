@@ -1,6 +1,6 @@
 // @todo schema default
 import React, { PureComponent } from 'react';
-import { createForm, registerValidateRules } from '@formily/core';
+import { createForm, registerValidateRules, onFieldValueChange } from '@formily/core';
 import { createSchemaField } from '@formily/react';
 import {
   Space,
@@ -122,6 +122,29 @@ const SCHEMA = {
           default: {},
           'x-decorator-props': {
             addonAfter: <ComponentSwitchBtn component="LowcodeExpression" />,
+          },
+        },
+        mock: {
+          type: 'object',
+          title: '请求配置',
+          required: true,
+          name: 'mock',
+          properties: {
+            isMock: {
+              name: 'isMock',
+              title: '是否Mock请求',
+              type: 'boolean',
+              default: false,
+            },
+            responseData: {
+              name: 'mockResponseData',
+              type: 'string',
+              title: 'Mock响应数据',
+              'x-component': 'Input.TextArea',
+              'x-component-props': {
+                autoHeight: { minRows: 6, maxRows: 10 },
+              },
+            },
           },
         },
       },
@@ -461,6 +484,14 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
 
   form = createForm({
     initialValues: this.deriveInitialData(this.props.dataSource),
+    effects: () => {
+      // 设置mock开关和mock数据联动
+      onFieldValueChange('options.mock.isMock', (field: any) => {
+        this.form.setFieldState('*(options.mock.responseData)', (state) => {
+          state.display = field.value ? 'visible' : 'none';
+        });
+      });
+    },
   });
 
   render() {
