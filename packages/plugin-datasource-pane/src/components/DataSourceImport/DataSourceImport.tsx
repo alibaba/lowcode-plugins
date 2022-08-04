@@ -32,9 +32,18 @@ export class DataSourceImport extends PureComponent<
   static defaultProps = {
     defaultValue: [
       {
-        type: 'http',
-        id: 'test',
-      },
+        type: 'fetch',
+        isInit: false,
+        options: {
+          method: 'GET',
+          isCors: true,
+          timeout: 5000,
+          uri: '/info',
+          params: {},
+          headers: {}
+        },
+        id: 'info'
+      }
     ],
   };
 
@@ -47,8 +56,10 @@ export class DataSourceImport extends PureComponent<
     return new Promise((resolve, reject) => {
       const { isCodeValid, code } = this.state;
 
-      if (isCodeValid) reject(new Error('格式有误'));
-      resolve({ schema: code });
+      if (!isCodeValid) reject(new Error('导入格式有误'));
+
+      // 只 resolve 通过 schema 校验的数据
+      resolve(this.deriveValue(JSON.parse(code)));
     });
   };
 
@@ -79,14 +90,25 @@ export class DataSourceImport extends PureComponent<
 
     return (result as DataSourceConfig[]).filter((dataSource) => {
       if (!dataSource.type) return false;
+
       const dataSourceType = dataSourceTypes.find(
         (type) => type.type === dataSource.type,
       );
+
       if (!dataSourceType) return false;
-      return ajv.validate(dataSourceType.schema, dataSource);
+
+      // 校验失败的数据源，给予用户提示
+      const validate = ajv.compile(dataSourceType.schema)
+      const valid = validate(dataSource)
+      if (!valid) console.warn(validate.errors)
+      return valid
     });
   };
 
+  /**
+   * 看代码是未使用到
+   * @deprecated
+   */
   handleComplete = () => {
     if (this.monacoRef) {
       if (
@@ -116,8 +138,8 @@ export class DataSourceImport extends PureComponent<
     }
   };
 
-  handleEditorDidMount = (isFullscreen: boolean, editor: MonacoEditor, monaco: MonacoEditor) => {
-    this.monacoRef = monaco?.editor;
+  handleEditorDidMount = (editor: MonacoEditor, monaco: MonacoEditor) => {
+    this.monacoRef = editor?.editor;
   };
 
   render() {
