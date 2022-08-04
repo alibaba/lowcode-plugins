@@ -85,7 +85,8 @@ export class DataSourcePane extends PureComponent<
   componentDidMount() {
     this.serviceS = this.context?.stateService?.subscribe?.((state: any) => {
       this.setState({ current: state });
-      if (state.changed && state.value === 'idle') {
+      // 监听导入成功事件
+      if (state.changed && (state.value === 'idle' || state.event?.type === "FINISH_IMPORT")) {
         // TODO add hook
         this.props.onSchemaChange?.({
           list: state.context.dataSourceList,
@@ -221,7 +222,7 @@ export class DataSourcePane extends PureComponent<
           return;
         }
         const repeatedDataSourceList = data.filter(
-          (item) => !!this.state.current.dataSourceList.find(
+          (item) => !!this.state.current.context.dataSourceList.find(
               (dataSource: DataSourceConfig) => dataSource.id === item.id,
             ),
         );
@@ -237,6 +238,8 @@ export class DataSourcePane extends PureComponent<
           return;
         }
         importDataSourceList();
+      }).catch(err => {
+        console.warn(err?.message)
       });
     }
   };
