@@ -34,6 +34,7 @@ import { generateClassName } from '../../utils/misc';
 import { filterXDisplay } from '../../utils/filter-x-display';
 
 import { DataSourceFormProps, DataSourceFormMode } from '../../types';
+import { isJSExpression } from '@alilc/lowcode-types';
 
 const SCHEMA = {
   type: 'object',
@@ -79,8 +80,8 @@ const SCHEMA = {
         },
         params: {
           title: '请求参数',
-          type: 'object',
-          default: {},
+          type: 'array',
+          default: [],
           'x-decorator-props': {
             addonAfter: <ComponentSwitchBtn component="LowcodeExpression" />,
           },
@@ -117,9 +118,9 @@ const SCHEMA = {
           },
         },
         headers: {
-          type: 'object',
+          type: 'array',
           title: '请求头信息',
-          default: {},
+          default: [],
           'x-decorator-props': {
             addonAfter: <ComponentSwitchBtn component="LowcodeExpression" />,
           },
@@ -218,9 +219,8 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
   deriveInitialData = (dataSource: object = {}) => {
     const { dataSourceType } = this.props;
     const result: any = _cloneDeep(dataSource);
-
     // TODO
-    if (_isPlainObject(_get(result, 'options.params'))) {
+    if (_isPlainObject(_get(result, 'options.params')) && !isJSExpression(_get(result, 'options.params'))) {
       result.options.params = Object.keys(result.options.params).reduce(
         (acc: any, cur: any) => {
           acc.push({
@@ -232,7 +232,7 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
         [],
       );
     }
-    if (_isPlainObject(_get(result, 'options.headers'))) {
+    if (_isPlainObject(_get(result, 'options.headers')) && !isJSExpression(_get(result, 'options.headers'))) {
       result.options.headers = Object.keys(result.options.headers).reduce(
         (acc: any, cur: any) => {
           acc.push({

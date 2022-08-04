@@ -31,7 +31,7 @@ preference.set('DataSourcePane', {
                 type: "boolean",
               },
               timeout: {
-                type: "integer",
+                type: "number",
               },
               uri: {
                 type: "string",
