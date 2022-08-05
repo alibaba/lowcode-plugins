@@ -12,6 +12,7 @@ import _pick from 'lodash/pick';
 import { JSFunction } from './jsFunction';
 import { RemoveBtn } from './form-lazy-obj-remove-btn';
 import { generateClassName } from '../../utils/misc';
+import { isJSFunction } from '@alilc/lowcode-types';
 
 const { Item: MenuButtonItem } = MenuButton;
 
@@ -22,11 +23,18 @@ export interface FormLazyObjProps {
 
 export const FormLazyObj = observer((props: FormLazyObjProps) => {
   const { addText = '添加' } = props;
+
   const field = useField<VoidField>();
-  const [selectedProperties, setSelectedProperties] = useState<string[]>([]);
+
   const schema = useFieldSchema();
 
-  useEffect(() => {}, [field]);
+  const [selectedProperties, setSelectedProperties] = useState<string[]>(() => {
+    // 自动回填数据处理函数
+    return Object.keys(schema.properties || {}).filter(property => {
+      return isJSFunction(field.form.values[property])
+    })
+  });
+
   const properties = useMemo(() => {
     return Object.keys(schema.properties || {})
       .filter((i) => selectedProperties.indexOf(i) === -1)
@@ -69,6 +77,7 @@ export const FormLazyObj = observer((props: FormLazyObjProps) => {
     });
     const schemaJSON = schema.toJSON();
     const schemaProperties = _pick(schemaJSON.properties, selectedProperties);
+
     return (
       <SchemaField
         schema={{
