@@ -1,6 +1,6 @@
 // @todo schema default
 import React, { PureComponent } from 'react';
-import { createForm, registerValidateRules } from '@formily/core';
+import { createForm, registerValidateRules, Form as FormilyForm } from '@formily/core';
 import { createSchemaField } from '@formily/react';
 import {
   Space,
@@ -183,9 +183,32 @@ const SCHEMA = {
 /**
  * 通过是否存在 ID 来决定读写状态
  */
-export class DataSourceForm extends PureComponent<DataSourceFormProps> {
+export class DataSourceForm extends PureComponent<DataSourceFormProps, { form: FormilyForm } > {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      form: this.createForm()
+    }
+  }
+
+  createForm(): FormilyForm {
+    return createForm({
+      initialValues: this.deriveInitialData(this.props.dataSource),
+    })
+  }
+
+  componentDidUpdate(prevProps: DataSourceFormProps) {
+    // dataSource 变了，需要更新 form，界面刷新
+    if (this.props.dataSource !== prevProps.dataSource) {
+      this.setState({
+        form: this.createForm()
+      })
+    }
+  }
+
   submit = () => {
-    return this.form
+    return this.state.form
       .submit()
       .then((formData: any) => {
         if (_isArray(_get(formData, 'options.params'))) {
@@ -459,10 +482,6 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
     };
   };
 
-  form = createForm({
-    initialValues: this.deriveInitialData(this.props.dataSource),
-  });
-
   render() {
     const SchemaField = createSchemaField({
       components: {
@@ -485,7 +504,7 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
 
     return (
       <div className={generateClassName('create')}>
-        <Form form={this.form}>
+        <Form form={this.state.form}>
           <SchemaField
             schema={_thru(this.deriveSchema(), (arg) => {
               return arg;
