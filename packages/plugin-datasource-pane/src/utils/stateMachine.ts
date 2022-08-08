@@ -161,7 +161,14 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
                   target: 'idle',
                   actions: assign({
                     dataSourceList: (context, event) => {
-                      return context.dataSourceList.concat(event.payload);
+                      // 直接 concat 会出现重复
+                      const filterDataSourceList = context.dataSourceList.filter((item) => {
+                        return !event.payload.find(
+                          (dataSource: DataSourceConfig) => dataSource.id === item.id,
+                        )
+                      })
+
+                      return filterDataSourceList.concat(event.payload);
                     },
                     detail: {
                       visible: false,
