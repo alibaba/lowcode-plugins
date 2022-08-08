@@ -9,39 +9,39 @@ preference.set('DataSourcePane', {
   dataSourceTypes: [
     {
       type: 'fetch',
-      schema: {
-        type: "object",
-        properties: {
-          id: {
-            type: "string"
-          },
-          type: {
-            type: "string"
-          },
-          isInit: {
-            type: "boolean",
-          },
-          options: {
-            type: "object",
-            properties: {
-              method: {
-                type: "string",
-              },
-              isCors: {
-                type: "boolean",
-              },
-              timeout: {
-                type: "number",
-              },
-              uri: {
-                type: "string",
-              },
-            },
-            required: ["method", "isCors", "timeout", "uri"]
-          }
-        },
-        required: ["id", "type", "isInit", "options"]
-      }
+      // schema: {
+      //   type: "object",
+      //   properties: {
+      //     id: {
+      //       type: "string"
+      //     },
+      //     type: {
+      //       type: "string"
+      //     },
+      //     isInit: {
+      //       type: "boolean",
+      //     },
+      //     options: {
+      //       type: "object",
+      //       properties: {
+      //         method: {
+      //           type: "string",
+      //         },
+      //         isCors: {
+      //           type: "boolean",
+      //         },
+      //         timeout: {
+      //           type: "number",
+      //         },
+      //         uri: {
+      //           type: "string",
+      //         },
+      //       },
+      //       required: ["method", "isCors", "timeout", "uri"]
+      //     }
+      //   },
+      //   required: ["id", "type", "isInit", "options"]
+      // }
     },
     {
       type: 'jsonp',

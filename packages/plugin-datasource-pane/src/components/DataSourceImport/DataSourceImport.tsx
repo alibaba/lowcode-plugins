@@ -67,7 +67,7 @@ export class DataSourceImport extends PureComponent<
 
   constructor(props: DataSourceImportProps) {
     super(props);
-    this.state.code = JSON.stringify(this.deriveValue(this.props.defaultValue));
+    this.state.code = JSON.stringify(this.deriveValue(this.props.defaultValue), null, 2);
     this.handleEditorDidMount = this.handleEditorDidMount.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.handleComplete = this.handleComplete.bind(this);
@@ -97,11 +97,17 @@ export class DataSourceImport extends PureComponent<
 
       if (!dataSourceType) return false;
 
-      // 校验失败的数据源，给予用户提示
-      const validate = ajv.compile(dataSourceType.schema)
-      const valid = validate(dataSource)
-      if (!valid) console.warn(validate.errors)
-      return valid
+      // 向下兼容
+      if (dataSourceType.schema) {
+        // 校验失败的数据源，给予用户提示
+        const validate = ajv.compile(dataSourceType.schema)
+        const valid = validate(dataSource)
+        if (!valid) console.warn(validate.errors)
+        return valid
+      } else {
+        // 用户不传入 schema 校验规则，默认返回 true
+        return true
+      }
     });
   };
 
