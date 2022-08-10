@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-datasource-pane",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "低代码引擎数据源面板",
   "main": "lib/index.js",
   "files": [
@@ -27,8 +27,8 @@
     "@alib/build-scripts": "^0.1.32",
     "@alifd/theme-lowcode-light": "^0.2.1",
     "@alilc/build-plugin-alt": "^1.0.0",
-    "@alilc/lowcode-shell": "^1.0.0",
     "@alilc/lowcode-engine": "beta",
+    "@alilc/lowcode-shell": "^1.0.0",
     "@alilc/lowcode-types": "beta",
     "@types/babel-types": "^7.0.9",
     "@types/babel__preset-env": "^7.9.2",
@@ -36,6 +36,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/traverse": "^0.6.32",
     "build-plugin-fusion": "^0.1.9",
+    "build-plugin-moment-locales": "^0.1.3",
     "monaco-editor": "^0.21.0"
   },
   "peerDependencies": {
@@ -73,5 +74,5 @@
     "traverse": "^0.6.6",
     "xstate": "^4.26.0"
   },
-  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.4/build/index.html"
+  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.6/build/index.html"
 }
