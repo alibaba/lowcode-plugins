@@ -72,11 +72,11 @@ export class DataSourcePane extends PureComponent<
     listMode: DataSourcePanelMode.NORMAL,
   };
 
-  detailRef?= createRef<DataSourceForm>();
+  detailRef ?= createRef<DataSourceForm>();
 
-  exportRef?= createRef<ExportDetail>();
+  exportRef ?= createRef<ExportDetail>();
 
-  importRef?= createRef<ImportDetail>();
+  importRef ?= createRef<ImportDetail>();
 
   private send = (...args: any[]) => {
     this.context.stateService.send(...args);
@@ -282,7 +282,7 @@ export class DataSourcePane extends PureComponent<
     } else if (current.matches('detail.import')) {
       // TODO
       // pluginName
-      const currentPluginName = current.context.detail.data.pluginName.name;
+      const currentPluginName = current.context.detail?.data?.pluginName?.name;
       const importPlugin = importPlugins?.find((item) => item.name === currentPluginName);
       const Component = (importPlugin ? importPlugin.component : ImportDetail) as React.ElementType;
       content = <Component dataSourceTypes={dataSourceTypes} ref={this.importRef} />;
