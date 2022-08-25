@@ -72,11 +72,11 @@ export class DataSourcePane extends PureComponent<
     listMode: DataSourcePanelMode.NORMAL,
   };
 
-  detailRef? = createRef<DataSourceForm>();
+  detailRef?= createRef<DataSourceForm>();
 
-  exportRef? = createRef<ExportDetail>();
+  exportRef?= createRef<ExportDetail>();
 
-  importRef? = createRef<ImportDetail>();
+  importRef?= createRef<ImportDetail>();
 
   private send = (...args: any[]) => {
     this.context.stateService.send(...args);
@@ -86,7 +86,7 @@ export class DataSourcePane extends PureComponent<
     this.serviceS = this.context?.stateService?.subscribe?.((state: any) => {
       this.setState({ current: state });
       // 监听导入成功事件
-      if (state.changed && (state.value === 'idle' || state.event?.type === "FINISH_IMPORT")) {
+      if (state.changed && (state.value === 'idle' || state.event?.type === 'FINISH_IMPORT')) {
         // TODO add hook
         this.props.onSchemaChange?.({
           list: state.context.dataSourceList,
@@ -223,8 +223,8 @@ export class DataSourcePane extends PureComponent<
         }
         const repeatedDataSourceList = data.filter(
           (item) => !!this.state.current.context.dataSourceList.find(
-              (dataSource: DataSourceConfig) => dataSource.id === item.id,
-            ),
+            (dataSource: DataSourceConfig) => dataSource.id === item.id,
+          ),
         );
         if (repeatedDataSourceList.length > 0) {
           Dialog.confirm({
@@ -239,14 +239,14 @@ export class DataSourcePane extends PureComponent<
         }
         importDataSourceList();
       }).catch(err => {
-        console.warn(err?.message)
+        console.warn(err?.message);
       });
     }
   };
 
   renderDetail = () => {
     const { current } = this.state;
-    const { dataSourceTypes = [] } = this.props;
+    const { dataSourceTypes = [], importPlugins = [], exportPlugins = [], formComponents = [] } = this.props;
     let content = null;
 
     if (current.matches('detail.edit')) {
@@ -282,15 +282,11 @@ export class DataSourcePane extends PureComponent<
     } else if (current.matches('detail.import')) {
       // TODO
       // pluginName
-      // content = <ImportDetail dataSourceTypes={dataSourceTypes} ref={this.importRef} />;
       const currentPluginName = current.context.detail.data.pluginName.name;
-      const { importPlugins } = this.props
-      const importPlugin = importPlugins?.find((item) => item.name === currentPluginName)
-
-      const Component = (importPlugin ? importPlugin.component : ImportDetail) as React.ElementType
-
+      const importPlugin = importPlugins?.find((item) => item.name === currentPluginName);
+      const Component = (importPlugin ? importPlugin.component : ImportDetail) as React.ElementType;
       content = <Component dataSourceTypes={dataSourceTypes} ref={this.importRef} />;
-      
+
     } else if (current.matches('detail.export')) {
       // TODO
       content = (
@@ -333,7 +329,7 @@ export class DataSourcePane extends PureComponent<
       className = '',
       helpLink = '',
       dataSourceTypes = [],
-      importPlugins,
+      importPlugins = [],
     } = this.props;
     const { current, listMode } = this.state;
 
@@ -390,10 +386,10 @@ export class DataSourcePane extends PureComponent<
               dataSource={current.context.dataSourceList.filter((i: DataSourceConfig) => {
                 return (
                   i.id.indexOf(current.context.dataSourceListFilter.keyword) !==
-                    -1 &&
+                  -1 &&
                   (!current.context.dataSourceListFilter.dataSourceType ||
                     current.context.dataSourceListFilter.dataSourceType ===
-                      i.type)
+                    i.type)
                 );
               })}
               onOperationClick={this.handleOperationClick}
