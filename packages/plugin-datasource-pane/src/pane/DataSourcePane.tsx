@@ -282,7 +282,15 @@ export class DataSourcePane extends PureComponent<
     } else if (current.matches('detail.import')) {
       // TODO
       // pluginName
-      content = <ImportDetail dataSourceTypes={dataSourceTypes} ref={this.importRef} />;
+      // content = <ImportDetail dataSourceTypes={dataSourceTypes} ref={this.importRef} />;
+      const currentPluginName = current.context.detail.data.pluginName.name;
+      const { importPlugins } = this.props
+      const importPlugin = importPlugins?.find((item) => item.name === currentPluginName)
+
+      const Component = (importPlugin ? importPlugin.component : ImportDetail) as React.ElementType
+
+      content = <Component dataSourceTypes={dataSourceTypes} ref={this.importRef} />;
+      
     } else if (current.matches('detail.export')) {
       // TODO
       content = (
