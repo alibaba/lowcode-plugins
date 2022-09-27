@@ -1,7 +1,7 @@
 .lp-simulator-pane {
   display: flex;
   align-items: center;
-  margin: 0 8px;
+  margin: 0 80px;
   .lp-simulator-pane-item {
     display: inline-block;
     width: 32px;
@@ -15,7 +15,7 @@
         opacity: 1;
       }
     }
-    &.actived {
+    &.active {
       background: #F2F2F2;
     }
   }

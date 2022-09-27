@@ -4,7 +4,7 @@
   "description": "画布切换",
   "main": "lib/index.js",
   "scripts": {
-    "start": "build-scripts start",
+    "start": "build-scripts start --config build.js",
     "build": "build-scripts build --skip-demo",
     "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.18",
-    "@alilc/build-plugin-alt": "^1.1.0",
+    "@alilc/build-plugin-alt": "^1.2.2",
     "@alilc/lowcode-engine": "^1.0.0",
     "@types/react": "^16.8.1",
     "build-plugin-component": "^1.1.0",
@@ -26,5 +26,5 @@
     "react-dom": "^16.8.1"
   },
   "author": "mark.ck",
-  "license": "ISC"
+  "license": "MIT"
 }
