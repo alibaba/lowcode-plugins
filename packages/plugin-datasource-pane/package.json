@@ -7,7 +7,7 @@
     "lib"
   ],
   "scripts": {
-    "start": "build-scripts start",
+    "start": "build-scripts start --config build.js",
     "build": "build-scripts build",
     "test": "ava",
     "test:snapshot": "ava --update-snapshots"
@@ -26,7 +26,7 @@
   "devDependencies": {
     "@alib/build-scripts": "^0.1.32",
     "@alifd/theme-lowcode-light": "^0.2.1",
-    "@alilc/build-plugin-alt": "^1.0.0",
+    "@alilc/build-plugin-alt": "^1.2.2",
     "@alilc/lowcode-engine": "beta",
     "@alilc/lowcode-shell": "^1.0.0",
     "@alilc/lowcode-types": "beta",
