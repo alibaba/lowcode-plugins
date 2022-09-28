@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "build-scripts start --config build.js",
-    "build": "build-scripts build",
+    "build": "build-scripts build --config build.js",
     "test": "ava",
     "test:snapshot": "ava --update-snapshots"
   },

@@ -12,9 +12,9 @@
   "types": "lib/index.d.ts",
   "README": "README.md",
   "scripts": {
-    "start": "build-scripts start",
+    "start": "build-scripts start --config build.js",
     "prepublishOnly": "npm run build",
-    "build": "build-scripts build"
+    "build": "build-scripts build --skip-demo --config build.js"
   },
   "publishConfig": {
     "access": "public"
