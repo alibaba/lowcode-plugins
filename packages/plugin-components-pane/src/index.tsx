@@ -10,7 +10,7 @@ import List from './components/List';
 import Component from './components/Component';
 import Tab from './components/Tab';
 import ComponentManager from './store';
-import transform, { getTextReader, SortedGroups, Text } from './utils/transform';
+import transform, { getTextReader, SortedGroups, Text, StandardComponentMeta, SnippetMeta } from './utils/transform';
 
 const { material, common, project, event } = window.AliLowCodeEngine || {};
 
@@ -49,6 +49,14 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
 
   getStrKeywords: (keywords: Text[]) => string;
 
+  getKeyToSearch (c:StandardComponentMeta|SnippetMeta){
+    const strTitle = this.t(c.title);
+    const strComponentName = this.t(c.componentName);
+    const strDescription = "description" in c ? this.t(c.description):'';
+    const strKeywords = "keywords" in c ? this.getStrKeywords(c.keywords||[]):'';
+    return  `${strTitle}#${strComponentName}#${strDescription}#${strKeywords}`.toLowerCase();
+  }
+
   getFilteredComponents = debounce(() => {
     const { groups = [], keyword } = this.state;
     if (!keyword) {
@@ -58,17 +66,20 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
       return;
     }
 
+
+
     const filter = groups.map((group) => ({
       ...group,
       categories: group.categories
         .map((category) => ({
           ...category,
           components: category.components.filter((c) => {
-            const strTitle = this.t(c.title);
-            const strComponentName = this.t(c.componentName);
-            const strDescription = this.t(c.description);
-            const strKeywords = this.getStrKeywords(c.keywords);
-            const keyToSearch = `${strTitle}#${strComponentName}#${strDescription}#${strKeywords}`.toLowerCase();
+            let keyToSearch =  this.getKeyToSearch(c);
+            if(c.snippets){
+              c.snippets.map((item)=>{
+                keyToSearch += `_${this.getKeyToSearch(item)}`
+              })
+            }
             return keyToSearch.includes(keyword);
           }),
         }))
@@ -224,7 +235,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
                   <List>
                     {components.map((component) => {
                       const { componentName, snippets = [] } = component;
-                      return snippets.filter(snippet => snippet.id).map(snippet => {
+                      return snippets.filter(snippet => snippet.id && this.getKeyToSearch(snippet).includes(keyword)).map(snippet => {
                         return (
                           <Component
                             data={{
