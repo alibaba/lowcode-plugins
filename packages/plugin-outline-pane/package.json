@@ -1,0 +1,47 @@
+{
+  "name": "@alilc/lowcode-plugin-outline-pane",
+  "version": "2.0.0",
+  "description": "Outline pane for Ali lowCode engine",
+  "files": [
+    "es",
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "start": "build-scripts start --config build.js",
+    "build": "build-scripts build --config build.js"
+  },
+  "dependencies": {
+    "@alifd/next": "^1.19.16",
+    "classnames": "^2.2.6"
+  },
+  "devDependencies": {
+    "@alib/build-scripts": "^0.1.32",
+    "@alilc/build-plugin-alt": "^1.2.2",
+    "@alilc/lowcode-engine": "^1.0.0",
+    "@alilc/lowcode-designer": "^1.0.15",
+    "@alilc/lowcode-editor-core": "^1.0.15",
+    "@alilc/lowcode-types": "^1.0.15",
+    "@alilc/lowcode-utils": "^1.0.15",
+    "@types/classnames": "^2.2.7",
+    "@types/node": "^13.7.1",
+    "@types/react": "^16",
+    "@types/react-dom": "^16",
+    "react": "^16",
+    "react-dom": "^16.7.0",
+    "build-plugin-component": "^0.2.10",
+    "build-plugin-fusion": "^0.1.1",
+    "build-plugin-moment-locales": "^0.1.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/alibaba/lowcode-plugins/tree/main/packages/plugin-outline-pane"
+  },
+  "gitHead": "2669f179e6f899d395ce1942d0fe04f9c5ed48a6"
+}

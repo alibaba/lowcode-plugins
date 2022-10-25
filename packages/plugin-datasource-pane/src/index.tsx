@@ -12,7 +12,6 @@ export interface Options {
   exportPlugins?: DataSourcePaneImportPlugin[];
 }
 
-// TODO: 2.0插件传参修改，不支持直接options: Options
 const plugin = (ctx: ILowCodePluginContext, options: Options) => {
   return {
     name: 'com.alibaba.lowcode.datasource.pane',

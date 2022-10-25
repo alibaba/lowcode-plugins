@@ -31,6 +31,12 @@ module.exports = {
     '@typescript-eslint/indent': 0,
     'import/no-cycle': 0,
     '@typescript-eslint/no-shadow': 0,
-    'max-len': ["error", {"code": 180}]
+    'max-len': ["error", {"code": 180}],
+    'comma-dangle': ["warn", {
+      "objects": "always",
+      "arrays": "always",
+      "imports": "never",
+      "functions": "never"
+    }]
   }
 };
