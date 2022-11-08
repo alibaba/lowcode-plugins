@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-simulator-select",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "画布切换",
   "main": "lib/index.js",
   "scripts": {
@@ -26,5 +26,10 @@
     "react-dom": "^16.8.1"
   },
   "author": "mark.ck",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-plugins.git",
+    "directory": "packages/plugin-simulator-size"
+  },
   "license": "MIT"
 }
