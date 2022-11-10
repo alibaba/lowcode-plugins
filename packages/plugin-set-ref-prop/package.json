@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-set-ref-prop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "alibaba lowcode editor plugin for setting ref-id",
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
     "lib"
   ],
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "module": "es/index.js",
   "scripts": {
     "start": "build-scripts start",
