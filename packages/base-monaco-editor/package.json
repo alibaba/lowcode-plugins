@@ -62,5 +62,10 @@
       "commit-msg": "f2elint commit-msg-scan"
     }
   },
-  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-base-monaco-editor@1.1.1/build/index.html"
+  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-base-monaco-editor@1.1.1/build/index.html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-plugins.git",
+    "directory": "packages/base-monaco-editor"
+  }
 }
