@@ -49,5 +49,10 @@
     "@types/react-dom": "^16.9.4",
     "build-plugin-fusion": "^0.1.22"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-plugins.git",
+    "directory": "packages/plugin-code-editor"
+  }
 }

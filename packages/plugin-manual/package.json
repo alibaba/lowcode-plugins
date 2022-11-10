@@ -30,5 +30,10 @@
     "build-plugin-fusion": "^0.1.19",
     "@alilc/build-plugin-alt": "^1.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-plugins.git",
+    "directory": "packages/plugin-manual"
+  }
 }
