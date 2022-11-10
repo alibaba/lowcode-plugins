@@ -2,6 +2,11 @@
   "name": "@alilc/lowcode-plugin-set-ref-prop",
   "version": "1.0.0",
   "description": "alibaba lowcode editor plugin for setting ref-id",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-plugins.git",
+    "directory": "packages/plugin-set-ref-prop"
+  },
   "files": [
     "es",
     "lib"
