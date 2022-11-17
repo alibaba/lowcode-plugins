@@ -250,7 +250,10 @@ export class JsEditor extends PureComponent<JsEditorProps, JsEditorState> {
 
     const pos = monacoEditor.getPosition();
     this.setState({ errorInfo, hasError, code: newCode, errorLocation }, () => {
-      monacoEditor.setPosition(pos);
+      if(hasError) {
+        pos.column += 1;
+        monacoEditor.setPosition(pos);
+      }
 
       // update error decorations
       if (this.lastErrorDecoration) {
