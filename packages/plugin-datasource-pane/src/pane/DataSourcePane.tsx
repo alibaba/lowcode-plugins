@@ -95,7 +95,7 @@ export class DataSourcePane extends PureComponent<
     });
     setTimeout(() => {
       this.send({ type: 'UPDATE_DS', payload: this.props.initialSchema?.list });
-    }, 80);
+    }, 0);
   }
 
   componentWillUnmount() {
