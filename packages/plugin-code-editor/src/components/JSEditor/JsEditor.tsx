@@ -248,13 +248,9 @@ export class JsEditor extends PureComponent<JsEditorProps, JsEditorState> {
       return;
     }
 
-    const pos = monacoEditor.getPosition();
+    // const pos = monacoEditor.getPosition();
     this.setState({ errorInfo, hasError, code: newCode, errorLocation }, () => {
-      if(hasError) {
-        pos.column += 1;
-        monacoEditor.setPosition(pos);
-      }
-
+      // monacoEditor.setPosition(pos);
       // update error decorations
       if (this.lastErrorDecoration) {
         monacoEditor.deltaDecorations(
