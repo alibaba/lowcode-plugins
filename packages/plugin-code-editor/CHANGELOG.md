@@ -1,6 +1,7 @@
 ## 1.0.4 / 2022-11-18
 
-- 修复从 schema2code 时, state 恢复错误的问题
+- Fix 修正输入 / 粘贴时光标位置错误的 bug
+- Fix 修复当上下文没有 originCode 时，通过 schema 中的局部 source 字段无法恢复 state 的问题
 
 ## 1.0.3 / 2022-07-11
 
