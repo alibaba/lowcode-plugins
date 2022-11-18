@@ -1,3 +1,7 @@
+## 1.0.4 / 2022-11-18
+
+- 修复从 schema2code 时, state 恢复错误的问题
+
 ## 1.0.3 / 2022-07-11
 
 - Fix 源码面板高度塌陷的 [bug](https://github.com/alibaba/lowcode-engine/issues/803)

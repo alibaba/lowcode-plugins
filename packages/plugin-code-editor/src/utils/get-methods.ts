@@ -54,8 +54,7 @@ export const getMethods = (ast: Node) => {
       methods[name] = {
         type: 'JSFunction',
         value: compiledCode,
-        // 这里的 originalCode 直接放在全局，不挂在局部
-        // originalCode: codeStr,
+        source: codeStr,
       };
     },
   });

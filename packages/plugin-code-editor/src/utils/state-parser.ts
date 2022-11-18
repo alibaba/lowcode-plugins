@@ -18,7 +18,6 @@ export const stateParser = (ast: Node) => {
       // get state identifier or literal
       if (path.isIdentifier({ name: 'state' }) || path.isLiteral({ value: 'state' })) {
         const properties = path.container?.value?.properties;
-        // console.log('properties', properties);
         if (properties) {
           properties.forEach((property) => {
             // creat empty AST
@@ -26,7 +25,7 @@ export const stateParser = (ast: Node) => {
             code.program.body.push(t.variableDeclaration('var', [
               t.variableDeclarator(t.identifier('name'), property.value),
             ]));
-            
+
             const codeStr = babelTransformFromAst(code).code;
             const compiledCode = transformJS(codeStr, defaultBabelConfig).code;
             if (compiledCode) {
