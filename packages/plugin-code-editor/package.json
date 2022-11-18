@@ -14,7 +14,7 @@
   "scripts": {
     "start": "build-scripts start --config build.js",
     "prepublishOnly": "npm run build",
-    "build": "build-scripts build --skip-demo --config build.js"
+    "build": "build-scripts build --config build.js"
   },
   "publishConfig": {
     "access": "public"
