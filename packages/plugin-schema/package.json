@@ -1,7 +1,7 @@
 {
   "name": "@alilc/lowcode-plugin-schema",
   "author": "alvarto",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Show schema in lowcode editor",
   "files": [
     "es",
