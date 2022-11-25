@@ -3,7 +3,8 @@
     [
       "@alilc/build-plugin-alt",
       {
-        "type": "plugin"
+        "type": "plugin",
+        "inject": true
       }
     ],
     [
