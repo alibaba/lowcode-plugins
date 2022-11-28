@@ -36,25 +36,14 @@ export const beautifyCSS = (input?: string): string => {
 function initStateCode(componentSchema: RootSchema | undefined) {
   if (componentSchema?.state) {
     let statesStr = 'state = {\n';
-    let needNotice = false;
     Object.keys(componentSchema.state).forEach((key) => {
       const state = componentSchema.state?.[key];
       if (typeof state === 'object' && isJSExpression(state)) {
-        if (!(state as IState).source) {
-          needNotice = true;
-        }
         statesStr += `"${key}": ${(state as IState).source || state.value},\n`;
       } else {
         statesStr += `"${key}": ${typeof state === 'string' ? '"' + state + '"' : state},,\n`;
       }
-
     });
-    if (needNotice) {
-      Dialog.alert({
-        title: WORDS.title,
-        content: WORDS.irreparableState,
-      });
-    }
     statesStr += '}';
     return statesStr;
   }
