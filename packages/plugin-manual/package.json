@@ -1,7 +1,7 @@
 {
   "name": "@alilc/lowcode-plugin-manual",
   "author": "humphry.huang9@gmail.com",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "低代码产品使用手册",
   "main": "lib/index.js",
   "module": "es/index.js",
