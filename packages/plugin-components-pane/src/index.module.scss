@@ -33,4 +33,9 @@
       line-height: 2;
     }
   }
+
+  > .filtered-content {
+    overflow-y: overlay;
+    overflow-x: hidden;
+  }
 }
