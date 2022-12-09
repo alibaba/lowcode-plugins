@@ -213,7 +213,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
     }
     if (keyword) {
       return (
-        <div ref={this.registerAdditive}>
+        <div ref={this.registerAdditive} className={cx('filtered-content')}>
           {filter.map((group) => {
             const { categories } = group;
             {return categories.map((category) => {
