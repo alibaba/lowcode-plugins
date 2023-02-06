@@ -32,8 +32,6 @@ export interface DataSource {
   list: InterpretDataSourceConfig[];
 }
 
-const stateService = createStateService();
-
 export { DataSourceForm } from '../components/DataSourceForm';
 
 const PLUGIN_NAME = 'dataSourcePane';
@@ -83,6 +81,8 @@ export default class DataSourcePanePlugin extends PureComponent<
     exportPlugins: [],
   };
 
+  stateService = createStateService();
+
   state = {
     active: false,
     panelKey: 1,
@@ -110,11 +110,11 @@ export default class DataSourcePanePlugin extends PureComponent<
   }
 
   componentDidMount() {
-    stateService.start();
+    this.stateService.start();
   }
 
   componentWillUnmount() {
-    stateService.stop();
+    this.stateService.stop();
   }
 
   handleSchemaChange = (schema: DataSource) => {
@@ -166,7 +166,7 @@ export default class DataSourcePanePlugin extends PureComponent<
     return (
       <EditorContext.Provider value={{ project, logger, setters }}>
         <DataSourcePaneContext.Provider
-          value={{ stateService, dataSourceTypes }}
+          value={{ stateService: this.stateService, dataSourceTypes }}
         >
           <ErrorBoundary
             onError={onError}
