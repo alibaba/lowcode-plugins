@@ -39,19 +39,15 @@ const plugin = (ctx: ILowCodePluginContext, options: Options) => {
           width: '300px',
           // title: '源码面板',
         },
-        content: (
-          <DataSourcePanePlugin
-            // @ts-ignore
-            importPlugins={importPlugins}
-            // @ts-ignore
-            dataSourceTypes={dataSourceTypes}
-            event={ctx.event}
-            project={ctx.project}
-            logger={ctx.logger}
-            // @ts-ignore
-            setters={ctx.setters}
-          />
-        ),
+        content: DataSourcePanePlugin,
+        contentProps: {
+          importPlugins,
+          dataSourceTypes,
+          event: ctx.event,
+          project: ctx.project,
+          logger: ctx.logger,
+          setters: ctx.setters,
+        },
       });
 
       schemaDock && schemaDock.disable();

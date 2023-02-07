@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-datasource-pane",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "低代码引擎数据源面板",
   "main": "lib/index.js",
   "files": [
@@ -74,7 +74,7 @@
     "traverse": "^0.6.6",
     "xstate": "^4.26.0"
   },
-  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.7/build/index.html",
+  "homepage": "https://unpkg.com/@alilc/lowcode-plugin-datasource-pane@1.0.8/build/index.html",
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/lowcode-plugins.git",

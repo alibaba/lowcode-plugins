@@ -9,8 +9,6 @@ import {
 } from '@alilc/lowcode-datasource-types';
 import { Button, Message, Dialog } from '@alifd/next';
 import _isArray from 'lodash/isArray';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
 import { createStateMachine } from '../utils/stateMachine';
 import { DataSourcePaneContext } from '../utils/panel-context';
 import { DataSourceFilter } from '../components/DataSourceFilter';
@@ -350,54 +348,52 @@ export class DataSourcePane extends PureComponent<
     const isEmpty = current.context.dataSourceList.length === 0;
 
     return (
-      <DndProvider backend={HTML5Backend}>
-        <div
-          className={cn(generateClassName('container'), className)}
-          style={style}
-        >
-          <div className={generateClassName('title')}>
-            数据源
-            {helpLink && <Button component="a" href={helpLink}>使用帮助</Button>}
-          </div>
-          <DataSourceFilter
-            key={current.context.dataSourceListFilter.renderKey}
-            dataSourceTypes={dataSourceTypes}
-            onFilter={this.handleFilterChange}
-          />
-          <DataSourceOperations
-            dataSource={current.context.dataSourceList}
-            empty={isEmpty}
-            importPlugins={importPlugins}
-            dataSourceTypes={dataSourceTypes}
-            onCreate={this.handleCreate}
-            onStartExport={this.handleStartExport}
-            onCancelExport={this.handleCancelExport}
-            onFinishExport={this.handleFinishExport}
-            onStartSort={this.handleStartSort}
-            onCancelSort={this.handleCancelSort}
-            onFinishSort={this.handleFinishSort}
-            onImport={this.handleImport}
-            mode={mode}
-            selectedList={current.context.export.selectedDataSourceIdList}
-          />
-          <div className={generateClassName('list')}>
-            <DataSourceList
-              renderItemInfoTags={renderDataSourceInfoTags}
-              dataSource={current.context.dataSourceList.filter((i: DataSourceConfig) => {
-                return (
-                  i.id.indexOf(current.context.dataSourceListFilter.keyword) !==
-                  -1 &&
-                  (!current.context.dataSourceListFilter.dataSourceType ||
-                    current.context.dataSourceListFilter.dataSourceType ===
-                    i.type)
-                );
-              })}
-              onOperationClick={this.handleOperationClick}
-            />
-          </div>
-          {this.renderDetail()}
+      <div
+        className={cn(generateClassName('container'), className)}
+        style={style}
+      >
+        <div className={generateClassName('title')}>
+          数据源
+          {helpLink && <Button component="a" href={helpLink}>使用帮助</Button>}
         </div>
-      </DndProvider>
+        <DataSourceFilter
+          key={current.context.dataSourceListFilter.renderKey}
+          dataSourceTypes={dataSourceTypes}
+          onFilter={this.handleFilterChange}
+        />
+        <DataSourceOperations
+          dataSource={current.context.dataSourceList}
+          empty={isEmpty}
+          importPlugins={importPlugins}
+          dataSourceTypes={dataSourceTypes}
+          onCreate={this.handleCreate}
+          onStartExport={this.handleStartExport}
+          onCancelExport={this.handleCancelExport}
+          onFinishExport={this.handleFinishExport}
+          onStartSort={this.handleStartSort}
+          onCancelSort={this.handleCancelSort}
+          onFinishSort={this.handleFinishSort}
+          onImport={this.handleImport}
+          mode={mode}
+          selectedList={current.context.export.selectedDataSourceIdList}
+        />
+        <div className={generateClassName('list')}>
+          <DataSourceList
+            renderItemInfoTags={renderDataSourceInfoTags}
+            dataSource={current.context.dataSourceList.filter((i: DataSourceConfig) => {
+              return (
+                i.id.indexOf(current.context.dataSourceListFilter.keyword) !==
+                -1 &&
+                (!current.context.dataSourceListFilter.dataSourceType ||
+                  current.context.dataSourceListFilter.dataSourceType ===
+                  i.type)
+              );
+            })}
+            onOperationClick={this.handleOperationClick}
+          />
+        </div>
+        {this.renderDetail()}
+      </div>
     );
   }
 }
