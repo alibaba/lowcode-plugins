@@ -31,6 +31,13 @@ export class SimulatorResizePane extends React.Component {
         currentWidth
       });
     });
+    project.onSimulatorHostReady?.((simulator) => {
+      if (simulator.get('device')) {
+        this.setState({
+          active: simulator.get('device'),
+        });
+      }
+    });
   }
 
   change = (device: string) => {
@@ -47,7 +54,7 @@ export class SimulatorResizePane extends React.Component {
         currentWidth
       });
     }, 0);
-  }
+  };
 
   renderItemSVG(device: string) {
     switch (device) {
@@ -76,31 +83,39 @@ export class SimulatorResizePane extends React.Component {
               >
                 {this.renderItemSVG(item.key)}
               </span>
-            )
+            );
           })
         }
-        <div className='lp-simulator-width-setter'>
-          <NumberPicker className="lp-simulator-width-input" addonTextAfter="px" value={currentWidth} placeholder="请输入" onChange={(value) => {
-            this.setState({
-              currentWidth: value
-            });
-          }} onPressEnter={(event: any) => {
-            const value = event?.target?.value;
-            const simulator = project.simulatorHost;
-            simulator?.set('deviceStyle', {
-              canvas: {
-                width: `${value}px`,
-              }
-            })
-            this.setState({
-              currentWidth: value
-            });
-          }} />
+        <div className="lp-simulator-width-setter">
+          <NumberPicker
+            className="lp-simulator-width-input"
+            addonTextAfter="px"
+            value={currentWidth}
+            placeholder="请输入"
+            onChange={(value) => {
+              this.setState({
+                currentWidth: value
+              });
+            }}
+            onPressEnter={(event: any) => {
+              const value = event?.target?.value;
+              const simulator = project.simulatorHost;
+              simulator?.set('deviceStyle', {
+                canvas: {
+                  width: `${value}px`,
+                },
+              });
+              this.setState({
+                currentWidth: value
+              });
+            }}
+          />
         </div>
       </div>
     );
   }
 }
+
 const plugin = (ctx: ILowCodePluginContext) => {
   const SimulatorResizePaneRef = React.createRef<SimulatorResizePane>();
 
@@ -114,7 +129,7 @@ const plugin = (ctx: ILowCodePluginContext) => {
         type: 'Widget',
         props: {
           description: '切换画布尺寸',
-          align: "center",
+          align: 'center',
         },
         content: (
           <SimulatorResizePane

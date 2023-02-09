@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-simulator-select",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "画布切换",
   "main": "lib/index.js",
   "scripts": {
