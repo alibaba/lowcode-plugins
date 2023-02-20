@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useLayoutEffect } from 'react';
 import MonacoEditor from '@alilc/lowcode-plugin-base-monaco-editor';
 
 import { Dialog, Message, Button } from '@alifd/next';
@@ -32,15 +32,16 @@ export default function PluginSchema({ project, skeleton, event, showProjectSche
     });
   }, []);
 
-  useEffect(() => {
-    event.on('skeleton.panel-dock.active', (pluginName) => {
+  useLayoutEffect(() => {
+    const cancelListenShowPanel = skeleton.onShowPanel((pluginName: string) => {
       if (pluginName == 'LowcodePluginAliLowcodePluginSchema') {
-        const schema = project.exportSchema(common.designerCabin.TransformStage.Save)
-        const str = schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : ''
+        const schema = project.exportSchema(common.designerCabin.TransformStage.Save);
+        const str = schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : '';
         setSchemaValue(str);
       }
-    });
-  }, []);
+    })
+    return cancelListenShowPanel;
+  }, [])
 
   useEffect(() => {
     resize();
