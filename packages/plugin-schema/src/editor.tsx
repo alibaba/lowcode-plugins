@@ -3,23 +3,20 @@ import { useState, useRef, useCallback, useEffect, useLayoutEffect } from 'react
 import MonacoEditor from '@alilc/lowcode-plugin-base-monaco-editor';
 
 import { Dialog, Message, Button } from '@alifd/next';
-
-import { common } from '@alilc/lowcode-engine'
-import { Project, Skeleton, Event } from '@alilc/lowcode-shell';
+import { IPublicApiProject, IPublicApiSkeleton, IPublicEnumTransformStage } from '@alilc/lowcode-types';
 import { IEditorInstance } from '@alilc/lowcode-plugin-base-monaco-editor/lib/helper';
 
 interface PluginCodeDiffProps {
-  project: Project;
-  skeleton: Skeleton;
-  event: Event;
+  project: IPublicApiProject;
+  skeleton: IPublicApiSkeleton;
   // 是否显示项目级 schema
   showProjectSchema: boolean;
 }
 
-export default function PluginSchema({ project, skeleton, event, showProjectSchema = false }: PluginCodeDiffProps) {
+export default function PluginSchema({ project, skeleton, showProjectSchema = false }: PluginCodeDiffProps) {
   const [editorSize, setEditorSize] = useState({ width: 0, height: 0 });
   const [schemaValue, setSchemaValue] = useState(() => {
-    const schema = project.exportSchema(common.designerCabin.TransformStage.Save);
+    const schema = project.exportSchema(IPublicEnumTransformStage.Save);
     const schemaToShow = showProjectSchema? schema : schema?.componentsTree?.[0];
     return schemaToShow? JSON.stringify(schemaToShow, null, 2) : '';
   });
@@ -35,13 +32,13 @@ export default function PluginSchema({ project, skeleton, event, showProjectSche
   useLayoutEffect(() => {
     const cancelListenShowPanel = skeleton.onShowPanel((pluginName: string) => {
       if (pluginName == 'LowcodePluginAliLowcodePluginSchema') {
-        const schema = project.exportSchema(common.designerCabin.TransformStage.Save);
+        const schema = project.exportSchema(IPublicEnumTransformStage.Save);
         const str = schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : '';
         setSchemaValue(str);
       }
     })
     return cancelListenShowPanel;
-  }, [])
+  }, []);
 
   useEffect(() => {
     resize();
@@ -69,7 +66,7 @@ export default function PluginSchema({ project, skeleton, event, showProjectSche
         } else {
           // 当前操作页面级 schema
           project.importSchema({
-            ...project.exportSchema(common.designerCabin.TransformStage.Save),
+            ...project.exportSchema(IPublicEnumTransformStage.Save),
             componentsTree: [json],
           });
         }

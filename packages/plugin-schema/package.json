@@ -1,7 +1,7 @@
 {
   "name": "@alilc/lowcode-plugin-schema",
   "author": "alvarto",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Show schema in lowcode editor",
   "files": [
     "es",
@@ -31,8 +31,7 @@
     "@alib/build-scripts": "^0.1.32",
     "@alifd/theme-lowcode-light": "^0.2.1",
     "@alilc/build-plugin-alt": "^1.0.0",
-    "@alilc/lowcode-engine": "^1.0.0",
-    "@alilc/lowcode-shell": "^1.0.0",
+    "@alilc/lowcode-types": "^1.1.2",
     "@recore/config": "^2.0.6",
     "@types/react": "^16.0.3",
     "build-plugin-fusion": "^0.1.19"

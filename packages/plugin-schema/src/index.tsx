@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { ILowCodePluginContext } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import PluginSchema from './editor';
 
-const plugin = (ctx: ILowCodePluginContext, options: any) => {
+const plugin = (ctx: IPublicModelPluginContext, options: any) => {
   return {
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     init() {
@@ -25,7 +25,6 @@ const plugin = (ctx: ILowCodePluginContext, options: any) => {
           <PluginSchema
             project={ctx.project}
             skeleton={ctx.skeleton}
-            event={ctx.event}
             showProjectSchema={isProjectSchema}
           />
         ),
