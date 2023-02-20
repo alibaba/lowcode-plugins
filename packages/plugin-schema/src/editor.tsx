@@ -35,12 +35,12 @@ export default function PluginSchema({ project, skeleton, event, showProjectSche
   useLayoutEffect(() => {
     const cancelListenShowPanel = skeleton.onShowPanel((pluginName: string) => {
       if (pluginName == 'LowcodePluginAliLowcodePluginSchema') {
-        const schema = project.exportSchema(common.designerCabin.TransformStage.Save)
-        const str = schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : ''
-        setSchemaValue(str)
+        const schema = project.exportSchema(common.designerCabin.TransformStage.Save);
+        const str = schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : '';
+        setSchemaValue(str);
       }
     })
-    return cancelListenShowPanel
+    return cancelListenShowPanel;
   }, [])
 
   useEffect(() => {
