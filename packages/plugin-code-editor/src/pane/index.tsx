@@ -94,7 +94,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
 
   useEffect(() => {
     // load schema on open
-    eventRef.current?.on('skeleton.panel-dock.active', (pluginName) => {
+    eventRef.current?.on('common:skeleton.panel-dock.active', (pluginName) => {
       if (pluginName === 'codeEditor') {
         const schema = lowcodeProjectRef.current?.exportSchema(common.designerCabin.TransformStage.Save);
         if (!schema) {
@@ -109,7 +109,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
     });
 
     // save schema when panel closed
-    eventRef.current?.on('skeleton.panel-dock.unactive', (pluginName) => {
+    eventRef.current?.on('common:skeleton.panel-dock.unactive', (pluginName) => {
       if (pluginName === 'codeEditor') {
         saveSchemaRef.current?.();
       }
