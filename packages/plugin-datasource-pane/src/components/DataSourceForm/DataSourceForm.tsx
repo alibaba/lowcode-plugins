@@ -90,7 +90,7 @@ const SCHEMA = {
           type: 'string',
           title: '请求方法',
           required: true,
-          enum: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'].map((i) => ({
+          enum: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'].map((i) => ({
             label: i,
             value: i,
           })),
