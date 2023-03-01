@@ -3,17 +3,18 @@ import { useState, useRef, useCallback, useEffect, useLayoutEffect } from 'react
 import MonacoEditor from '@alilc/lowcode-plugin-base-monaco-editor';
 
 import { Dialog, Message, Button } from '@alifd/next';
-import { IPublicApiProject, IPublicApiSkeleton, IPublicEnumTransformStage } from '@alilc/lowcode-types';
+import { IPublicEnumTransformStage, IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { IEditorInstance } from '@alilc/lowcode-plugin-base-monaco-editor/lib/helper';
 
 interface PluginCodeDiffProps {
-  project: IPublicApiProject;
-  skeleton: IPublicApiSkeleton;
+  pluginContext: IPublicModelPluginContext;
   // 是否显示项目级 schema
   showProjectSchema: boolean;
 }
 
-export default function PluginSchema({ project, skeleton, showProjectSchema = false }: PluginCodeDiffProps) {
+export default function PluginSchema({ pluginContext, showProjectSchema = false }: PluginCodeDiffProps) {
+  const { project, skeleton } = pluginContext;
+
   const [editorSize, setEditorSize] = useState({ width: 0, height: 0 });
   const [schemaValue, setSchemaValue] = useState(() => {
     const schema = project.exportSchema(IPublicEnumTransformStage.Save);
@@ -82,7 +83,7 @@ export default function PluginSchema({ project, skeleton, showProjectSchema = fa
         onClick={onSave}
         style={{ position: 'absolute', right: 68, zIndex: 100, top: -38 }}
       >
-        保存 Schema
+        {pluginContext.intl('Save Schema')}
       </Button>
       <MonacoEditor
         height={editorSize.height}
