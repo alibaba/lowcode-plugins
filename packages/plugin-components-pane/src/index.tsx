@@ -10,7 +10,7 @@ import List from './components/List';
 import Component from './components/Component';
 import Tab from './components/Tab';
 import ComponentManager from './store';
-import transform, { getTextReader, SortedGroups, Text, StandardComponentMeta, SnippetMeta } from './utils/transform';
+import transform, { getTextReader, SortedGroups, Text, StandardComponentMeta, SnippetMeta, createI18n } from './utils/transform';
 
 const { material, common, project, event } = window.AliLowCodeEngine || {};
 
@@ -136,7 +136,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
     const { editor } = this.props;
     const rawData = isNewEngineVersion ? material.getAssets() : editor.get('assets');
 
-    const meta = transform(rawData);
+    const meta = transform(rawData, this.t);
 
     const { groups, snippets } = meta;
 
@@ -207,7 +207,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
     return (
       <div className={cx('empty')}>
         <img src="//g.alicdn.com/uxcore/pic/empty.png" />
-        <div className={cx('content')}>暂无组件，请在物料站点添加</div>
+        <div className={cx('content')}>{this.t(createI18n('暂无组件，请在物料站点添加', 'No components, please add materials'))}</div>
       </div>
     )
   }
@@ -244,6 +244,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
                               snippets: [snippet]
                             }}
                             key={`${this.t(group.name)}_${this.t(componentName)}_${this.t(snippet.title)}`}
+                            t={this.t}
                           />
                         );
                       });
@@ -279,6 +280,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
                                   icon: snippet.screenshot || component.icon,
                                   snippets: [snippet]
                                 }}
+                                t={this.t}
                                 key={`${this.t(group.name)}_${this.t(componentName)}_${this.t(snippet.title)}`}
                               />
                             );
@@ -302,7 +304,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
         <div className={cx('header')}>
           <Search
             className={cx('search')}
-            placeholder="搜索组件"
+            placeholder={this.t(createI18n('其他', 'Search components'))}
             shape="simple"
             hasClear
             autoFocus
