@@ -304,7 +304,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
         <div className={cx('header')}>
           <Search
             className={cx('search')}
-            placeholder={this.t(createI18n('其他', 'Search components'))}
+            placeholder={this.t(createI18n('搜索组件', 'Search components'))}
             shape="simple"
             hasClear
             autoFocus
