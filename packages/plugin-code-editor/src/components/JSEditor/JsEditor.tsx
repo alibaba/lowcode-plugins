@@ -178,8 +178,14 @@ export class JsEditor extends PureComponent<JsEditorProps, JsEditorState> {
     if (!monacoEditor || !monaco) {
       return;
     }
-    const count = monacoEditor.getModel()?.getLineCount() ?? 0;
-    const range = new monaco.Range(count, 1, count, 1);
+
+    // 找到最后一个 }，在他前面插入新的 function 字符串
+    const matches = monacoEditor.getModel()?.findMatches('}');
+    let range = {}
+    if(matches && matches.length > 0) {
+      const { startLineNumber, startColumn } = matches[matches.length - 1]?.range || {}
+      range = new monaco.Range(startLineNumber, startColumn, startLineNumber, startColumn);
+    }
 
     const functionCode = params.template ?
       params.template :
