@@ -1,7 +1,7 @@
 {
   "name": "@alilc/lowcode-plugin-code-editor",
   "author": "59174526@qq.com & humphry.huang9@gmail.com",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "CodeEditor",
   "files": [
     "es",
