@@ -16,10 +16,13 @@ export default function PluginSchema({ pluginContext, showProjectSchema = false 
   const { project, skeleton } = pluginContext;
 
   const [editorSize, setEditorSize] = useState({ width: 0, height: 0 });
-  const [schemaValue, setSchemaValue] = useState(() => {
+  const getSchemaStr = useCallback(() => {
     const schema = project.exportSchema(IPublicEnumTransformStage.Save);
     const schemaToShow = showProjectSchema? schema : schema?.componentsTree?.[0];
-    return schemaToShow? JSON.stringify(schemaToShow, null, 2) : '';
+    return schemaToShow ? JSON.stringify(schemaToShow, null, 2) : '';
+  }, []);
+  const [schemaValue, setSchemaValue] = useState(() => {
+    return getSchemaStr();
   });
   const monacoEditorRef = useRef<IEditorInstance>();
 
@@ -33,9 +36,7 @@ export default function PluginSchema({ pluginContext, showProjectSchema = false 
   useLayoutEffect(() => {
     const cancelListenShowPanel = skeleton.onShowPanel((pluginName: string) => {
       if (pluginName == 'LowcodePluginAliLowcodePluginSchema') {
-        const schema = project.exportSchema(IPublicEnumTransformStage.Save);
-        const str = schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : '';
-        setSchemaValue(str);
+        setSchemaValue(getSchemaStr());
       }
     })
     return cancelListenShowPanel;
