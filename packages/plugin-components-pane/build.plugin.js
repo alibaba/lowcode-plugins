@@ -4,7 +4,6 @@ module.exports = ({ onGetWebpackConfig }) => {
   onGetWebpackConfig('component-demo-web', (config) => {
     config.plugin('HtmlWebpackPlugin').tap((options) => {
       const [config] = options;
-      console.log("Config: ", config);
       return [
         {
           ...config,
