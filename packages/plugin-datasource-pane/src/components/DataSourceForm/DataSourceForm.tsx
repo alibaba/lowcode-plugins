@@ -42,11 +42,7 @@ const SCHEMA = {
     type: {
       title: '类型',
       type: 'string',
-      editable: false,
       readOnly: true,
-      hidden: true,
-      display: 'hidden',
-      visible: false,
       'x-decorator': 'FormItem',
       'x-component-props': {
         // labelWidth: 300,
