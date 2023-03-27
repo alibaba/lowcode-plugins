@@ -1,13 +1,11 @@
 import React from 'react';
 import { NumberPicker, Icon } from '@alifd/next';
-import { ILowCodePluginContext, project, material } from '@alilc/lowcode-engine';
+import { ILowCodePluginContext, project, isOpenSource } from '@alilc/lowcode-engine';
 
 import './index.scss';
 
-const isNewEngineVersion = !!material;
-
 const devices = [
-  { key: 'desktop' },
+  { key: 'default' },
   { key: 'tablet' },
   { key: 'phone' },
 ];
@@ -16,36 +14,34 @@ const CustomIcon = Icon.createFromIconfontCN({
   scriptUrl: 'https://at.alicdn.com/t/font_2896595_33xhsbg9ux5.js',
 });
 
-export class SimulatorPane extends React.Component {
-  static displayName = 'SimulatorPane';
+export class SimulatorResizePane extends React.Component {
+  static displayName = 'SimulatorResizePane';
 
   state = {
-    actived: 'desktop',
+    active: 'default',
     currentWidth: null
   };
 
   componentDidMount() {
-    if (isNewEngineVersion) {
-      project.onSimulatorRendererReady(() => {
-        const currentWidth = document.querySelector('.lc-simulator-canvas')?.clientWidth || this.state.currentWidth || 0;
-        this.setState({
-          currentWidth
-        });
+    // @ts-ignore
+    const onSimulatorRendererReady = (project.onSimulatorRendererReady || project.onRendererReady).bind(project);
+    onSimulatorRendererReady(() => {
+      const currentWidth = document.querySelector('.lc-simulator-canvas')?.clientWidth || this.state.currentWidth || 0;
+      this.setState({
+        currentWidth
       });
-    } else {
-      // 兼容老版本引擎
-      // @ts-ignore
-      project.onRendererReady(() => {
-        const currentWidth = document.querySelector('.lc-simulator-canvas')?.clientWidth || this.state.currentWidth || 0;
+    });
+    project.onSimulatorHostReady?.((simulator) => {
+      if (simulator.get('device')) {
         this.setState({
-          currentWidth
+          active: simulator.get('device'),
         });
-      });
-    }
+      }
+    });
   }
 
   change = (device: string) => {
-    const simulator = project.simulator;
+    const simulator = project.simulatorHost;
     // 切换画布
     simulator?.set('device', device);
     if (document.querySelector('.lc-simulator-canvas')?.style) {
@@ -54,15 +50,15 @@ export class SimulatorPane extends React.Component {
     setTimeout(() => {
       const currentWidth = document.querySelector('.lc-simulator-canvas')?.clientWidth || this.state.currentWidth || 0;
       this.setState({
-        actived: device,
+        active: device,
         currentWidth
       });
     }, 0);
-  }
+  };
 
   renderItemSVG(device: string) {
     switch (device) {
-      case 'desktop':
+      case 'default':
         return <CustomIcon size="large" type="iconic_PC_Select" />;
       case 'tablet':
         return <CustomIcon size="large" type="iconic_Tablet_Select" />;
@@ -82,55 +78,69 @@ export class SimulatorPane extends React.Component {
             return (
               <span
                 key={item.key}
-                className={`lp-simulator-pane-item ${this.state.actived === item.key ? 'actived' : ''}`}
+                className={`lp-simulator-pane-item ${this.state.active === item.key ? 'active' : ''}`}
                 onClick={this.change.bind(this, item.key)}
               >
                 {this.renderItemSVG(item.key)}
               </span>
-            )
+            );
           })
         }
-        <div className='lp-simulator-width-setter'>
-          <NumberPicker className="lp-simulator-width-input" addonTextAfter="px" value={currentWidth} placeholder="请输入" onChange={(value) => {
-            this.setState({
-              currentWidth: value
-            });
-          }} onPressEnter={(event: any) => {
-            const value = event?.target?.value;
-            if (document.querySelector('.lc-simulator-canvas')?.style) {
-              document.querySelector('.lc-simulator-canvas').style.width = `${value}px`
-            } 
-            this.setState({
-              currentWidth: value
-            });
-          }} />
+        <div className="lp-simulator-width-setter">
+          <NumberPicker
+            className="lp-simulator-width-input"
+            addonTextAfter="px"
+            value={currentWidth}
+            placeholder="请输入"
+            onChange={(value) => {
+              this.setState({
+                currentWidth: value
+              });
+            }}
+            onPressEnter={(event: any) => {
+              const value = event?.target?.value;
+              const simulator = project.simulatorHost;
+              simulator?.set('deviceStyle', {
+                canvas: {
+                  width: `${value}px`,
+                },
+              });
+              this.setState({
+                currentWidth: value
+              });
+            }}
+          />
         </div>
       </div>
     );
   }
 }
-export default (ctx: ILowCodePluginContext) => {
-  const simulatorPaneRef = React.createRef<SimulatorPane>();
+
+const plugin = (ctx: ILowCodePluginContext) => {
+  const SimulatorResizePaneRef = React.createRef<SimulatorResizePane>();
 
   return {
-    name: 'SimulatorPane',
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     init() {
       // 往引擎增加工具条
       ctx.skeleton.add({
-        area: 'top',
-        name: 'SimulatorPane',
+        area: 'topArea',
+        name: 'SimulatorResizePane',
         type: 'Widget',
         props: {
           description: '切换画布尺寸',
-          align: "center",
+          align: 'center',
         },
         content: (
-          <SimulatorPane
-            ref={simulatorPaneRef}
+          <SimulatorResizePane
+            ref={SimulatorResizePaneRef}
           />
         ),
       });
     }
   };
 };
+
+plugin.pluginName = 'SimulatorResizePane';
+
+export default plugin;

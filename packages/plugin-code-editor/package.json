@@ -1,7 +1,7 @@
 {
   "name": "@alilc/lowcode-plugin-code-editor",
   "author": "59174526@qq.com & humphry.huang9@gmail.com",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "description": "CodeEditor",
   "files": [
     "es",
@@ -12,16 +12,16 @@
   "types": "lib/index.d.ts",
   "README": "README.md",
   "scripts": {
-    "start": "build-scripts start",
+    "start": "build-scripts start --config build.js",
     "prepublishOnly": "npm run build",
-    "build": "build-scripts build"
+    "build": "build-scripts build --config build.js"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "@alifd/next": "^1.25.13",
-    "@alilc/lowcode-plugin-base-monaco-editor": "^1.0.0",
+    "@alilc/lowcode-plugin-base-monaco-editor": "^1.1.1",
     "@babel/core": "^7.15.8",
     "@babel/parser": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
@@ -49,5 +49,10 @@
     "@types/react-dom": "^16.9.4",
     "build-plugin-fusion": "^0.1.22"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/lowcode-plugins.git",
+    "directory": "packages/plugin-code-editor"
+  }
 }

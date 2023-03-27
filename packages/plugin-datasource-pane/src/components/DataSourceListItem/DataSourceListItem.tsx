@@ -110,6 +110,10 @@ export class DataSourceListItem extends Component<DataSourceListItemProps> {
       selected,
       renderInfoTags = defaultRenderInfoTags,
     } = this.props;
+
+    // 拖拽中，需要向右偏移 8p，避免覆盖
+    const offsetStyle = mode === DataSourcePanelMode.SORTING ? { marginLeft: '8px' } : null;
+
     return this.props?.connectDropTarget?.(
       this.props?.connectDragPreview?.(
         <div
@@ -137,7 +141,7 @@ export class DataSourceListItem extends Component<DataSourceListItemProps> {
               onChange={this.handleExportCheckChange}
             />
           )}
-          <div className={generateClassName('list-item-title')}>
+          <div className={generateClassName('list-item-title')} style={offsetStyle}>
             <div
               className={generateClassName('list-item-id')}
               title={dataSource.id}
@@ -165,7 +169,7 @@ export class DataSourceListItem extends Component<DataSourceListItemProps> {
               </div>
             }
           </div>
-          <div className={generateClassName('list-item-desc')}>
+          <div className={generateClassName('list-item-desc')} style={offsetStyle}>
             {renderInfoTags(dataSource)?.map?.((tag: DataSourceInfoTag) => {
               if (tag.tooltip === true) {
                 return (

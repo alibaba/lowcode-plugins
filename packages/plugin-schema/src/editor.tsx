@@ -1,24 +1,28 @@
 import * as React from 'react';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useLayoutEffect } from 'react';
 import MonacoEditor from '@alilc/lowcode-plugin-base-monaco-editor';
 
 import { Dialog, Message, Button } from '@alifd/next';
-
-import { common } from '@alilc/lowcode-engine'
-import { Project, Skeleton, Event } from '@alilc/lowcode-shell';
+import { IPublicEnumTransformStage, IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { IEditorInstance } from '@alilc/lowcode-plugin-base-monaco-editor/lib/helper';
 
 interface PluginCodeDiffProps {
-  project: Project;
-  skeleton: Skeleton;
-  event: Event;
+  pluginContext: IPublicModelPluginContext;
+  // 是否显示项目级 schema
+  showProjectSchema: boolean;
 }
 
-export default function PluginSchema({ project, skeleton, event }: PluginCodeDiffProps) {
+export default function PluginSchema({ pluginContext, showProjectSchema = false }: PluginCodeDiffProps) {
+  const { project, skeleton } = pluginContext;
+
   const [editorSize, setEditorSize] = useState({ width: 0, height: 0 });
+  const getSchemaStr = useCallback(() => {
+    const schema = project.exportSchema(IPublicEnumTransformStage.Save);
+    const schemaToShow = showProjectSchema? schema : schema?.componentsTree?.[0];
+    return schemaToShow ? JSON.stringify(schemaToShow, null, 2) : '';
+  }, []);
   const [schemaValue, setSchemaValue] = useState(() => {
-    const schema = project.exportSchema(common.designerCabin.TransformStage.Save)
-    return schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : ''
+    return getSchemaStr();
   });
   const monacoEditorRef = useRef<IEditorInstance>();
 
@@ -29,14 +33,13 @@ export default function PluginSchema({ project, skeleton, event }: PluginCodeDif
     });
   }, []);
 
-  useEffect(() => {
-    event.on('skeleton.panel-dock.active', (pluginName) => {
+  useLayoutEffect(() => {
+    const cancelListenShowPanel = skeleton.onShowPanel((pluginName: string) => {
       if (pluginName == 'LowcodePluginAliLowcodePluginSchema') {
-        const schema = project.exportSchema(common.designerCabin.TransformStage.Save)
-        const str = schema?.componentsTree?.[0] ? JSON.stringify(schema.componentsTree[0], null, 2) : ''
-        setSchemaValue(str);
+        setSchemaValue(getSchemaStr());
       }
-    });
+    })
+    return cancelListenShowPanel;
   }, []);
 
   useEffect(() => {
@@ -44,7 +47,7 @@ export default function PluginSchema({ project, skeleton, event }: PluginCodeDif
     window.addEventListener('resize', resize);
     return () => {
       window.removeEventListener('resize', resize);
-    }
+    };
   }, [resize]);
 
   const onSave = () => {
@@ -52,20 +55,24 @@ export default function PluginSchema({ project, skeleton, event }: PluginCodeDif
       content: 'Are you 100% sure? Lowcode editor may crash.',
       footerActions: ['cancel', 'ok'],
       onOk: () => {
-        let json
+        let json;
         try {
-          json = JSON.parse(monacoEditorRef.current?.getValue() ?? schemaValue)
+          json = JSON.parse(monacoEditorRef.current?.getValue() ?? schemaValue);
         } catch (err) {
-          Message.error('Cannot save schema. Schema Parse Error.' + err.message)
+          Message.error('Cannot save schema. Schema Parse Error.' + err.message);
           return;
         }
-    
-        project.importSchema({
-          ...project.exportSchema(common.designerCabin.TransformStage.Save),
-          componentsTree: [json],
-        });
+        if (showProjectSchema) {
+          // 当前操作项目级 schema
+          project.importSchema(json);
+        } else {
+          // 当前操作页面级 schema
+          project.importSchema({
+            ...project.exportSchema(IPublicEnumTransformStage.Save),
+            componentsTree: [json],
+          });
+        }
         Message.success('Schema Saved!');
-
         skeleton.hidePanel('LowcodePluginAliLowcodePluginSchema');
       }
     });
@@ -77,7 +84,7 @@ export default function PluginSchema({ project, skeleton, event }: PluginCodeDif
         onClick={onSave}
         style={{ position: 'absolute', right: 68, zIndex: 100, top: -38 }}
       >
-        保存 Schema
+        {pluginContext.intl('Save Schema')}
       </Button>
       <MonacoEditor
         height={editorSize.height}
@@ -96,7 +103,7 @@ export default function PluginSchema({ project, skeleton, event }: PluginCodeDif
             contextMenuGroupId: 'navigation',
             contextMenuOrder: 1.5,
             run: onSave,
-          });          
+          });
         }}
       />
     </>

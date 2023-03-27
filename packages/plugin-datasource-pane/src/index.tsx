@@ -13,7 +13,7 @@ export interface Options {
 }
 
 // TODO: 2.0插件传参修改，不支持直接options: Options
-const plugin = (ctx: ILowCodePluginContext) => {
+const plugin = (ctx: ILowCodePluginContext, options: Options) => {
   return {
     name: 'com.alibaba.lowcode.datasource.pane',
     width: 300,
@@ -25,8 +25,8 @@ const plugin = (ctx: ILowCodePluginContext) => {
     },
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     init() {
-      const dataSourceTypes = ctx.preference.getPreferenceValue('dataSourceTypes');
-      const importPlugins = ctx.preference.getPreferenceValue('importPlugins');
+      const dataSourceTypes = ctx.preference.getPreferenceValue('dataSourceTypes') || options.dataSourceTypes;
+      const importPlugins = ctx.preference.getPreferenceValue('importPlugins') || options.importPlugins;
       const schemaDock = ctx.skeleton.add({
         area: 'leftArea',
         name: 'dataSourcePane',
@@ -39,19 +39,15 @@ const plugin = (ctx: ILowCodePluginContext) => {
           width: '300px',
           // title: '源码面板',
         },
-        content: (
-          <DataSourcePanePlugin
-            // @ts-ignore
-            importPlugins={importPlugins}
-            // @ts-ignore
-            dataSourceTypes={dataSourceTypes}
-            event={ctx.event}
-            project={ctx.project}
-            logger={ctx.logger}
-            // @ts-ignore
-            setters={ctx.setters}
-          />
-        ),
+        content: DataSourcePanePlugin,
+        contentProps: {
+          importPlugins,
+          dataSourceTypes,
+          event: ctx.event,
+          project: ctx.project,
+          logger: ctx.logger,
+          setters: ctx.setters,
+        },
       });
 
       schemaDock && schemaDock.disable();

@@ -1,3 +1,16 @@
+## 1.0.5 / 2022-11-28
+
+- Fix 修正 UIPaaS 中针对 source 的异常提示问题
+
+## 1.0.4 / 2022-11-18
+
+- Fix 修正输入 / 粘贴时光标位置错误的 bug
+- Fix 修复当上下文没有 originCode 时，通过 schema 中的局部 source 字段无法恢复 state 的问题
+
+## 1.0.3 / 2022-07-11
+
+- Fix 源码面板高度塌陷的 [bug](https://github.com/alibaba/lowcode-engine/issues/803)
+
 ## 1.0.2 / 2022-05-05
 
 * Fix [schema export issue](https://github.com/alibaba/lowcode-engine/issues/416)

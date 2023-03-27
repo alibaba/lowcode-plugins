@@ -8,7 +8,9 @@
     "moduleResolution": "node",
     "lib": ["DOM", "ES6"],
     "noImplicitAny": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
   },
   "include": [
     "src/**/*.ts",

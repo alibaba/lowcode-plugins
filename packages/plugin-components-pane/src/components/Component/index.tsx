@@ -2,12 +2,13 @@ import React from 'react';
 import cls from 'classnames/bind';
 import Svg from '../../Icon/Component';
 import style from './index.module.scss';
-import { getTextReader, StandardComponentMeta } from '../../utils/transform';
+import { Text, StandardComponentMeta } from '../../utils/transform';
 
 const cx = cls.bind(style);
 
 interface Props {
   data: StandardComponentMeta;
+  t: (input: Text) => string;
 }
 
 interface State {
@@ -37,7 +38,7 @@ export default class Component extends React.Component<Props, State> {
 
   constructor(props) {
     super(props);
-    this.t = getTextReader('zh_CN');
+    this.t = props.t;
   }
 
   renderIcon() {

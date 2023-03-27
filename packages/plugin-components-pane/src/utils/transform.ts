@@ -51,8 +51,7 @@ export interface IgnoreComponents {
   [key: string]: string[];
 }
 
-export default function transform(raw: any) {
-  const t = getTextReader('zh_CN');
+export default function transform(raw: any, t: (input: Text) => string) {
   let groupList: Text[] = [];
   let categoryList: Text[] = [];
   let ignoreComponents: IgnoreComponents = {};
@@ -136,7 +135,7 @@ export default function transform(raw: any) {
         const { sort } = stdComponent;
         const { group, category, priority = 0 } = sort;
 
-        const hasGroup = textExistIn(group, groupList);
+        const hasGroup = textExistIn(group, groupList, t);
 
         if (hasGroup) {
           if (!map[t(group)]) {
@@ -319,7 +318,6 @@ export function pipe(arr: any[]) {
   };
 }
 
-export function textExistIn(text: Text, arr: Text[]) {
-  const t = getTextReader('zh_CN');
+export function textExistIn(text: Text, arr: Text[], t: (input: Text) => string) {
   return !!arr.find((item) => t(item) === t(text));
 }

@@ -18,47 +18,44 @@ import { generateClassName } from '../../utils/misc';
 // import './import-plugins/code.scss';
 
 export interface DataSourceExportProps {
-dataSourceList: DataSourceConfig[];
-dataSourceTypes: DataSourceType[];
+  dataSourceList: DataSourceConfig[];
+  dataSourceTypes: DataSourceType[];
 }
 
 export interface DataSourceExportState {
-code: string;
-isCodeValid: boolean;
+  code: string;
+  isCodeValid: boolean;
 }
 
-export class DataSourceExport extends PureComponent<
-DataSourceExportProps,
-DataSourceExportState
-> {
-static defaultProps = {
+export class DataSourceExport extends PureComponent<DataSourceExportProps, DataSourceExportState> {
+  static defaultProps = {
     dataSourceList: [],
-};
+  };
 
-state = {
+  state = {
     code: '',
     isCodeValid: true,
-};
+  };
 
-submit = () => {
+  submit = () => {
     return new Promise((resolve, reject) => {
     const { isCodeValid, code } = this.state;
 
     if (isCodeValid) reject(new Error('格式有误'));
     resolve({ schema: code });
     });
-};
+  };
 
-private monacoRef: any;
+  private monacoRef: any;
 
-constructor(props: DataSourceExportProps) {
+  constructor(props: DataSourceExportProps) {
     super(props);
-    this.state.code = JSON.stringify(this.deriveValue(this.props.dataSourceList));
+    this.state.code = JSON.stringify(this.deriveValue(this.props.dataSourceList), null, 2);
     this.handleEditorDidMount = this.handleEditorDidMount.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
-}
+  }
 
-deriveValue = (value: any) => {
+  deriveValue = (value: any) => {
     const { dataSourceTypes } = this.props;
 
     if (!_isArray(dataSourceTypes) || dataSourceTypes.length === 0) return [];
@@ -74,36 +71,50 @@ deriveValue = (value: any) => {
     const ajv = new Ajv();
 
     return (result as DataSourceConfig[]).filter((dataSource) => {
-    if (!dataSource.type) return false;
-    const dataSourceType = dataSourceTypes.find((type) => type.type === dataSource.type);
-    if (!dataSourceType) return false;
-    return ajv.validate(dataSourceType.schema, dataSource);
+      if (!dataSource.type) return false;
+
+      const dataSourceType = dataSourceTypes.find((type) => type.type === dataSource.type);
+
+      if (!dataSourceType) return false;
+
+      // 向下兼容
+      if (dataSourceType.schema) {
+        // 校验失败的数据源，给予用户提示
+        const validate = ajv.compile(dataSourceType.schema)
+        const valid = validate(dataSource)
+        if (!valid) console.warn(validate.errors)
+        return valid
+      } else {
+        // 用户不传入 schema 校验规则，默认返回 true
+        return true
+      }
     });
-};
+  };
 
-handleCopy = () => {
+  handleCopy = () => {
     Message.success('粘贴成功！');
-};
+  };
 
-handleEditorChange = (newValue) => {
+  handleEditorChange = (newValue) => {
     if (this.monacoRef) {
-    if (!this.monacoRef.getModelMarkers().find((marker: editor.IMarker) => marker.owner === 'json')) {
+      if (!this.monacoRef.getModelMarkers().find((marker: editor.IMarker) => marker.owner === 'json')) {
         this.setState({ isCodeValid: true, code: newValue });
+      }
     }
+  };
+
+  handleEditorDidMount = (editor: MonacoEditor, monaco: MonacoEditor) => {
+    this.monacoRef = editor?.editor;
+  };
+
+  handleReset = () => {
+    const code = JSON.stringify(this.deriveValue(this.props.dataSourceList), null, 2)
+    if (this.monacoRef) {
+      this.monacoRef.getModels()?.[0]?.setValue?.(code);
     }
-};
+  };
 
-handleEditorDidMount = (isFullscreen, editor, monaco) => {
-    this.monacoRef = monaco?.editor;
-};
-
-handleReset = () => {
-if (this.monacoRef) {
-    this.monacoRef.getModels()?.[0]?.setValue?.(code);
-}
-};
-
-render() {
+  render() {
     const { code, isCodeValid } = this.state;
 
     // @todo
@@ -134,5 +145,5 @@ render() {
         </p>
       </div>
     );
-}
+  }
 }

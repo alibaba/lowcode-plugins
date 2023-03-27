@@ -1,6 +1,6 @@
 // @todo schema default
 import React, { PureComponent } from 'react';
-import { createForm, registerValidateRules } from '@formily/core';
+import { createForm, registerValidateRules, Form as FormilyForm } from '@formily/core';
 import { createSchemaField } from '@formily/react';
 import {
   Space,
@@ -34,6 +34,7 @@ import { generateClassName } from '../../utils/misc';
 import { filterXDisplay } from '../../utils/filter-x-display';
 
 import { DataSourceFormProps, DataSourceFormMode } from '../../types';
+import { isJSExpression } from '@alilc/lowcode-types';
 
 const SCHEMA = {
   type: 'object',
@@ -79,8 +80,8 @@ const SCHEMA = {
         },
         params: {
           title: '请求参数',
-          type: 'object',
-          default: {},
+          type: 'array',
+          default: [],
           'x-decorator-props': {
             addonAfter: <ComponentSwitchBtn component="LowcodeExpression" />,
           },
@@ -89,7 +90,7 @@ const SCHEMA = {
           type: 'string',
           title: '请求方法',
           required: true,
-          enum: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'].map((i) => ({
+          enum: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'].map((i) => ({
             label: i,
             value: i,
           })),
@@ -117,9 +118,9 @@ const SCHEMA = {
           },
         },
         headers: {
-          type: 'object',
+          type: 'array',
           title: '请求头信息',
-          default: {},
+          default: [],
           'x-decorator-props': {
             addonAfter: <ComponentSwitchBtn component="LowcodeExpression" />,
           },
@@ -182,9 +183,32 @@ const SCHEMA = {
 /**
  * 通过是否存在 ID 来决定读写状态
  */
-export class DataSourceForm extends PureComponent<DataSourceFormProps> {
+export class DataSourceForm extends PureComponent<DataSourceFormProps, { form: FormilyForm } > {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      form: this.createForm()
+    }
+  }
+
+  createForm(): FormilyForm {
+    return createForm({
+      initialValues: this.deriveInitialData(this.props.dataSource),
+    })
+  }
+
+  componentDidUpdate(prevProps: DataSourceFormProps) {
+    // dataSource 变了，需要更新 form，界面刷新
+    if (this.props.dataSource !== prevProps.dataSource) {
+      this.setState({
+        form: this.createForm()
+      })
+    }
+  }
+
   submit = () => {
-    return this.form
+    return this.state.form
       .submit()
       .then((formData: any) => {
         if (_isArray(_get(formData, 'options.params'))) {
@@ -218,9 +242,8 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
   deriveInitialData = (dataSource: object = {}) => {
     const { dataSourceType } = this.props;
     const result: any = _cloneDeep(dataSource);
-
     // TODO
-    if (_isPlainObject(_get(result, 'options.params'))) {
+    if (_isPlainObject(_get(result, 'options.params')) && !isJSExpression(_get(result, 'options.params'))) {
       result.options.params = Object.keys(result.options.params).reduce(
         (acc: any, cur: any) => {
           acc.push({
@@ -232,7 +255,7 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
         [],
       );
     }
-    if (_isPlainObject(_get(result, 'options.headers'))) {
+    if (_isPlainObject(_get(result, 'options.headers')) && !isJSExpression(_get(result, 'options.headers'))) {
       result.options.headers = Object.keys(result.options.headers).reduce(
         (acc: any, cur: any) => {
           acc.push({
@@ -459,10 +482,6 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
     };
   };
 
-  form = createForm({
-    initialValues: this.deriveInitialData(this.props.dataSource),
-  });
-
   render() {
     const SchemaField = createSchemaField({
       components: {
@@ -485,7 +504,7 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps> {
 
     return (
       <div className={generateClassName('create')}>
-        <Form form={this.form}>
+        <Form form={this.state.form}>
           <SchemaField
             schema={_thru(this.deriveSchema(), (arg) => {
               return arg;

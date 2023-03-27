@@ -1,14 +1,14 @@
-
 import { js_beautify, css_beautify } from 'js-beautify';
-import { isJSExpression, ProjectSchema, RootSchema, JSFunction, JSExpression } from '@alilc/lowcode-types';
+import { isJSExpression, ProjectSchema, RootSchema } from '@alilc/lowcode-types';
 import { Dialog } from '@alifd/next';
 import { IState } from '../types';
-import { defaultStateCode, WORDS } from '../config';
+import { WORDS } from '../config';
+import type { Method } from '../types/methods';
 
 const js_beautify_config = { indent_size: 2, indent_empty_lines: true, e4x: true };
 
 const initCode = (componentSchema: RootSchema | undefined) => {
-  const code = `class LowcodeComponent extends Component {
+  const code = `class Page extends Component {
     ${initStateCode(componentSchema)}
     ${initLifeCycleCode(componentSchema)}
     ${initMethodsCode(componentSchema)}
@@ -30,34 +30,24 @@ export const schema2CssCode = (schema: ProjectSchema) => {
 };
 
 export const beautifyCSS = (input?: string): string => {
-  return input ? css_beautify(input, { indent_size: 2 }) : ''
+  return input ? css_beautify(input, { indent_size: 2 }) : '';
 }
 
 function initStateCode(componentSchema: RootSchema | undefined) {
   if (componentSchema?.state) {
-    let states: Record<string, any> = {};
-    let needNotice = false;
-    Object.keys(componentSchema.state).forEach((item) => {
-      const state = componentSchema.state?.[item];
+    let statesStr = 'state = {\n';
+    Object.keys(componentSchema.state).forEach((key) => {
+      const state = componentSchema.state?.[key];
       if (typeof state === 'object' && isJSExpression(state)) {
-        states[item] = (state as IState).originCode || state.value; // 兼容历史数据
-        if (!(state as IState).originCode) {
-          needNotice = true;
-        }
+        statesStr += `"${key}": ${(state as IState).source || state.value},\n`;
       } else {
-        states[item] = state; // 兼容历史数据
+        statesStr += `"${key}": ${typeof state === 'string' ? '"' + state + '"' : state},,\n`;
       }
     });
-    if (needNotice) {
-      Dialog.alert({
-        title: WORDS.title,
-        content: WORDS.irreparableState,
-      });
-    }
-    return `state = ${JSON.stringify(states)}`;
+    statesStr += '}';
+    return statesStr;
   }
 
-  return defaultStateCode;
 }
 
 function initLifeCycleCode(componentSchema: RootSchema | undefined) {
@@ -100,10 +90,10 @@ function initMethodsCode(componentSchema: RootSchema | undefined) {
   }
 }
 
-function createFunctionCode(functionName: string, functionNode: JSFunction | JSExpression) {
+function createFunctionCode(functionName: string, functionNode: Method) {
   if (functionNode?.type === 'JSExpression' || functionNode?.type === 'JSFunction') {
     // 读取原始代码
-    let functionCode = functionNode.originalCode;
+    let functionCode = functionNode.source;
     if (functionCode) {
       functionCode = functionCode.replace(/function/, '');
     } else {

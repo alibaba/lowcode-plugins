@@ -6,6 +6,7 @@
     position: relative;
     flex-grow: 0;
     flex-shrink: 0;
+    overflow-x: scroll;
 
     .items {
       display: flex;

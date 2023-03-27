@@ -10,7 +10,7 @@ import List from './components/List';
 import Component from './components/Component';
 import Tab from './components/Tab';
 import ComponentManager from './store';
-import transform, { getTextReader, SortedGroups, Text } from './utils/transform';
+import transform, { getTextReader, SortedGroups, Text, StandardComponentMeta, SnippetMeta, createI18n } from './utils/transform';
 
 const { material, common, project, event } = window.AliLowCodeEngine || {};
 
@@ -49,6 +49,14 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
 
   getStrKeywords: (keywords: Text[]) => string;
 
+  getKeyToSearch (c:StandardComponentMeta|SnippetMeta){
+    const strTitle = this.t(c.title);
+    const strComponentName = this.t(c.componentName);
+    const strDescription = "description" in c ? this.t(c.description):'';
+    const strKeywords = "keywords" in c ? this.getStrKeywords(c.keywords||[]):'';
+    return  `${strTitle}#${strComponentName}#${strDescription}#${strKeywords}`.toLowerCase();
+  }
+
   getFilteredComponents = debounce(() => {
     const { groups = [], keyword } = this.state;
     if (!keyword) {
@@ -58,17 +66,20 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
       return;
     }
 
+
+
     const filter = groups.map((group) => ({
       ...group,
       categories: group.categories
         .map((category) => ({
           ...category,
           components: category.components.filter((c) => {
-            const strTitle = this.t(c.title);
-            const strComponentName = this.t(c.componentName);
-            const strDescription = this.t(c.description);
-            const strKeywords = this.getStrKeywords(c.keywords);
-            const keyToSearch = `${strTitle}#${strComponentName}#${strDescription}#${strKeywords}`.toLowerCase();
+            let keyToSearch =  this.getKeyToSearch(c);
+            if(c.snippets){
+              c.snippets.map((item)=>{
+                keyToSearch += `_${this.getKeyToSearch(item)}`
+              })
+            }
             return keyToSearch.includes(keyword);
           }),
         }))
@@ -125,7 +136,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
     const { editor } = this.props;
     const rawData = isNewEngineVersion ? material.getAssets() : editor.get('assets');
 
-    const meta = transform(rawData);
+    const meta = transform(rawData, this.t);
 
     const { groups, snippets } = meta;
 
@@ -196,7 +207,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
     return (
       <div className={cx('empty')}>
         <img src="//g.alicdn.com/uxcore/pic/empty.png" />
-        <div className={cx('content')}>暂无组件，请在物料站点添加</div>
+        <div className={cx('content')}>{this.t(createI18n('暂无组件，请在物料站点添加', 'No components, please add materials'))}</div>
       </div>
     )
   }
@@ -213,7 +224,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
     }
     if (keyword) {
       return (
-        <div ref={this.registerAdditive}>
+        <div ref={this.registerAdditive} className={cx('filtered-content')}>
           {filter.map((group) => {
             const { categories } = group;
             {return categories.map((category) => {
@@ -224,7 +235,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
                   <List>
                     {components.map((component) => {
                       const { componentName, snippets = [] } = component;
-                      return snippets.filter(snippet => snippet.id).map(snippet => {
+                      return snippets.filter(snippet => snippet.id && this.getKeyToSearch(snippet).includes(keyword)).map(snippet => {
                         return (
                           <Component
                             data={{
@@ -233,6 +244,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
                               snippets: [snippet]
                             }}
                             key={`${this.t(group.name)}_${this.t(componentName)}_${this.t(snippet.title)}`}
+                            t={this.t}
                           />
                         );
                       });
@@ -268,6 +280,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
                                   icon: snippet.screenshot || component.icon,
                                   snippets: [snippet]
                                 }}
+                                t={this.t}
                                 key={`${this.t(group.name)}_${this.t(componentName)}_${this.t(snippet.title)}`}
                               />
                             );
@@ -291,7 +304,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
         <div className={cx('header')}>
           <Search
             className={cx('search')}
-            placeholder="搜索组件"
+            placeholder={this.t(createI18n('搜索组件', 'Search components'))}
             shape="simple"
             hasClear
             autoFocus

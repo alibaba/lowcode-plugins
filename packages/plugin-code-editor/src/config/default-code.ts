@@ -1,5 +1,5 @@
 export const defaultCode = `
-  export default class LowcodeComponent extends Component {
+  export default class Page extends Component {
     // 可以在 state 中定义搭建所需要的 State
     state = {
       test: 1,

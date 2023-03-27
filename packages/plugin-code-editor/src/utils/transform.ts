@@ -1,4 +1,3 @@
-
 import { transform } from './babel';
 import { TransformResult } from '../types';
 

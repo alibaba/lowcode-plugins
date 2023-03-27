@@ -14,7 +14,7 @@ const plugin = (ctx: ILowCodePluginContext) => {
     },
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     init() {
-      const schemaDock = ctx.skeleton.add({
+      const codeEditorDock = ctx.skeleton.add({
         area: 'leftArea',
         name: 'codeEditor',
         type: 'PanelDock',
@@ -35,9 +35,9 @@ const plugin = (ctx: ILowCodePluginContext) => {
         ),
       });
 
-      schemaDock && schemaDock.disable();
+      codeEditorDock && codeEditorDock.disable();
       project.onSimulatorRendererReady(() => {
-        schemaDock.enable();
+        codeEditorDock.enable();
       });
     },
   };

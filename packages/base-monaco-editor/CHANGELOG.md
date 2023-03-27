@@ -1,3 +1,20 @@
+## 1.1.1
+
+- 避免 UIPaaS 中的样式冲突，将 `.ve-code-control` 替换为 `.lc-code-control`
+
+## 1.1.0
+
+- Publish following changes
+
+## 1.1.0-beta.3
+
+- 去除 `overflow: visible` 样式，避免动作面板遮住按钮
+
+## 1.1.0-beta.1
+
+- 添加 controller 实例，可用作中间交换介质，解决与代码编辑相关的插件间的协作问题 [@wangshihao111](https://github.com/wangshihao111)
+- 优化 Monaco 单例，元信息保存在 controller 实例内部 [@wangshihao111](https://github.com/wangshihao111)
+
 ## 1.1.0-beta.0
 
 - 重构 type / path / value 联动，彻底修复 monaco 在多文件模式下覆盖多个 path 值的 bug

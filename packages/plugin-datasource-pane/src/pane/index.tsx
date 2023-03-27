@@ -7,6 +7,8 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import _isEmpty from 'lodash/isEmpty';
 import _isFunction from 'lodash/isFunction';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 import { EditorContext } from '../utils/editor-context';
 import { DataSourcePane } from './DataSourcePane';
 import { DataSourceFilter } from '../components/DataSourceFilter';
@@ -31,8 +33,6 @@ import './index.scss';
 export interface DataSource {
   list: InterpretDataSourceConfig[];
 }
-
-const stateService = createStateService();
 
 export { DataSourceForm } from '../components/DataSourceForm';
 
@@ -83,6 +83,8 @@ export default class DataSourcePanePlugin extends PureComponent<
     exportPlugins: [],
   };
 
+  stateService = createStateService();
+
   state = {
     active: false,
     panelKey: 1,
@@ -110,11 +112,11 @@ export default class DataSourcePanePlugin extends PureComponent<
   }
 
   componentDidMount() {
-    stateService.start();
+    this.stateService.start();
   }
 
   componentWillUnmount() {
-    stateService.stop();
+    this.stateService.stop();
   }
 
   handleSchemaChange = (schema: DataSource) => {
@@ -166,32 +168,34 @@ export default class DataSourcePanePlugin extends PureComponent<
     return (
       <EditorContext.Provider value={{ project, logger, setters }}>
         <DataSourcePaneContext.Provider
-          value={{ stateService, dataSourceTypes }}
+          value={{ stateService: this.stateService, dataSourceTypes }}
         >
-          <ErrorBoundary
-            onError={onError}
-            FallbackComponent={ErrorFallback}
-            onReset={this.handleReset}
-            resetKeys={[panelKey]}
-          >
-            { /* @ts-ignore */ }
-            <DataSourcePane
-              key={panelKey + 1}
-              importPlugins={mergeTwoObjectListByKey(
-                BUILTIN_IMPORT_PLUGINS as unknown as Array<Record<string, unknown>>,
-                importPlugins as unknown as Array<Record<string, unknown>>,
-                'name',
-              )}
-              exportPlugins={mergeTwoObjectListByKey(
-                BUILTIN_IMPORT_PLUGINS as unknown as Array<Record<string, unknown>>,
-                exportPlugins as unknown as Array<Record<string, unknown>>,
-                'name',
-              )}
-              dataSourceTypes={dataSourceTypes}
-              initialSchema={schema}
-              onSchemaChange={this.handleSchemaChange}
-            />
-          </ErrorBoundary>
+          <DndProvider backend={HTML5Backend}>
+            <ErrorBoundary
+              onError={onError}
+              FallbackComponent={ErrorFallback}
+              onReset={this.handleReset}
+              resetKeys={[panelKey]}
+            >
+              { /* @ts-ignore */ }
+              <DataSourcePane
+                key={panelKey + 1}
+                importPlugins={mergeTwoObjectListByKey(
+                  BUILTIN_IMPORT_PLUGINS as unknown as Array<Record<string, unknown>>,
+                  importPlugins as unknown as Array<Record<string, unknown>>,
+                  'name',
+                )}
+                exportPlugins={mergeTwoObjectListByKey(
+                  BUILTIN_IMPORT_PLUGINS as unknown as Array<Record<string, unknown>>,
+                  exportPlugins as unknown as Array<Record<string, unknown>>,
+                  'name',
+                )}
+                dataSourceTypes={dataSourceTypes}
+                initialSchema={schema}
+                onSchemaChange={this.handleSchemaChange}
+              />
+            </ErrorBoundary>
+          </DndProvider>
         </DataSourcePaneContext.Provider>
       </EditorContext.Provider>
     );
