@@ -113,11 +113,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
         if (!schema) {
           return;
         }
-        const jsCode = schema2JsCode(schema);
-        const cssCode = schema2CssCode(schema);
-        setSchema(schema);
-        jsEditorRef.current?._updateCode(jsCode);
-        cssEditorRef.current?._updateCode(cssCode);
+        updateSchema(schema)
       }
     });
 
