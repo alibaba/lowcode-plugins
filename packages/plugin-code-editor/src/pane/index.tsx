@@ -28,6 +28,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
   const cssEditorRef = useRef<CssEditor>(null);
   const saveSchemaRef = useRef<() => void>(); // save code to schema
 
+  const currentSchema = lowcodeProjectRef.current?.exportSchema(common.designerCabin.TransformStage.Save);
   const [schema, setSchema] = useState(() => project.exportSchema(common.designerCabin.TransformStage.Save));
 
   const jsCode = useMemo(() => {
@@ -37,6 +38,14 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
   const cssCode = useMemo(() => {
     return schema2CssCode(schema);
   }, [schema]);
+
+  const updateSchema = (schema) => {
+    const jsCode = schema2JsCode(schema);
+    const cssCode = schema2CssCode(schema);
+    setSchema(schema)
+    jsEditorRef.current?._updateCode(jsCode);
+    cssEditorRef.current?._updateCode(cssCode);
+  }
 
   useEffect(() => {
     saveSchemaRef.current = () => {
@@ -91,6 +100,10 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
   useEffect(() => {
     eventRef.current = event;
   }, [event]);
+
+  useEffect(() => {
+    updateSchema(currentSchema)
+  }, [JSON.stringify(currentSchema) !== JSON.stringify(schema)])
 
   useEffect(() => {
     // load schema on open
