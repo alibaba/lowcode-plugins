@@ -48,9 +48,15 @@ export const FormLazyObj = observer((props: FormLazyObjProps) => {
     setSelectedProperties((selectedProperties) => selectedProperties.concat(propertyKey));
   }, []);
 
+  /* 改成formily内部支持 */
   const handleRemove = useCallback((propertyKey) => {
-    setSelectedProperties((selectedProperties) => selectedProperties.filter((i) => i !== propertyKey));
-  }, []);
+    field?.form?.query(propertyKey)?.take()?.setState((state) => {
+      state.visible = !state.visible;
+    });
+    // setSelectedProperties((selectedProperties) =>
+    //   selectedProperties.filter((i) => i !== propertyKey)
+    // );
+  }, [field]);
 
   const addition = useMemo(() => {
     if (properties.length === 0) return null;

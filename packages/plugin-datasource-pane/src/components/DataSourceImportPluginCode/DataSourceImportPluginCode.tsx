@@ -3,7 +3,7 @@
  * @todo editor 关联 types，并提供详细的出错信息
  */
 import React, { PureComponent } from 'react';
-import { Button } from '@alifd/next';
+import { Button, Message } from '@alifd/next';
 import _noop from 'lodash/noop';
 import _isArray from 'lodash/isArray';
 import _last from 'lodash/last';
@@ -44,6 +44,20 @@ export class DataSourceImportPluginCode extends PureComponent<
     isCodeValid: true,
   };
 
+  /* @author daifuyang
+  ** @description：修复默认panel ref没有submit方法
+  */
+  submit = () => {
+    return new Promise((resolve, reject) => {
+      const { isCodeValid, code } = this.state;
+
+      if (!isCodeValid) reject(new Error('导入格式有误'));
+
+      // 只 resolve 通过 schema 校验的数据
+      resolve(this.deriveValue(JSON.parse(code)));
+    });
+  };
+
   private monacoRef: any;
 
   constructor(props: DataSourceImportPluginCodeProps) {
@@ -75,7 +89,8 @@ export class DataSourceImportPluginCode extends PureComponent<
         (type) => type.type === dataSource.type,
       );
       if (!dataSourceType) return false;
-      return ajv.validate(dataSourceType.schema, dataSource);
+      // 处理下默认为空的情况，向下兼容
+      return ajv.validate(dataSourceType.schema || {}, dataSource);
     });
   };
 
@@ -86,10 +101,11 @@ export class DataSourceImportPluginCode extends PureComponent<
           .getModelMarkers()
           .find((marker: editor.IMarker) => marker.owner === 'json')
       ) {
+        Message.success("检验成功，点击右上方确定完成导入！")
         this.setState({ isCodeValid: true });
-        const model: any = _last(this.monacoRef.getModels());
-        if (!model) return;
-        this.props.onImport?.(this.deriveValue(JSON.parse(model.getValue())));
+        // const model: any = _last(this.monacoRef.getModels());
+        // if (!model) return;
+        // this.props.onImport?.(this.deriveValue(JSON.parse(model.getValue())));
         return;
       }
     }
@@ -108,9 +124,13 @@ export class DataSourceImportPluginCode extends PureComponent<
     }
   };
 
-  handleEditorDidMount = (isFullscreen, editor, monaco) => {
-    this.monacoRef = monaco?.editor;
+  /* @author daifuyang
+  ** @description：修复编辑器挂载事件
+  */
+  handleEditorDidMount = (editor: MonacoEditor, monaco: MonacoEditor) => {
+    this.monacoRef = editor?.editor;
   };
+
 
   render() {
     const { onCancel = _noop } = this.props;
@@ -133,7 +153,7 @@ export class DataSourceImportPluginCode extends PureComponent<
         <p className="btns">
           <Button onClick={onCancel}>取消</Button>
           <Button type="primary" onClick={this.handleComplete}>
-            确认
+            检验
           </Button>
         </p>
       </div>
