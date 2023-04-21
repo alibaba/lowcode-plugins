@@ -44,6 +44,7 @@ export interface IGeneralManacoEditorProps {
   enableOutline?: boolean;
   /** style of wrapper */
   style?: CSSProperties;
+  overrideServices?: oEditor.IEditorOverrideServices;
   enhancers?: EditorEnhancer[];
 }
 
@@ -113,7 +114,7 @@ const DIFF_EDITOR_INITIAL_OPTIONS: oEditor.IStandaloneDiffEditorConstructionOpti
 
 export const useEditor = <T = IEditorInstance>(type: 'single' | 'diff', props: IGeneralManacoEditorProps) => {
   const {
-    editorDidMount, editorWillMount, theme, value, path, language, saveViewState, defaultValue, enhancers,
+    editorDidMount, editorWillMount, theme, value, path, language, saveViewState, defaultValue, enhancers, overrideServices
   } = props;
 
   const [isEditorReady, setIsEditorReady] = useState(false);
@@ -196,7 +197,7 @@ export const useEditor = <T = IEditorInstance>(type: 'single' | 'diff', props: I
             automaticLayout: true,
             ...INITIAL_OPTIONS,
             ...optionRef.current,
-          });
+          }, overrideServices);
           editor.setModel(model);
         } else {
           const originalModel = monaco
@@ -211,7 +212,7 @@ export const useEditor = <T = IEditorInstance>(type: 'single' | 'diff', props: I
             automaticLayout: true,
             ...DIFF_EDITOR_INITIAL_OPTIONS,
             ...optionRef.current,
-          });
+          }, overrideServices);
 
           editor.setModel({ original: originalModel, modified: modifiedModel });
         }

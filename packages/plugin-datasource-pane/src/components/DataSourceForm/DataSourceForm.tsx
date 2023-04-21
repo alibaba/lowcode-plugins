@@ -42,11 +42,7 @@ const SCHEMA = {
     type: {
       title: '类型',
       type: 'string',
-      editable: false,
       readOnly: true,
-      hidden: true,
-      display: 'hidden',
-      visible: false,
       'x-decorator': 'FormItem',
       'x-component-props': {
         // labelWidth: 300,
@@ -199,8 +195,10 @@ export class DataSourceForm extends PureComponent<DataSourceFormProps, { form: F
   }
 
   componentDidUpdate(prevProps: DataSourceFormProps) {
-    // dataSource 变了，需要更新 form，界面刷新
-    if (this.props.dataSource !== prevProps.dataSource) {
+    const type = this.props.dataSourceType?.type;
+    const ptype = prevProps.dataSourceType?.type;
+    // dataSource 或 dataSourceType.type 变了，需要更新 form，界面刷新
+    if (this.props.dataSource !== prevProps.dataSource || type !== ptype) {
       this.setState({
         form: this.createForm()
       })
