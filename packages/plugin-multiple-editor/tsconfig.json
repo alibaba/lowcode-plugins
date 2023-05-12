@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "outDir": "./es",
+    "moduleResolution": "node",
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "es2020",
+    "target": "ES5",
+    "paths": {
+      "@/*": ["./src/*"],
+      "utils": ["./src/utils"],
+      "utils/*": ["./src/utils/*"],
+      "types": ["./src/types"],
+      "types/*": ["./src/types/*"]
+    }
+  },
+  "include": ["src"]
+}
