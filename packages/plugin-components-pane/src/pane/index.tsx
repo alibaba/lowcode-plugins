@@ -51,7 +51,7 @@ export default class ComponentPane extends React.Component<ComponentPaneProps, C
 
   getKeyToSearch (c:StandardComponentMeta|SnippetMeta){
     const strTitle = this.t(c.title);
-    const strComponentName = this.t((c as SnippetMeta).schema.componentName);
+    const strComponentName = this.t((c as SnippetMeta).schema?.componentName);
     const strDescription = "description" in c ? this.t(c.description):'';
     const strKeywords = "keywords" in c ? this.getStrKeywords(c.keywords||[]):'';
     return  `${strTitle}#${strComponentName}#${strDescription}#${strKeywords}`.toLowerCase();
