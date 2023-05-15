@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-components-pane",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "低代码组件面板",
   "files": [
     "es/",
