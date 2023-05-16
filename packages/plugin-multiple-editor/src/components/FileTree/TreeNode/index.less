@@ -1,0 +1,108 @@
+.ilp-tree-node {
+  width: 100%;
+  line-height: 24px;
+  font-size: 12px;
+  color: #333;
+  &-title {
+    &-content {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 1;
+      cursor: pointer;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    &-prefix {
+      margin-right: 4px;
+      transition: all 0.2s;
+      &-expand {
+        transform: rotate(90deg);
+      }
+    }
+    &-modules {
+      background-color: rgba(221,221,221, 0.5);
+      color: #999;
+    }
+  }
+
+  &-title,
+  &-file {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    img {
+      width: 14px;
+      height: 14px;
+    }
+    span {
+      margin-left: 4px;
+    }
+    &-icon {
+      position: absolute;
+      right: 8px;
+      top: calc(50% - 7px);
+    }
+  }
+  &-title {
+    &-dropdown {
+      background-color: #fff;
+      line-height: 32px;
+      box-shadow: 1px 1px 4px 0 #ccc;
+      &-item {
+        padding: 0 12px;
+        transform: all 0.15s;
+        cursor: pointer;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+
+  &-file {
+    position: relative;
+    &-selected {
+      background-color: rgba(62, 180, 189, 0.15);
+    }
+    &-modified:hover:after {
+      display: none;
+    }
+    &-modified:after {
+      content: '';
+      position: absolute;
+      right: 8px;
+      top: calc(12px - 3px);
+      background-color: rgb(182, 182, 107);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    &-icon {
+      display: none;
+    }
+    &:hover &-icon {
+      display: block;
+    }
+  }
+}
+
+.help-tooltips {
+  padding: 8px;
+  max-width: 300px;
+  font-size: 14px;
+  font-weight: 400;
+  word-wrap: break-word;
+  color: #fff;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background-color: #1f2633;
+  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 12%);
+}

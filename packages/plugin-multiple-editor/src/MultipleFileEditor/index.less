@@ -1,0 +1,46 @@
+
+@leftWidth: 200px;
+
+.ilp-multiple-editor {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  box-sizing: border-box;
+  padding-left: @leftWidth;
+  &-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+  }
+  &-tree {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #efeffe;
+  }
+  &-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-top: 24px;
+    h3 {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: 0;
+      line-height: 24px;
+      padding-left: 16px;
+      box-sizing: border-box;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+    }
+  }
+}
