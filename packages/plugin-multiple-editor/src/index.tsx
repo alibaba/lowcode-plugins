@@ -1,8 +1,4 @@
 import { project, editor } from '@alilc/lowcode-engine';
-import type {
-  ILowCodePluginConfig,
-  ILowCodePluginContext,
-} from '@alilc/lowcode-engine';
 import { controller as baseController } from '@alilc/lowcode-plugin-base-monaco-editor/es/controller';
 import { EditorProvider } from './Context';
 import MultipleFileEditor from './MultipleFileEditor';
@@ -26,7 +22,7 @@ const pluginCodeEditor = (
     defaultFiles?: Record<string, string>;
   } = {}
 ) => {
-  const plugin = (ctx: ILowCodePluginContext): ILowCodePluginConfig => {
+  const plugin = (ctx: any): any => {
     return {
       exports: () => ({}),
       init() {

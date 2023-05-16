@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ILowCodePluginContext,
   plugins,
   skeleton,
   project,
@@ -41,7 +40,7 @@ export default async function registerPlugins() {
   SchemaPlugin.pluginName = 'SchemaPlugin';
   await plugins.register(SchemaPlugin);
 
-  const editorInit = (ctx: ILowCodePluginContext) => {
+  const editorInit = (ctx: any) => {
     return {
       name: 'editor-init',
       async init() {
@@ -66,7 +65,7 @@ export default async function registerPlugins() {
   editorInit.pluginName = 'editorInit';
   await plugins.register(editorInit);
 
-  const builtinPluginRegistry = (ctx: ILowCodePluginContext) => {
+  const builtinPluginRegistry = (ctx: any) => {
     return {
       name: 'builtin-plugin-registry',
       async init() {
@@ -110,7 +109,7 @@ export default async function registerPlugins() {
   await plugins.register(builtinPluginRegistry);
 
   // 设置内置 setter 和事件绑定、插件绑定面板
-  const setterRegistry = (ctx: ILowCodePluginContext) => {
+  const setterRegistry = (ctx: any) => {
     const { setterMap, pluginMap } = AliLowCodeEngineExt;
     return {
       name: 'ext-setters-registry',
@@ -145,7 +144,7 @@ export default async function registerPlugins() {
   // 注册中英文切换
   await plugins.register(ZhEnPlugin);
 
-  const loadAssetsSample = (ctx: ILowCodePluginContext) => {
+  const loadAssetsSample = (ctx: any) => {
     return {
       name: 'loadAssetsSample',
       async init() {
@@ -170,7 +169,7 @@ export default async function registerPlugins() {
   await plugins.register(loadAssetsSample);
 
   // 注册保存面板
-  const saveSample = (ctx: ILowCodePluginContext) => {
+  const saveSample = (ctx: any) => {
     return {
       name: 'saveSample',
       async init() {
@@ -204,7 +203,7 @@ export default async function registerPlugins() {
   saveSample.pluginName = 'saveSample';
   await plugins.register(saveSample);
 
-  const previewSample = (ctx: ILowCodePluginContext) => {
+  const previewSample = (ctx: any) => {
     return {
       name: 'previewSample',
       async init() {
@@ -228,7 +227,7 @@ export default async function registerPlugins() {
   previewSample.pluginName = 'previewSample';
   await plugins.register(previewSample);
 
-  const customSetter = (ctx: ILowCodePluginContext) => {
+  const customSetter = (ctx: any) => {
     return {
       name: '___registerCustomSetter___',
       async init() {

@@ -1,6 +1,5 @@
 import type { Project, Event } from '@alilc/lowcode-shell';
-import { ProjectSchema } from '@alilc/lowcode-types';
-import { skeleton } from '@alilc/lowcode-engine';
+import { skeleton, common } from '@alilc/lowcode-engine';
 import {
   beautifyCSS,
   compatGetSourceCodeMap,
@@ -11,7 +10,6 @@ import {
   treeToMap,
 } from './utils';
 import { FunctionEventParams, Monaco, ObjectType } from './types';
-import { common } from '@alilc/lowcode-engine';
 import type { editor } from 'monaco-editor';
 import {
   addFunction,
@@ -29,7 +27,7 @@ export * from './EditorHook';
 
 export interface EditorControllerState {
   declarationsMap: Record<string, string>;
-  extraLibs: { path: string; content: string }[];
+  extraLibs: Array<{ path: string; content: string }>;
 }
 
 export type HookHandleFn<T = any> = (fn: T) => () => void;
@@ -51,7 +49,7 @@ export class EditorController extends EditorHook {
 
   defaultFiles: ObjectType<string>;
 
-  public monaco?: Monaco;
+  monaco?: Monaco;
 
   private codeTemp?: CodeTemp;
 
@@ -61,20 +59,20 @@ export class EditorController extends EditorHook {
 
   private state: EditorControllerState;
 
-  public codeEditor?: editor.IStandaloneCodeEditor;
+  codeEditor?: editor.IStandaloneCodeEditor;
 
   private codeEditorCtx?: EditorContextType;
 
-  public service!: Service;
+  service!: Service;
 
-  public onImportSchema: HookHandleFn<
-    (schema: ProjectSchema) => void | Promise<void>
-  > = this.hookFactory(HookKeys.onImport);
+  onImportSchema: HookHandleFn<(schema: any) => void | Promise<void>> =
+    this.hookFactory(HookKeys.onImport);
 
-  public onSourceCodeChange: HookHandleFn<(code: any) => void> =
-    this.hookFactory(HookKeys.onSourceCodeChange);
+  onSourceCodeChange: HookHandleFn<(code: any) => void> = this.hookFactory(
+    HookKeys.onSourceCodeChange
+  );
 
-  public onEditCodeChange: HookHandleFn<
+  onEditCodeChange: HookHandleFn<
     (code: { content: string; file: string }) => void
   > = this.hookFactory(HookKeys.onEditCodeChange);
 
@@ -124,7 +122,7 @@ export class EditorController extends EditorHook {
     this.applyLibs();
   }
 
-  addComponentDeclarations(list: [string, string][] = []) {
+  addComponentDeclarations(list: Array<[string, string]> = []) {
     for (const [key, dec] of list) {
       this.state.declarationsMap[key] = dec;
     }
@@ -133,7 +131,7 @@ export class EditorController extends EditorHook {
   }
 
   private publishExtraLib() {
-    const libs: { path: string; content: string }[] = [];
+    const libs: Array<{ path: string; content: string }> = [];
     this.extraLibMap.forEach((content, path) => libs.push({ content, path }));
     this.state.extraLibs = libs;
     this.publish();
@@ -156,7 +154,7 @@ export class EditorController extends EditorHook {
       const { getMonaco } = await import(
         '@alilc/lowcode-plugin-base-monaco-editor'
       );
-      this.monaco = await getMonaco(undefined);
+      this.monaco = await getMonaco(undefined) as any;
     }
     const decStr = Object.keys(this.state.declarationsMap).reduce(
       (v, k) => `${v}\n${k}: ${this.state.declarationsMap[k]};\n`,
@@ -175,7 +173,7 @@ export class EditorController extends EditorHook {
     });
   }
 
-  getSchema(pure?: boolean): ProjectSchema {
+  getSchema(pure?: boolean): any {
     const schema = this.project.exportSchema(
       common.designerCabin.TransformStage.Save
     );
@@ -192,7 +190,7 @@ export class EditorController extends EditorHook {
     return schema;
   }
 
-  importSchema(schema: ProjectSchema) {
+  importSchema(schema: any) {
     this.project.importSchema(schema);
     this.initCodeTempBySchema(schema);
     this.triggerHook(HookKeys.onImport, schema);
@@ -219,7 +217,7 @@ export class EditorController extends EditorHook {
     };
   }
 
-  public initCodeTempBySchema(schema: ProjectSchema) {
+  initCodeTempBySchema(schema: any) {
     const componentSchema = schema.componentsTree[0] || {};
     const { css, methods, state, lifeCycles } = componentSchema;
     const codeMap = (componentSchema as any)._sourceCodeMap;
@@ -343,7 +341,7 @@ export class EditorController extends EditorHook {
     return true;
   }
 
-  public resetSaveStatus() {
+  resetSaveStatus() {
     this.codeEditorCtx?.updateState({ modifiedKeys: [] });
   }
 
