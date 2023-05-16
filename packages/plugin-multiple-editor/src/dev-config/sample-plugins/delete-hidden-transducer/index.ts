@@ -1,14 +1,14 @@
-import { ILowCodePluginContext, project } from '@alilc/lowcode-engine';
-import { CompositeObject, TransformStage } from '@alilc/lowcode-types';
+import { project } from '@alilc/lowcode-engine';
+import { IPublicEnumTransformStage } from '@alilc/lowcode-types';
 
-export const deleteHiddenTransducer = (ctx: ILowCodePluginContext) => {
+export const deleteHiddenTransducer = (ctx: any) => {
   return {
     name: 'deleteHiddenTransducer',
     async init() {
-      project.addPropsTransducer((props: CompositeObject): CompositeObject => {
+      project.addPropsTransducer((props: any): any => {
         delete props.hidden;
         return props;
-      }, TransformStage.Save);
+      }, IPublicEnumTransformStage.Save);
     },
   };
 }

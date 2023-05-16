@@ -1,9 +1,7 @@
-import { JSExpression } from '@alilc/lowcode-types';
-
 export type Monaco = typeof import('monaco-editor/esm/vs/editor/editor.api');
 export type ObjectType<T = any> = Record<string, T>;
 
-export interface IState extends JSExpression {
+export interface IState {
   originCode?: string;
 }
 

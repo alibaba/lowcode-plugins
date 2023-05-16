@@ -111,7 +111,7 @@ export const getMethods = (fileContent: string) => {
             ?.code;
           const compiledCode = pureTranspile(codeStr, { esm: true });
           state[
-            (property.key as Identifier).name ?? property?.key?.extra?.rawValue
+            (property.key as Identifier).name ?? property?.key?.extra?.rawValue as string
           ] = {
             type: 'JSExpression',
             value: compiledCode.replace(/var *name *= */, '').replace(/;$/, ''),

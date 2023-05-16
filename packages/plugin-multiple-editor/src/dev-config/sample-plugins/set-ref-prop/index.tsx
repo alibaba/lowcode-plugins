@@ -1,11 +1,7 @@
-import {
-  TransformedComponentMetadata,
-  FieldConfig,
-} from '@alilc/lowcode-types';
 import { v4 as uuidv4 } from 'uuid';
 import { material } from '@alilc/lowcode-engine';
 
-function addonCombine(metadata: TransformedComponentMetadata) {
+function addonCombine(metadata: any) {
   const { componentName, configure = {} } = metadata;
 
   const isRoot: boolean =
@@ -15,9 +11,9 @@ function addonCombine(metadata: TransformedComponentMetadata) {
     return metadata;
   }
 
-  let advancedGroup: FieldConfig | undefined;
+  let advancedGroup: any | undefined;
 
-  const refItem: FieldConfig = {
+  const refItem: any = {
     title: {
       label: 'refId',
       tip: '用于获取组件实例，调用物料内部方法',
@@ -57,7 +53,7 @@ function addonCombine(metadata: TransformedComponentMetadata) {
     advancedGroup.items = [refItem];
   }
 
-  const advanceItems: FieldConfig[] = advancedGroup.items || [];
+  const advanceItems: any[] = advancedGroup.items || [];
 
   if (
     !advanceItems ||
