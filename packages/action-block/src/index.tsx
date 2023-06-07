@@ -30,7 +30,7 @@ const SaveAsBlock = (props: SaveAsBlockProps) => {
   React.useEffect(() => {
     const generateImage = async () => {
       let dom2 = node.getDOMNode();
-      console.log('html2canvas: ', html2canvas);
+      // console.log('html2canvas: ', html2canvas);
       const canvas = await html2canvas?.(dom2, { scale: 0.5 });
       const dataUrl = canvas.toDataURL();
       setSrc(dataUrl);
@@ -106,7 +106,7 @@ export default {
     },
     title: '新增',
     action(node: Node) {
-      console.log('node: ', node);
+      // console.log('node: ', node);
       dialog = Dialog.show({
         v2: true,
         title: "保存为区块",
