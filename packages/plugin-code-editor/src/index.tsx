@@ -1,8 +1,13 @@
 import { CodeEditorPane } from './pane';
 import { project, ILowCodePluginContext } from '@alilc/lowcode-engine';
 import icon from './icon';
+import { JsEditor } from './components';
 
-const plugin = (ctx: ILowCodePluginContext) => {
+export interface Options {
+  init: (jsEditorRef: JsEditor) => void
+}
+
+const plugin = (ctx: ILowCodePluginContext, options: Options) => {
   return {
     name: 'codeEditor',
     width: 600,
@@ -14,6 +19,7 @@ const plugin = (ctx: ILowCodePluginContext) => {
     },
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     init() {
+      const init = ctx.preference.getPreferenceValue('init') || options.init;
       const codeEditorDock = ctx.skeleton.add({
         area: 'leftArea',
         name: 'codeEditor',
@@ -31,6 +37,7 @@ const plugin = (ctx: ILowCodePluginContext) => {
             event={ctx.event}
             skeleton={ctx.skeleton}
             project={ctx.project}
+            init={init}
           />
         ),
       });

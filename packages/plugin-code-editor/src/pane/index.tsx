@@ -17,9 +17,10 @@ interface CodeEditorPaneProps {
   project: Project;
   event: Event;
   skeleton: Skeleton;
+  init?: (jsEditorRef: JsEditor) => void
 }
 
-export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPaneProps) => {
+export const CodeEditorPane = memo(({ project, event, skeleton, init }: CodeEditorPaneProps) => {
   const [activeKey, setActiveKey] = useState(TAB_KEY.JS);
   const lowcodeProjectRef = useRef(project);
   const skeletonRef = useRef(skeleton);
@@ -129,6 +130,7 @@ export const CodeEditorPane = memo(({ project, event, skeleton }: CodeEditorPane
         jsEditorRef.current?.addFunction(params as FunctionEventParams);
       }, 100);
     });
+    init && init(jsEditorRef)
   }, []);
 
   return (
