@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { ILowCodePluginContext, project } from '@alilc/lowcode-engine';
 import { Button, Icon } from '@alifd/next';
-import { PluginProps } from '@alilc/lowcode-types';
+import { PluginProps, IPublicTypeDisposable } from '@alilc/lowcode-types';
 
 import './index.scss';
 
@@ -18,7 +18,8 @@ class UndoRedo extends PureComponent<IProps, IState> {
   static displayName = 'LowcodeUndoRedo';
 
   private history: any;
-
+  private changeDocumentDispose?: IPublicTypeDisposable;
+  private changeStateDispose?: IPublicTypeDisposable;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -29,11 +30,11 @@ class UndoRedo extends PureComponent<IProps, IState> {
   }
 
   init = (): void => {
-    project.onChangeDocument(doc => {
+    this.changeDocumentDispose = project.onChangeDocument(doc => {
       this.history = doc.history;
       this.updateState(this.history?.getState() || 0);
-
-      this.history.onChangeState(() => {
+      this.changeStateDispose?.();
+      this.changeStateDispose = this.history.onChangeState(() => {
         this.updateState(this.history?.getState() || 0);
       });
     });
@@ -53,6 +54,11 @@ class UndoRedo extends PureComponent<IProps, IState> {
   handleRedoClick = (): void => {
     this.history.forward();
   };
+
+  componentWillUnmount() {
+    this.changeDocumentDispose?.();
+    this.changeStateDispose?.();
+  }
 
   render(): React.ReactNode {
     const { undoEnable, redoEnable } = this.state;

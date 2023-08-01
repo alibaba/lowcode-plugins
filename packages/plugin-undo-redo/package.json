@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "@alilc/lowcode-utils": "^1.0.0",
-    "@alilc/lowcode-types": "^1.0.0",
+    "@alilc/lowcode-types": "^1.1.9",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
   },
