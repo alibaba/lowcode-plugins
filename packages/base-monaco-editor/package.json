@@ -3,6 +3,7 @@
   "version": "1.1.2",
   "description": "代码编辑组件，monaco-editor 的低代码适配封装",
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "files": [

@@ -1,0 +1,20 @@
+{
+  "plugins": [
+    [
+      "@alilc/build-plugin-alt",
+      {
+        "type": "plugin",
+        "inject": true
+      }
+    ],
+    [
+      "build-plugin-fusion",
+      {
+        "themePackage": "@alifd/theme-lowcode-light"
+      }
+    ],
+    ["build-plugin-moment-locales", {
+      "locales": ["zh-cn"]
+    }]
+  ]
+}

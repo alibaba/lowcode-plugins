@@ -1,0 +1,41 @@
+.workspace-view-pane {
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  left: var(--top-area-height);
+  top: 42px;
+  bottom: 0;
+  right: 0;
+
+  &-content {
+    width: 300px;
+    padding: 11px;
+    background: #fff;
+    height: 100%;
+    position: relative;
+  }
+
+  &-icon {
+    height: 60px !important;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  &-top {
+    margin-bottom: 11px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-title {
+    font-weight: 500;
+
+  }
+
+  &-top-icon {
+    margin-left: 14px;
+    cursor: pointer;
+  }
+}

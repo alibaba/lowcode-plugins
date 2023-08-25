@@ -17,6 +17,7 @@
     "build": "build-scripts build --config build.js"
   },
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "dependencies": {
