@@ -1,0 +1,58 @@
+.resource-tabs {
+  .resource-tab-item {
+    display: flex;
+    line-height: 20px;
+
+    &:hover {
+      .resource-tab-item-close-icon {
+        display: block;
+      }
+
+      .resource-tab-item-others {
+        display: none;
+      }
+    }
+
+    &-resource-icon {
+      position: relative;
+      top: 2px;
+      margin-right: 2px;
+    }
+
+    &-changed-icon {
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 100%;
+      background-color: var(--color-brand1-6, #006aff);
+      margin: 0 auto;
+    }
+
+    &-title {
+      max-width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-tips {
+      margin-left: 2px;
+      width: 12px;
+    }
+
+    &-close-icon {
+      position: relative;
+      top: 2px;
+      display: none;
+    }
+
+    &-others {
+      display: block;
+
+      .icon {
+        position: relative;
+        top: 2px;
+      }
+    }
+  }
+}

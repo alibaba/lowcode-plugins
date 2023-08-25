@@ -35,6 +35,7 @@
     "build-plugin-fusion": "^0.1.22"
   },
   "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   }
 }

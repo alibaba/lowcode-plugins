@@ -1,6 +1,6 @@
 {
-  "name": "@alilc/lowcode-plugin-undo-redo",
-  "version": "1.0.0-beta.3",
+  "name": "@alilc/lowcode-plugin-view-manager-pane",
+  "version": "1.0.0",
   "description": "alibaba lowcode editor undo redo plugin",
   "files": [
     "es",
@@ -39,6 +39,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/lowcode-plugins.git",
-    "directory": "packages/plugin-undo-redo"
+    "directory": "packages/plugin-view-manager-pane"
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NumberPicker, Icon } from '@alifd/next';
-import { ILowCodePluginContext, project, isOpenSource } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 
 import './index.scss';
 
@@ -14,7 +14,9 @@ const CustomIcon = Icon.createFromIconfontCN({
   scriptUrl: 'https://at.alicdn.com/t/font_2896595_33xhsbg9ux5.js',
 });
 
-export class SimulatorResizePane extends React.Component {
+export class SimulatorResizePane extends React.Component<{
+  pluginContext: IPublicModelPluginContext
+}> {
   static displayName = 'SimulatorResizePane';
 
   state = {
@@ -23,6 +25,7 @@ export class SimulatorResizePane extends React.Component {
   };
 
   componentDidMount() {
+    const { project } = this.props.pluginContext;
     // @ts-ignore
     const onSimulatorRendererReady = (project.onSimulatorRendererReady || project.onRendererReady).bind(project);
     onSimulatorRendererReady(() => {
@@ -41,6 +44,7 @@ export class SimulatorResizePane extends React.Component {
   }
 
   change = (device: string) => {
+    const { project } = this.props.pluginContext;
     const simulator = project.simulatorHost;
     // 切换画布
     simulator?.set('device', device);
@@ -71,6 +75,7 @@ export class SimulatorResizePane extends React.Component {
 
   render() {
     const currentWidth = this.state.currentWidth || 0;
+    const { project } = this.props.pluginContext;
     return (
       <div className="lp-simulator-pane">
         {
@@ -116,7 +121,7 @@ export class SimulatorResizePane extends React.Component {
   }
 }
 
-const plugin = (ctx: ILowCodePluginContext) => {
+const plugin = (ctx: IPublicModelPluginContext) => {
   const SimulatorResizePaneRef = React.createRef<SimulatorResizePane>();
 
   return {
@@ -134,6 +139,7 @@ const plugin = (ctx: ILowCodePluginContext) => {
         content: (
           <SimulatorResizePane
             ref={SimulatorResizePaneRef}
+            pluginContext={ctx}
           />
         ),
       });

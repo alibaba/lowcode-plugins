@@ -1,7 +1,7 @@
 {
-  "name": "@alilc/lowcode-plugin-undo-redo",
-  "version": "1.0.0-beta.3",
-  "description": "alibaba lowcode editor undo redo plugin",
+  "name": "@alilc/lowcode-plugin-resource-tabs",
+  "version": "1.0.1",
+  "description": "alibaba lowcode resource tabs plugin",
   "files": [
     "es",
     "lib"
@@ -18,8 +18,8 @@
     "editor"
   ],
   "dependencies": {
-    "@alilc/lowcode-utils": "^1.0.0",
     "@alilc/lowcode-types": "^1.0.0",
+    "@alilc/lowcode-utils": "^1.0.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
   },
@@ -39,6 +39,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/lowcode-plugins.git",
-    "directory": "packages/plugin-undo-redo"
+    "directory": "packages/plugin-resource-tabs"
   }
 }
