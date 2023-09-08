@@ -1,11 +1,10 @@
-@use "sass:math";
 .card {
   display: flex;
   flex-direction: column;
   padding: 14px;
   align-items: center;
   justify-content: space-between;
-  width: math.div(1, 3);
+  width: (100 / 3) * 1%;
   height: 114px;
   flex-grow: 0;
   flex-shrink: 0;
