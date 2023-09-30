@@ -1,0 +1,8 @@
+{
+  "resource_tabs.src.Warning": "Warning",
+  "resource_tabs.src.TheCurrentWindowHasUnsaved": "The current window has unsaved changes. Do you want to discard the changes?",
+  "resource_tabs.src.DiscardChanges": "Discard changes",
+  "resource_tabs.src.ContinueEditing": "Continue editing",
+  "resource_tabs.src.ApplicationTagColumnPlugIn": "Application tag column plug-in parameter definition",
+  "resource_tabs.src.UniqueIdentifierForCachingApplication": "Unique identifier for caching application tabs"
+}
