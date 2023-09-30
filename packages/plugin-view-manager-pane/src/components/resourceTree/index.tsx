@@ -1,17 +1,23 @@
 import { workspace } from '@alilc/lowcode-engine';
-import { IPublicModelPluginContext, IPublicModelResource } from '@alilc/lowcode-types';
+import {
+  IPublicModelPluginContext,
+  IPublicModelResource,
+} from '@alilc/lowcode-types';
 import { Search, Overlay } from '@alifd/next';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { FileIcon, IconArrowRight } from './icon';
 import './index.scss';
 import { IOptions } from '../..';
+import { intl } from '../../locale';
 
 export function ResourcePaneContent(props: IPluginOptions) {
   const { workspace } = props.pluginContext;
-  const [ resourceList, setResourceList ] = useState<IPublicModelResource[]>(workspace.resourceList);
+  const [resourceList, setResourceList] = useState<IPublicModelResource[]>(
+    workspace.resourceList
+  );
   workspace.onResourceListChange(() => {
     setResourceList(workspace.resourceList);
-  })
+  });
   return (
     <ResourceListTree
       resourceList={resourceList}
@@ -21,20 +27,24 @@ export function ResourcePaneContent(props: IPluginOptions) {
       behaviors={props.behaviors}
       options={props.options}
     />
-  )
+  );
 }
 
-function ResourceListTree(props: {
-  resourceList: IPublicModelResource[];
-} & Required<IPluginOptions>) {
-  const [ category, setCategory ] = useState<{
+function ResourceListTree(
+  props: {
+    resourceList: IPublicModelResource[];
+  } & Required<IPluginOptions>
+) {
+  const [category, setCategory] = useState<{
     [key: string]: IPublicModelResource[];
   }>({});
-  const [ filterValue, setFilterValue ] = useState();
-  const [ activeId, setActiveId ] = useState(props.pluginContext.workspace.window?.resource.id);
+  const [filterValue, setFilterValue] = useState();
+  const [activeId, setActiveId] = useState(
+    props.pluginContext.workspace.window?.resource.id
+  );
   useEffect(() => {
     let category = {};
-    props.resourceList.forEach(d => {
+    props.resourceList.forEach((d) => {
       category[d.category] = category[d.category] || [];
       category[d.category].push(d);
     });
@@ -52,15 +62,17 @@ function ResourceListTree(props: {
         <Search
           hasClear
           shape="simple"
-          placeholder="搜索页面、组件"
+          placeholder={intl(
+            'view_manager.components.resourceTree.SearchPagesAndComponents'
+          )}
           className="resource-list-filter-search-input"
           value={filterValue}
           onChange={handleSearchChange}
         />
       </div>
-      <div className='resource-tree'>
-        {
-          Array.from(Object.entries(category)).map(([categoryName, resourceArr]) => {
+      <div className="resource-tree">
+        {Array.from(Object.entries(category)).map(
+          ([categoryName, resourceArr]) => {
             return (
               <ResourceGroup
                 defaultExpandAll={props.defaultExpandAll}
@@ -73,26 +85,36 @@ function ResourceListTree(props: {
                 behaviors={props.behaviors}
                 options={props.options}
               />
-            )
-          })
-        }
+            );
+          }
+        )}
       </div>
     </>
-  )
+  );
 }
 
-function ResourceGroup(props: {
-  activeId: string;
-  categoryName: string;
-  resourceArr: IPublicModelResource[];
-  filterValue: string;
-} & Required<IPluginOptions>) {
-  const [expanded, setExpanded] = useState(props.defaultExpandAll || props.defaultExpandedCategoryKeys?.includes(props.categoryName));
+function ResourceGroup(
+  props: {
+    activeId: string;
+    categoryName: string;
+    resourceArr: IPublicModelResource[];
+    filterValue: string;
+  } & Required<IPluginOptions>
+) {
+  const [expanded, setExpanded] = useState(
+    props.defaultExpandAll ||
+      props.defaultExpandedCategoryKeys?.includes(props.categoryName)
+  );
   const [visible, setVisible] = useState(false);
   const ref = useRef(null);
 
-  const resourceArr = props.resourceArr
-  .filter(d => !props.filterValue || [d.options.title, d.options.slug, d.options.componentName].some(d => d && d.toLowerCase().includes(props.filterValue.toLowerCase())));
+  const resourceArr = props.resourceArr.filter(
+    (d) =>
+      !props.filterValue ||
+      [d.options.title, d.options.slug, d.options.componentName].some(
+        (d) => d && d.toLowerCase().includes(props.filterValue.toLowerCase())
+      )
+  );
 
   if (!resourceArr || !resourceArr.length) {
     return null;
@@ -101,22 +123,20 @@ function ResourceGroup(props: {
   if (!props.categoryName || props.categoryName === 'undefined') {
     return (
       <div className="resource-tree-group">
-        {
-          resourceArr.map(d => (
-            <ResourceItem
-              children={d.children}
-              icon={d.icon}
-              key={d.title}
-              activeId={props.activeId}
-              resource={d}
-              behaviors={props.behaviors}
-              options={props.options}
-              pluginContext={props.pluginContext}
-            />
-          ))
-        }
+        {resourceArr.map((d) => (
+          <ResourceItem
+            children={d.children}
+            icon={d.icon}
+            key={d.title}
+            activeId={props.activeId}
+            resource={d}
+            behaviors={props.behaviors}
+            options={props.options}
+            pluginContext={props.pluginContext}
+          />
+        ))}
       </div>
-    )
+    );
   }
 
   return (
@@ -126,7 +146,7 @@ function ResourceGroup(props: {
         onContextMenu={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          setVisible(!visible)
+          setVisible(!visible);
         }}
         ref={ref}
       >
@@ -141,7 +161,7 @@ function ResourceGroup(props: {
         <div className="resource-tree-group-icon">
           <FileIcon />
         </div>
-        <div className='resource-tree-group-title'>{ props.categoryName }</div>
+        <div className="resource-tree-group-title">{props.categoryName}</div>
         <Overlay
           v2
           visible={visible}
@@ -152,45 +172,50 @@ function ResourceGroup(props: {
           safeNode={ref?.current}
           // @ts-ignore
           placement="br"
-          className='view-pane-popup'
+          className="view-pane-popup"
         >
           <div>
             <div
               onClick={(e) => {
-                if (props.categoryName === '页面') {
+                if (
+                  props.categoryName ===
+                  intl('view_manager.components.resourceTree.Page')
+                ) {
                   props.options.onAddPage();
                 } else {
                   props.options.onAddComponent();
                 }
               }}
-              className='view-pane-popup-item'
+              className="view-pane-popup-item"
             >
-              新建{ props.categoryName === '页面' ? '页面' : '组件' }
+              {intl('view_manager.components.resourceTree.Create')}
+
+              {props.categoryName ===
+              intl('view_manager.components.resourceTree.Page')
+                ? intl('view_manager.components.resourceTree.Page')
+                : intl('view_manager.components.resourceTree.Component')}
             </div>
           </div>
         </Overlay>
       </div>
-      {
-        expanded && <div className="resource-tree-group-items">
-          {
-            resourceArr
-              .map(d => (
-              <ResourceItem
-                children={d.children}
-                icon={d.icon}
-                key={d.options.id}
-                activeId={props.activeId}
-                resource={d}
-                behaviors={props.behaviors}
-                options={props.options}
-                pluginContext={props.pluginContext}
-              />
-            ))
-          }
+      {expanded && (
+        <div className="resource-tree-group-items">
+          {resourceArr.map((d) => (
+            <ResourceItem
+              children={d.children}
+              icon={d.icon}
+              key={d.options.id}
+              activeId={props.activeId}
+              resource={d}
+              behaviors={props.behaviors}
+              options={props.options}
+              pluginContext={props.pluginContext}
+            />
+          ))}
         </div>
-      }
+      )}
     </div>
-  )
+  );
 }
 
 function ResourceItem(props: {
@@ -216,40 +241,58 @@ function ResourceItem(props: {
   return (
     <div
       ref={ref}
-      className={`resource-tree-group-item ${props.resource.options.isProCodePage ? 'resource-tree-group-item-pro-code' : ''} ${props.activeId === props.resource.options.id ? 'active' : ''}`}
+      className={`resource-tree-group-item ${
+        props.resource.options.isProCodePage
+          ? 'resource-tree-group-item-pro-code'
+          : ''
+      } ${props.activeId === props.resource.options.id ? 'active' : ''}`}
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
         setShowBehaviors(!showBehaviors);
       }}
     >
-      {
-        props.resource.options.modified ? <div className="resource-tree-group-item-modified"></div> : null
-      }
+      {props.resource.options.modified ? (
+        <div className="resource-tree-group-item-modified"></div>
+      ) : null}
+
       <div
         onClick={() => {
           props.pluginContext.workspace.openEditorWindow(props.resource);
           props.options.handleClose(true);
         }}
-        className='resource-tree-group-item-children'
+        className="resource-tree-group-item-children"
       >
-        {
-          (props.children && props.children.length || null) && <div
-              className={`expand-btn-wrap ${expanded ? 'expanded' : ''}`}
-              onClick={(e) => {
-                setExpanded(!expanded);
-                e.stopPropagation();
-                e.preventDefault();
-              }}
-            >
-              <IconArrowRight />
-            </div>
-        }
-        <div className="resource-tree-group-item-icon">{ PropsIcon && <PropsIcon /> }</div>
-        <div className='resource-tree-group-item-title'>{props.resource.options?.label || props.resource.title}{props.resource.options.isProCodePage ? '（源码）' : ''}</div>
-        <div className='resource-tree-group-item-code'>{props.resource.options?.slug || props.resource.options?.componentName || ''}</div>
+        {((props.children && props.children.length) || null) && (
+          <div
+            className={`expand-btn-wrap ${expanded ? 'expanded' : ''}`}
+            onClick={(e) => {
+              setExpanded(!expanded);
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          >
+            <IconArrowRight />
+          </div>
+        )}
+
+        <div className="resource-tree-group-item-icon">
+          {PropsIcon && <PropsIcon />}
+        </div>
+        <div className="resource-tree-group-item-title">
+          {props.resource.options?.label || props.resource.title}
+          {props.resource.options.isProCodePage
+            ? intl('view_manager.components.resourceTree.SourceCode')
+            : ''}
+        </div>
+        <div className="resource-tree-group-item-code">
+          {props.resource.options?.slug ||
+            props.resource.options?.componentName ||
+            ''}
+        </div>
         <div className="resource-tree-group-item-behaviors">
-          { Behaviors && (props.resource.config as any)?.disableBehaviors !== true ? (
+          {Behaviors &&
+          (props.resource.config as any)?.disableBehaviors !== true ? (
             <Behaviors
               showBehaviors={showBehaviors}
               resource={props.resource}
@@ -258,11 +301,12 @@ function ResourceItem(props: {
               }}
               safeNode={ref?.current}
             />
-          ) : null }
+          ) : null}
         </div>
       </div>
-      {
-        expanded && props.children && props.children.map((child) => (
+      {expanded &&
+        props.children &&
+        props.children.map((child) => (
           <ResourceItem
             children={child.children}
             icon={child.icon}
@@ -273,10 +317,9 @@ function ResourceItem(props: {
             options={props.options}
             pluginContext={props.pluginContext}
           />
-        ))
-      }
+        ))}
     </div>
-  )
+  );
 }
 
 interface IPluginOptions {

@@ -1,13 +1,17 @@
 import * as React from 'react';
-import { IPublicModelPluginContext, IPublicModelResource } from '@alilc/lowcode-types';
+import {
+  IPublicModelPluginContext,
+  IPublicModelResource,
+} from '@alilc/lowcode-types';
 import Icon from './icon';
 import { Pane } from './pane';
 import './index.scss';
+import { intl } from './locale';
 
 export interface IOptions {
-  init?: (ctx: IPublicModelPluginContext) => {},
+  init?: (ctx: IPublicModelPluginContext) => {};
 
-  onAddPage?: () => {},
+  onAddPage?: () => {};
 
   onDeletePage?: (resource: IPublicModelResource) => {};
 
@@ -24,21 +28,27 @@ export interface IOptions {
   onDeleteComponent?: (resource: IPublicModelResource) => {};
 
   handleClose?: (force?: boolean) => void;
+
+  showIconText?: boolean;
 }
 
-const ViewManagerPane = (ctx: IPublicModelPluginContext, options: IOptions = {}) => {
+const ViewManagerPane = (
+  ctx: IPublicModelPluginContext,
+  options: IOptions = {}
+) => {
   return {
     // 插件的初始化函数，在引擎初始化之后会立刻调用
     async init() {
+      const showIconText = options.showIconText ?? true;
       // 往引擎增加面板
       ctx.skeleton.add({
         area: 'leftArea',
         name: 'ViewManagerPane',
         type: 'PanelDock',
         props: {
-          icon: <Icon />,
-          description: '视图管理',
-          className: 'workspace-view-pane-icon',
+          icon: <Icon showIconText={showIconText} />,
+          description: intl('view_manager.src.ViewManagement'),
+          className: `workspace-view-pane-icon ${showIconText ? 'show-icon-text' : null }`,
         },
         panelProps: {
           hideTitleBar: true,
@@ -53,7 +63,7 @@ const ViewManagerPane = (ctx: IPublicModelPluginContext, options: IOptions = {})
             ...options,
           },
           pluginContext: ctx,
-        }
+        },
       });
     },
   };
@@ -68,49 +78,65 @@ ViewManagerPane.meta = {
     lowcodeEngine: '^1.0.0', // 插件需要配合 ^1.0.0 的引擎才可运行
   },
   preferenceDeclaration: {
-    title: '视图管理面板插件参数定义',
-    properties: [{
-      key: 'init',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'onAddPage',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'onDeletePage',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'onEditPage',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'onCopyPage',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'onAddComponent',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'onEditComponent',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'onCopyComponent',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'onDeleteComponent',
-      type: 'function',
-      description: '',
-    }, {
-      key: 'handleClose',
-      type: 'function',
-      description: '',
-    }],
+    title: intl('view_manager.src.ViewManagementPanelPlugIn'),
+    properties: [
+      {
+        key: 'init',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'onAddPage',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'onDeletePage',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'onEditPage',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'onCopyPage',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'onAddComponent',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'onEditComponent',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'onCopyComponent',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'onDeleteComponent',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'handleClose',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'showIconText',
+        type: 'boolean',
+        description: '',
+      }
+    ],
   },
-}
+};
 
 export default ViewManagerPane;

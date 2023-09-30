@@ -1,0 +1,16 @@
+{
+  "view_manager.components.addFile.behaviors.DescriptionSettings": "{description} settings",
+  "view_manager.components.addFile.behaviors.CopyDescription": "Copy {description}",
+  "view_manager.components.addFile.behaviors.DeleteDescription": "Delete {description}",
+  "view_manager.components.addFile.CreatePage": "Create Page",
+  "view_manager.components.addFile.CreateAComponent": "Create a component",
+  "view_manager.components.resourceTree.SearchPagesAndComponents": "Search pages and components",
+  "view_manager.components.resourceTree.Page": "Page",
+  "view_manager.components.resourceTree.Create": "Create",
+  "view_manager.components.resourceTree.Component": "Component",
+  "view_manager.components.resourceTree.SourceCode": "(Source code)",
+  "view_manager.src.icon.View": "View",
+  "view_manager.src.ViewManagement": "View management",
+  "view_manager.src.ViewManagementPanelPlugIn": "View management panel plug-in parameter definition",
+  "view_manager.src.pane.View": "View"
+}

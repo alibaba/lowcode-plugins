@@ -7,7 +7,7 @@
   overflow: scroll;
 
   &-group {
-    fill: var(--color-data1-1, #5894ff);
+    fill: var(--color-brand, #5894ff);
 
     & > .resource-tree-group-item {
       padding-left: 14px;
@@ -27,7 +27,7 @@
       align-items: center;
       transition: color 200ms ease;
       margin-right: 4px;
-      color: var(--color-fill1-8, #5f697a);
+      color: var(--color-icon-hover, #5f697a);
 
       &.expanded > svg {
         transform: rotate(0)
@@ -42,7 +42,7 @@
 
     &-title {
       margin-left: 3px;
-      color: var(--color-fill1-8, #5f697a);
+      color: var(--color-text, #5f697a);
       font-weight: 500;
       font-size: 12px;
     }
@@ -53,7 +53,7 @@
     }
 
     &-items {
-      fill: var(--color-fill1-8, #5f697a);
+      fill: var(--color-text, #5f697a);
     }
 
     &-item {
@@ -61,19 +61,19 @@
       padding: 2px 0 2px 21px;
       font-size: 12px;
       font-weight: 500;
-      color: var(--color-fill1-8, #5f697a);
+      color: var(--color-text, #5f697a);
 
       &.resource-tree-group-item-pro-code {
-        color: var(--color-text1-1, #bcc5d1);
+        color: var(--color-text-disabled, #bcc5d1);
         pointer-events: none;
       }
 
       &.active {
-        background-color: var(--color-fill1-1, #f7f8fa);
+        background-color: var(--color-block-background-light, #f7f8fa);
       }
 
       &:hover {
-        background-color: var(--color-fill1-1, #f7f8fa);
+        background-color: var(--color-block-background-light, #f7f8fa);
 
         .resource-tree-group-item-behaviors {
           display: flex;
@@ -86,7 +86,7 @@
 
       &-modified {
         position: absolute;
-        background-color: var(--color-error-4, #e43823);
+        background-color: var(--color-function-error, #e43823);
         width: 5px;
         height: 5px;
         left: 11px;
@@ -103,7 +103,7 @@
       }
 
       &-code {
-        color: var(--color-text1-2, #8f9aa9);
+        color: var(--color-text-dark, #8f9aa9);
         margin-left: 6px;
         display: none;
         max-width: 70px;
