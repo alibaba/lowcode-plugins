@@ -1,9 +1,15 @@
 import { Tab, Dialog } from '@alifd/next';
-import { IPublicModelPluginContext, IPublicModelResource, IPublicModelWindow, IPublicTypePlugin } from '@alilc/lowcode-types';
+import {
+  IPublicModelPluginContext,
+  IPublicModelResource,
+  IPublicModelWindow,
+  IPublicTypePlugin,
+} from '@alilc/lowcode-types';
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import './index.scss';
 import { CloseIcon, LockIcon, WarnIcon } from './icon';
+import { intl } from './locale';
 
 function CustomTabItem(props: {
   icon: any;
@@ -53,52 +59,50 @@ function CustomTabItem(props: {
   const ResourceIcon = props.icon;
   return (
     <div className="next-tabs-tab-inner resource-tab-item">
-      <div className='resource-tab-item-resource-icon'>
-        { ResourceIcon ? <ResourceIcon /> : null }
+      <div className="resource-tab-item-resource-icon">
+        {ResourceIcon ? <ResourceIcon /> : null}
       </div>
-      <div className='resource-tab-item-title'>{ title }</div>
-      <div className='resource-tab-item-tips'>
+      <div className="resource-tab-item-title">{title}</div>
+      <div className="resource-tab-item-tips">
         <div
           onClick={async (e) => {
             e.stopPropagation();
             if (changed) {
               Dialog.show({
                 v2: true,
-                title: "警告",
-                content: "当前窗口有还未保存的改动，是否要舍弃变更",
+                title: intl('resource_tabs.src.Warning'),
+                content: intl('resource_tabs.src.TheCurrentWindowHasUnsaved'),
                 onOk: () => {},
                 onCancel: () => {
                   props.onClose();
                 },
                 cancelProps: {
-                  children: '舍弃变更'
+                  children: intl('resource_tabs.src.DiscardChanges'),
                 },
                 okProps: {
-                  children: '继续编辑',
-                }
+                  children: intl('resource_tabs.src.ContinueEditing'),
+                },
               });
               return;
             }
             props.onClose();
           }}
-          className='resource-tab-item-close-icon'
+          className="resource-tab-item-close-icon"
         >
           <CloseIcon />
         </div>
-        <div className='resource-tab-item-others'>
-          {
-            changed && !warned ? (<span className="resource-tab-item-changed-icon"></span>) : null
-          }
-          {
-            locked ? (<LockIcon />) : null
-          }
-          {
-            warned ? (<WarnIcon />) : null
-          }
+        <div className="resource-tab-item-others">
+          {changed && !warned ? (
+            <span className="resource-tab-item-changed-icon"></span>
+          ) : null}
+
+          {locked ? <LockIcon /> : null}
+
+          {warned ? <WarnIcon /> : null}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 interface ITabItem {
@@ -126,22 +130,32 @@ function Content(props: {
       windows = props.onSort(workspace.windows);
     }
 
-    return windows.map(d => {
+    return windows.map((d) => {
       return {
         id: d.resource?.id || d.resource?.options.id,
-        windowId: d.id
-      }
-    })
+        windowId: d.id,
+      };
+    });
   }, []);
 
   const [tabs, setTabs] = useState(getTabs());
-  const [activeTitle, setActiveTitle] = useState(workspace.window?.resource?.id || workspace.window?.resource?.options?.id);
+  const [activeTitle, setActiveTitle] = useState(
+    workspace.window?.resource?.id || workspace.window?.resource?.options?.id
+  );
 
   const saveTabsToLocal = useCallback(() => {
-    localStorage.setItem('___lowcode_plugin_resource_tabs___' + props.appKey, JSON.stringify(getTabs()));
-    localStorage.setItem('___lowcode_plugin_resource_tabs_active_title___' + props.appKey, JSON.stringify({
-      id: workspace.window?.resource.id || workspace.window?.resource?.options.id,
-    }));
+    localStorage.setItem(
+      '___lowcode_plugin_resource_tabs___' + props.appKey,
+      JSON.stringify(getTabs())
+    );
+    localStorage.setItem(
+      '___lowcode_plugin_resource_tabs_active_title___' + props.appKey,
+      JSON.stringify({
+        id:
+          workspace.window?.resource.id ||
+          workspace.window?.resource?.options.id,
+      })
+    );
   }, []);
 
   const initEvent = useCallback<() => void>(() => {
@@ -150,7 +164,9 @@ function Content(props: {
       saveTabsToLocal();
     });
     workspace.onChangeActiveWindow(() => {
-      setActiveTitle(workspace.window?.resource.id || workspace.window?.resource?.options.id);
+      setActiveTitle(
+        workspace.window?.resource.id || workspace.window?.resource?.options.id
+      );
       saveTabsToLocal();
     });
   }, []);
@@ -158,11 +174,11 @@ function Content(props: {
   useEffect(() => {
     const initResourceListMap = () => {
       const resourceListMap = {};
-      workspace.resourceList.forEach(d => {
+      workspace.resourceList.forEach((d) => {
         resourceListMap[d.id || d.options.id] = d;
       });
       setResourceListMap(resourceListMap);
-    }
+    };
 
     if (workspace.resourceList) {
       initResourceListMap();
@@ -176,14 +192,22 @@ function Content(props: {
       if (!Object.keys(resourceListMap).length || tabs.length) {
         return;
       }
-      const value: ITabItem[] = JSON.parse(localStorage.getItem('___lowcode_plugin_resource_tabs___' + props.appKey));
+      const value: ITabItem[] = JSON.parse(
+        localStorage.getItem(
+          '___lowcode_plugin_resource_tabs___' + props.appKey
+        )
+      );
       const activeValue: {
         id: string;
-      } = JSON.parse(localStorage.getItem('___lowcode_plugin_resource_tabs_active_title___' + props.appKey));
+      } = JSON.parse(
+        localStorage.getItem(
+          '___lowcode_plugin_resource_tabs_active_title___' + props.appKey
+        )
+      );
 
       if (value && value.length) {
-        value.forEach(d => {
-          const resource = resourceListMap[d.id]
+        value.forEach((d) => {
+          const resource = resourceListMap[d.id];
           resource && workspace.openEditorWindow(resource, true);
         });
 
@@ -194,9 +218,11 @@ function Content(props: {
 
       if (activeValue) {
         const resource = resourceListMap[activeValue.id];
-        resource && workspace.openEditorWindow(resource);
+        if (resource) {
+          workspace.openEditorWindow(resource);
+        }
       }
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
   }, [resourceListMap]);
@@ -213,13 +239,16 @@ function Content(props: {
       contentStyle={{
         height: 0,
       }}
-      tabRender={(key, props: {
-        key: string;
-        title: string;
-        icon: any;
-        onClose: () => void;
-        value: string;
-      }) => (
+      tabRender={(
+        key,
+        props: {
+          key: string;
+          title: string;
+          icon: any;
+          onClose: () => void;
+          value: string;
+        }
+      ) => (
         <CustomTabItem
           key={key}
           icon={props.icon}
@@ -231,12 +260,12 @@ function Content(props: {
       )}
       onChange={(name) => {
         setActiveTitle(name);
-        const item = tabs.filter(d => String(d.id) === String(name))?.[0];
+        const item = tabs.filter((d) => String(d.id) === String(name))?.[0];
         const resource = resourceListMap[item.id];
         workspace.openEditorWindow(resource);
       }}
     >
-      {tabs.map(item => {
+      {tabs.map((item) => {
         const resource = resourceListMap[item.id];
         if (!resource) {
           return null;
@@ -253,21 +282,22 @@ function Content(props: {
               (workspace as any).removeEditorWindow(resource);
             }}
           />
-        )
+        );
       })}
     </Tab>
-  )
+  );
 }
 
-const resourceTabs: IPublicTypePlugin = function (ctx: IPublicModelPluginContext, options: {
-  appKey?: string;
-  onSort?: (windows: IPublicModelWindow[]) => IPublicModelWindow[];
-  shape?: string;
-  tabClassName?: string;
-}) {
-  const {
-    skeleton,
-  } = ctx;
+const resourceTabs: IPublicTypePlugin = function (
+  ctx: IPublicModelPluginContext,
+  options: {
+    appKey?: string;
+    onSort?: (windows: IPublicModelWindow[]) => IPublicModelWindow[];
+    shape?: string;
+    tabClassName?: string;
+  }
+) {
+  const { skeleton } = ctx;
   return {
     async init() {
       skeleton.add({
@@ -285,23 +315,25 @@ const resourceTabs: IPublicTypePlugin = function (ctx: IPublicModelPluginContext
           appKey: options?.appKey,
           onSort: options?.onSort,
           shape: options?.shape,
-          tabClassName: options?.tabClassName
+          tabClassName: options?.tabClassName,
         },
       });
-    }
-  }
-}
+    },
+  };
+};
 
 resourceTabs.pluginName = 'resourceTabs';
 
 resourceTabs.meta = {
   preferenceDeclaration: {
-    title: '应用标签栏插件参数定义',
+    title: intl('resource_tabs.src.ApplicationTagColumnPlugIn'),
     properties: [
       {
         key: 'appKey',
         type: 'string',
-        description: '唯一标识，用于缓存应用 Tab',
+        description: intl(
+          'resource_tabs.src.UniqueIdentifierForCachingApplication'
+        ),
       },
       {
         key: 'onSort',
@@ -311,15 +343,15 @@ resourceTabs.meta = {
       {
         key: 'shape',
         type: 'string',
-        description: 'Tab shape'
+        description: 'Tab shape',
       },
       {
         key: 'tabClassName',
         type: 'string',
         description: 'Tab className',
-      }
-    ]
-  }
-}
+      },
+    ],
+  },
+};
 
 export default resourceTabs;
