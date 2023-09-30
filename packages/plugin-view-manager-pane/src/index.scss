@@ -1,6 +1,6 @@
 .workspace-view-pane {
   font-size: 14px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--color-layer-mask-background, rgba(0, 0, 0, 0.3));
   position: fixed;
   left: var(--top-area-height);
   top: 42px;
@@ -10,16 +10,19 @@
   &-content {
     width: 300px;
     padding: 11px;
-    background: #fff;
+    background: var(--color-pane-background, #fff);
     height: 100%;
     position: relative;
   }
 
   &-icon {
-    height: 60px !important;
     text-align: center;
-    margin-bottom: 10px;
     font-size: 14px;
+
+    &.show-icon-text {
+      height: 60px !important;
+      margin-bottom: 10px;
+    }
   }
 
   &-top {
@@ -31,11 +34,12 @@
 
   &-title {
     font-weight: 500;
-
+    color: var(--color-title);
   }
 
   &-top-icon {
     margin-left: 14px;
     cursor: pointer;
+    color: var(--color-icon-normal)
   }
 }
