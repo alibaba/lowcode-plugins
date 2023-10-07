@@ -9,8 +9,8 @@ export default function Icon(props: {
     <div>
       <div>
         <svg
-          width={props.showIconText ? '20px' : '16px'}
-          height={props.showIconText ? '20px' : '16px'}
+          width={props.showIconText ? '16px' : '20px'}
+          height={props.showIconText ? '16px' : '20px'}
           viewBox="0 0 16 16"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
