@@ -50,6 +50,7 @@
     &-icon {
       position: relative;
       top: 1px;
+      color: var(--color-brand);
     }
 
     &-items {
@@ -103,7 +104,7 @@
       }
 
       &-code {
-        color: var(--color-text-dark, #8f9aa9);
+        color: var(--color-text-disabled, #8f9aa9);
         margin-left: 6px;
         display: none;
         max-width: 70px;
