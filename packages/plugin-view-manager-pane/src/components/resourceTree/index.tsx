@@ -162,41 +162,44 @@ function ResourceGroup(
           <FileIcon />
         </div>
         <div className="resource-tree-group-title">{props.categoryName}</div>
-        <Overlay
-          v2
-          visible={visible}
-          target={ref?.current}
-          onRequestClose={() => {
-            setVisible(false);
-          }}
-          safeNode={ref?.current}
-          // @ts-ignore
-          placement="br"
-          className="view-pane-popup"
-        >
-          <div>
-            <div
-              onClick={(e) => {
-                if (
-                  props.categoryName ===
-                  intl('view_manager.components.resourceTree.Page')
-                ) {
-                  props.options.onAddPage();
-                } else {
-                  props.options.onAddComponent();
-                }
+        {
+          [intl('view_manager.components.resourceTree.Page'), intl('view_manager.components.resourceTree.Component')].includes(props.categoryName) ? (
+            <Overlay
+              v2
+              visible={visible}
+              target={ref?.current}
+              onRequestClose={() => {
+                setVisible(false);
               }}
-              className="view-pane-popup-item"
+              safeNode={ref?.current}
+              // @ts-ignore
+              placement="br"
+              className="view-pane-popup"
             >
-              {intl('view_manager.components.resourceTree.Create')}
-
-              {props.categoryName ===
-              intl('view_manager.components.resourceTree.Page')
-                ? intl('view_manager.components.resourceTree.Page')
-                : intl('view_manager.components.resourceTree.Component')}
-            </div>
-          </div>
-        </Overlay>
+              <div>
+                <div
+                  onClick={(e) => {
+                    if (
+                      props.categoryName ===
+                      intl('view_manager.components.resourceTree.Page')
+                    ) {
+                      props.options.onAddPage();
+                    } else {
+                      props.options.onAddComponent();
+                    }
+                  }}
+                  className="view-pane-popup-item"
+                >
+                  {intl('view_manager.components.resourceTree.CreateItem', {
+                    categoryName: props.categoryName === intl('view_manager.components.resourceTree.Page')
+                    ? intl('view_manager.components.resourceTree.Page')
+                    : intl('view_manager.components.resourceTree.Component'),
+                  })}
+                </div>
+              </div>
+            </Overlay>
+          ) : null
+        }
       </div>
       {expanded && (
         <div className="resource-tree-group-items">

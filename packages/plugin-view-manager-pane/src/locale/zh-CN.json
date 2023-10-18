@@ -6,7 +6,7 @@
   "view_manager.components.addFile.CreateAComponent": "新建组件",
   "view_manager.components.resourceTree.SearchPagesAndComponents": "搜索页面、组件",
   "view_manager.components.resourceTree.Page": "页面",
-  "view_manager.components.resourceTree.Create": "新建",
+  "view_manager.components.resourceTree.CreateItem": "新建{categoryName}",
   "view_manager.components.resourceTree.Component": "组件",
   "view_manager.components.resourceTree.SourceCode": "（源码）",
   "view_manager.src.icon.View": "视图",
