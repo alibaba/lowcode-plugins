@@ -1,7 +1,7 @@
 import React, { Component, ErrorInfo, Suspense } from 'react';
 import { Loading, Message, Button } from '@alifd/next';
 
-import styles from './ErrorBoundary.less';
+import './ErrorBoundary.less';
 
 interface ErrorBoundaryProps {
   onCatch?: (error: Error, info: ErrorInfo) => void;
@@ -41,7 +41,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     return (
       <Message title="出错了~" type="error">
         <p>详细错误: {errorInfo || '未知原因'}</p>
-        <div className={styles.actions}>
+        <div className="plugin-code-editor-errorBoundary-actions">
           <Button onClick={this._handleReset} size="small">
             重试
           </Button>
