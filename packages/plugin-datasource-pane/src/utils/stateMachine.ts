@@ -83,7 +83,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) =>
               target: 'idle',
               actions: assign({
                 dataSourceList: (context, event) => {
-                  return context.sort.dataSourceList === context.dataSourceList
+                  return context.sort.dataSourceList.length !== 0
                     ? context.sort.dataSourceList
                     : context.dataSourceList;
                 },
