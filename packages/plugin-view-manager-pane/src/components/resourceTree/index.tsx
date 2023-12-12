@@ -3,19 +3,20 @@ import {
   IPublicModelPluginContext,
   IPublicModelResource,
 } from '@alilc/lowcode-types';
-import { Search, Overlay } from '@alifd/next';
+import { Search, Overlay, Balloon } from '@alifd/next';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { FileIcon, IconArrowRight } from './icon';
 import './index.scss';
 import { IOptions } from '../..';
 import { intl } from '../../locale';
+import { AddFile } from '../addFile';
 
 export function ResourcePaneContent(props: IPluginOptions) {
-  const { workspace } = props.pluginContext;
-  const [resourceList, setResourceList] = useState<IPublicModelResource[]>(
-    workspace.resourceList
+  const { workspace } = props.pluginContext || {};
+  const [resourceList, setResourceList] = useState<IPublicModelResource[] | undefined>(
+    workspace?.resourceList
   );
-  workspace.onResourceListChange(() => {
+  workspace?.onResourceListChange(() => {
     setResourceList(workspace.resourceList);
   });
   return (
@@ -32,21 +33,23 @@ export function ResourcePaneContent(props: IPluginOptions) {
 
 function ResourceListTree(
   props: {
-    resourceList: IPublicModelResource[];
-  } & Required<IPluginOptions>
+    resourceList?: IPublicModelResource[];
+  } & IPluginOptions
 ) {
   const [category, setCategory] = useState<{
     [key: string]: IPublicModelResource[];
   }>({});
   const [filterValue, setFilterValue] = useState();
   const [activeId, setActiveId] = useState(
-    props.pluginContext.workspace.window?.resource.id
+    props.pluginContext?.workspace.window?.resource?.id + ''
   );
   useEffect(() => {
-    let category = {};
-    props.resourceList.forEach((d) => {
-      category[d.category] = category[d.category] || [];
-      category[d.category].push(d);
+    let category: {
+      [key: string]: any;
+    } = {};
+    props.resourceList?.forEach((d) => {
+      category[d.category!] = category[d.category!] || [];
+      category[d.category!].push(d);
     });
     setCategory(category);
   }, [props.resourceList]);
@@ -54,7 +57,7 @@ function ResourceListTree(
     setFilterValue(key);
   }, []);
   workspace.onChangeActiveWindow(() => {
-    setActiveId(workspace.window?.title);
+    setActiveId(workspace.window?.resource?.id + '');
   });
   return (
     <>
@@ -69,6 +72,7 @@ function ResourceListTree(
           value={filterValue}
           onChange={handleSearchChange}
         />
+        <AddFile options={props.options} />
       </div>
       <div className="resource-tree">
         {Array.from(Object.entries(category)).map(
@@ -84,6 +88,7 @@ function ResourceListTree(
                 pluginContext={props.pluginContext}
                 behaviors={props.behaviors}
                 options={props.options}
+                depth={0}
               />
             );
           }
@@ -95,11 +100,12 @@ function ResourceListTree(
 
 function ResourceGroup(
   props: {
-    activeId: string;
+    activeId?: string;
     categoryName: string;
     resourceArr: IPublicModelResource[];
-    filterValue: string;
-  } & Required<IPluginOptions>
+    filterValue?: string;
+    depth: number;
+  } & IPluginOptions
 ) {
   const [expanded, setExpanded] = useState(
     props.defaultExpandAll ||
@@ -112,7 +118,7 @@ function ResourceGroup(
     (d) =>
       !props.filterValue ||
       [d.options.title, d.options.slug, d.options.componentName].some(
-        (d) => d && d.toLowerCase().includes(props.filterValue.toLowerCase())
+        (d) => d && d.toLowerCase().includes(props.filterValue?.toLowerCase())
       )
   );
 
@@ -122,7 +128,10 @@ function ResourceGroup(
 
   if (!props.categoryName || props.categoryName === 'undefined') {
     return (
-      <div className="resource-tree-group">
+      <div
+        className="resource-tree-group"
+        data-depth={props.depth}
+      >
         {resourceArr.map((d) => (
           <ResourceItem
             children={d.children}
@@ -133,6 +142,7 @@ function ResourceGroup(
             behaviors={props.behaviors}
             options={props.options}
             pluginContext={props.pluginContext}
+            depth={props.depth + 1}
           />
         ))}
       </div>
@@ -140,7 +150,10 @@ function ResourceGroup(
   }
 
   return (
-    <div className="resource-tree-group">
+    <div
+      className="resource-tree-group"
+      data-depth={props.depth}
+    >
       <div
         className="resource-tree-group-wrap"
         onContextMenu={(e) => {
@@ -151,7 +164,7 @@ function ResourceGroup(
         ref={ref}
       >
         <div
-          className={`resource-tree-group-expand ${expanded ? 'expanded' : ''}`}
+          className={`resource-tree-expand ${expanded ? 'expanded' : ''}`}
           onClick={() => {
             setExpanded(!expanded);
           }}
@@ -183,9 +196,9 @@ function ResourceGroup(
                       props.categoryName ===
                       intl('view_manager.components.resourceTree.Page')
                     ) {
-                      props.options.onAddPage();
+                      props.options.onAddPage?.();
                     } else {
-                      props.options.onAddComponent();
+                      props.options.onAddComponent?.();
                     }
                   }}
                   className="view-pane-popup-item"
@@ -202,7 +215,7 @@ function ResourceGroup(
         }
       </div>
       {expanded && (
-        <div className="resource-tree-group-items">
+        <div className="resource-tree-children">
           {resourceArr.map((d) => (
             <ResourceItem
               children={d.children}
@@ -213,6 +226,7 @@ function ResourceGroup(
               behaviors={props.behaviors}
               options={props.options}
               pluginContext={props.pluginContext}
+              depth={props.depth + 1}
             />
           ))}
         </div>
@@ -222,53 +236,70 @@ function ResourceGroup(
 }
 
 function ResourceItem(props: {
-  resource: IPublicModelResource;
-  icon: any;
-  children: IPublicModelResource[];
-  activeId: string;
-  behaviors: any;
-  options: IOptions;
-  pluginContext: IPublicModelPluginContext;
+  resource?: IPublicModelResource;
+  icon?: any;
+  children?: IPublicModelResource[];
+  activeId?: string;
+  behaviors?: any;
+  options?: IOptions;
+  pluginContext?: IPublicModelPluginContext;
+  depth: number;
 }) {
   const [expanded, setExpanded] = useState(false);
   const ref = useRef(null);
   const [showBehaviors, setShowBehaviors] = useState(false);
   const PropsIcon = props.icon;
   const Behaviors = props.behaviors;
-  const display = (props.resource.config as any)?.display ?? true;
+  const display = (props.resource?.config as any)?.display ?? true;
 
+  const indent = props.depth * 28 + 12;
+  const style = {
+    paddingLeft: indent,
+    marginLeft: -indent,
+  }
   if (!display) {
     return null;
   }
 
+  const children = props.children?.filter(d => d.config?.display !== false);
+
   return (
     <div
       ref={ref}
-      className={`resource-tree-group-item ${
-        props.resource.options.isProCodePage
+      className={`resource-tree-group-node ${
+        props.resource?.options.isProCodePage
           ? 'resource-tree-group-item-pro-code'
           : ''
-      } ${props.activeId === props.resource.options.id ? 'active' : ''}`}
+      } ${props.activeId === props.resource?.options.id || props.activeId === props.resource?.id ? 'active' : ''}`}
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
         setShowBehaviors(!showBehaviors);
       }}
+      data-depth={props.depth}
     >
-      {props.resource.options.modified ? (
-        <div className="resource-tree-group-item-modified"></div>
-      ) : null}
-
       <div
         onClick={() => {
-          props.pluginContext.workspace.openEditorWindow(props.resource);
-          props.options.handleClose(true);
+          props.resource && props.pluginContext?.workspace.openEditorWindow(props.resource);
         }}
-        className="resource-tree-group-item-children"
+        className="resource-tree-title"
+        style={style}
       >
-        {((props.children && props.children.length) || null) && (
+        {props.resource?.options.modified ? (
+          <Balloon
+            v2
+            trigger={<div className='resource-tree-group-item-modified-wrap'><div className="resource-tree-group-item-modified"></div></div>}
+            triggerType="hover"
+            align='bl'
+            title=""
+          >
+            {props.resource.options.modifiedTips}
+          </Balloon>
+        ) : null}
+
+        {((children && children.length) || null) && (
           <div
-            className={`expand-btn-wrap ${expanded ? 'expanded' : ''}`}
+            className={`resource-tree-expand ${expanded ? 'expanded' : ''}`}
             onClick={(e) => {
               setExpanded(!expanded);
               e.stopPropagation();
@@ -282,24 +313,30 @@ function ResourceItem(props: {
         <div className="resource-tree-group-item-icon">
           {PropsIcon && <PropsIcon />}
         </div>
-        <div className="resource-tree-group-item-title">
-          {props.resource.options?.label || props.resource.title}
-          {props.resource.options.isProCodePage
+        <div className="resource-tree-group-title-label">
+          {props.resource?.options?.label || props.resource?.title}
+          {props.resource?.options.isProCodePage
             ? intl('view_manager.components.resourceTree.SourceCode')
             : ''}
+        
+          {
+            props.resource?.options?.slug ||
+            props.resource?.options?.componentName ? (
+              <span className="resource-tree-group-item-code">
+                ({ props.resource.options?.slug || props.resource.options?.componentName })
+              </span>
+            ) : null
+          }
         </div>
-        <div className="resource-tree-group-item-code">
-          {props.resource.options?.slug ||
-            props.resource.options?.componentName ||
-            ''}
-        </div>
+        
+        
         <div className="resource-tree-group-item-behaviors">
           {Behaviors &&
-          (props.resource.config as any)?.disableBehaviors !== true ? (
+          (props.resource?.config as any)?.disableBehaviors !== true ? (
             <Behaviors
               showBehaviors={showBehaviors}
               resource={props.resource}
-              onVisibleChange={(visible, fromTrigger) => {
+              onVisibleChange={(visible: boolean) => {
                 setShowBehaviors(visible);
               }}
               safeNode={ref?.current}
@@ -307,20 +344,28 @@ function ResourceItem(props: {
           ) : null}
         </div>
       </div>
-      {expanded &&
-        props.children &&
-        props.children.map((child) => (
-          <ResourceItem
-            children={child.children}
-            icon={child.icon}
-            key={child.id}
-            activeId={props.activeId}
-            resource={child}
-            behaviors={props.behaviors}
-            options={props.options}
-            pluginContext={props.pluginContext}
-          />
-        ))}
+
+      {
+        expanded && children?.length ? (
+          <div className='resource-tree-children'>
+            {
+              props.children?.map((child) => (
+                <ResourceItem
+                  children={child.children}
+                  icon={child.icon}
+                  key={child.id}
+                  activeId={props.activeId}
+                  resource={child}
+                  behaviors={props.behaviors}
+                  options={props.options}
+                  pluginContext={props.pluginContext}
+                  depth={props.depth + 1}
+                />
+              ))
+            }
+          </div>
+        ) : null
+      }
     </div>
   );
 }

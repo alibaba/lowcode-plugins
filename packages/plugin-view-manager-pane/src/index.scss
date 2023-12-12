@@ -1,14 +1,16 @@
 .workspace-view-pane {
   font-size: 14px;
-  background-color: var(--color-layer-mask-background, rgba(0, 0, 0, 0.3));
-  position: fixed;
-  left: var(--top-area-height);
-  top: 42px;
-  bottom: 0;
-  right: 0;
+  position: relative;
+  // background-color: var(--color-layer-mask-background, rgba(0, 0, 0, 0.3));
+  // position: fixed;
+  // left: var(--top-area-height);
+  // top: 42px;
+  // bottom: 0;
+  // right: 0;
+  height: 100%;
 
   &-content {
-    width: 300px;
+    // width: 300px;
     padding: 11px;
     background: var(--color-pane-background, #fff);
     height: 100%;
@@ -25,21 +27,21 @@
     }
   }
 
-  &-top {
-    margin-bottom: 11px;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-  }
+  // &-top {
+  //   margin-bottom: 11px;
+  //   font-size: 14px;
+  //   display: flex;
+  //   justify-content: space-between;
+  // }
 
-  &-title {
-    font-weight: 500;
-    color: var(--color-title);
-  }
+  // &-title {
+  //   font-weight: 500;
+  //   color: var(--color-title);
+  // }
 
-  &-top-icon {
-    margin-left: 14px;
-    cursor: pointer;
-    color: var(--color-title);
-  }
+  // &-top-icon {
+  //   margin-left: 14px;
+  //   cursor: pointer;
+  //   color: var(--color-title);
+  // }
 }

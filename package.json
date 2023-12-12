@@ -54,5 +54,6 @@
   },
   "resolutions": {
     "@builder/babel-preset-ice": "1.0.1"
-  }
+  },
+  "repository": "https://github.com/alibaba/lowcode-plugins.git"
 }
