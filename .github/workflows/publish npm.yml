@@ -1,0 +1,53 @@
+name: Publish NPM Packages
+on: push
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # 完全克隆
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # 根据项目需求更改 Node.js 版本
+
+      - name: Check for package.json changes
+        id: package-json-changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          CHANGED_PKG_FILES=$(git diff --name-only HEAD~1 HEAD -- 'packages/*/package.json')
+          if [ -z "$CHANGED_PKG_FILES" ]; then
+            echo "No package.json changes detected."
+            echo "CHANGED_PACKAGES=none" >> $GITHUB_ENV
+          else
+            CHANGED_DIRS=$(echo "$CHANGED_PKG_FILES" | xargs -L1 dirname)
+            echo "CHANGED_PACKAGES=$CHANGED_DIRS" >> $GITHUB_ENV
+            echo "Changed package.json files: $CHANGED_PKG_FILES"
+          fi
+
+      - name: Publish packages
+        if: env.CHANGED_PACKAGES != 'none'
+        run: |
+          for dir in $CHANGED_PACKAGES; do
+            echo "Entering directory $dir"
+            cd $dir
+            echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+            npm install
+            PACKAGE_NAME=$(node -p "require('./package.json').name")
+            PACKAGE_VERSION=$(node -p "require('./package.json').version")
+            if [[ $PACKAGE_VERSION == *beta* ]]; then
+              echo "Publishing $PACKAGE_NAME@$PACKAGE_VERSION as beta..."
+              npm publish --tag beta
+            else
+              echo "Publishing $PACKAGE_NAME@$PACKAGE_VERSION..."
+              npm publish
+            fi
+            cd -
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
