@@ -131,8 +131,8 @@
     height: auto;
     width: 12px;
     margin-right: 4px;
-    position: relative;
-    top: 1px;
+    display: flex;
+    align-items: center;
 
     svg {
       width: 100%;
