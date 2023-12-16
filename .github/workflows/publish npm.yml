@@ -31,9 +31,6 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
 
-    - name: Install Root Dependencies
-      run: npm install
-
     - name: Change to Package Directory
       run: cd packages/${{ github.event.inputs.packagePath }}
 
