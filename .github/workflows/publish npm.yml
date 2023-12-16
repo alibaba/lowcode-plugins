@@ -36,9 +36,10 @@ jobs:
         # 假设您使用 npm 来修改版本和发布
         npm run build
         npm version patch
-        npm publish
 
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        npm publish
+
         echo "::set-output name=PACKAGE_NAME::$(node -p "require('./package.json').name")"
         echo "::set-output name=PACKAGE_VERSION::$(node -p "require('./package.json').version")"
 
