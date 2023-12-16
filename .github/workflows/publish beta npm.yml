@@ -1,5 +1,5 @@
 name: Publish Beta NPM Packages
-on: push
+on:
   workflow_dispatch:
     inputs:
       packagePath:
