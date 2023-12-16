@@ -3,7 +3,7 @@ on: push
   workflow_dispatch:
     inputs:
       packagePath:
-        description: 'Path to the package (example: action-block)'
+        description: 'Path to the package (e.g., action-block)'
         required: true
       versionType:
         description: 'Version update type (major, minor, patch)'
