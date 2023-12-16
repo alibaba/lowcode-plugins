@@ -128,11 +128,15 @@
   }
 
   &-group-item-icon {
-    height: 17px;
-    width: 16px;
-    margin-right: 2px;
+    height: auto;
+    width: 12px;
+    margin-right: 4px;
     position: relative;
     top: 1px;
+
+    svg {
+      width: 100%;
+    }
   }
 
   &-group-item-behaviors {
