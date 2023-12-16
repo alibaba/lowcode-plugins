@@ -1,0 +1,41 @@
+name: Publish Beta NPM Packages
+on: push
+  workflow_dispatch:
+    inputs:
+      packagePath:
+        description: 'Path to the package (e.g., action-block)'
+        required: true
+      betaVersion:
+        description: 'Beta version number (e.g., 1.0.1-beta.0)'
+        required: true
+
+jobs:
+  publish-package:
+    runs-on: ubuntu-latest
+    if: >-
+      github.actor == 'JackLian' || github.actor == 'liujuping'
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16' # 或者您希望的任何版本
+
+    - name: Install Dependencies and Publish
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        cd packages
+        cd ${{ github.event.inputs.packagePath }}
+        npm install
+        # 假设您使用 npm 来修改版本和发布
+        npm run build
+        npm version ${{ github.event.inputs.betaVersion }}
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
+        npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # 确保在您的 GitHub 仓库的 Secrets 中设置了 NPM_TOKEN
