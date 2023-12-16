@@ -24,19 +24,29 @@ jobs:
       with:
         node-version: '16' # 或者您希望的任何版本
 
-    - name: Install Dependencies and Publish
+    - name: Configure Git
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        npm install
-        cd packages
-        cd ${{ github.event.inputs.packagePath }}
-        npm install
-        # 假设您使用 npm 来修改版本和发布
-        npm run build
-        npm version ${{ github.event.inputs.betaVersion }}
-        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
+    - name: Install Root Dependencies
+      run: npm install
+
+    - name: Change to Package Directory
+      run: cd packages/${{ github.event.inputs.packagePath }}
+
+    - name: Install Package Dependencies
+      run: npm install
+
+    - name: Build Package
+      run: npm run build
+
+    - name: Update Package Version
+      run: npm version ${{ github.event.inputs.betaVersion }}
+
+    - name: Publish Package
+      run: |
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
         npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # 确保在您的 GitHub 仓库的 Secrets 中设置了 NPM_TOKEN
