@@ -35,14 +35,21 @@ jobs:
       run: cd packages/${{ github.event.inputs.packagePath }}
 
     - name: Install Package Dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
 
     - name: Build Package
       run: npm run build
 
     - name: Publish Package
       run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        cd packages/${{ github.event.inputs.packagePath }}
+        npm install --legacy-peer-deps
         npm version patch
+        npm run build
 
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
         npm publish
@@ -52,6 +59,3 @@ jobs:
 
         git tag -a "${{ steps.package_info.outputs.PACKAGE_NAME }}@${{ steps.package_info.outputs.PACKAGE_VERSION }}" -m "Release ${{ steps.package_info.outputs.PACKAGE_NAME }} version ${{ steps.package_info.outputs.PACKAGE_VERSION }}"
         git push origin "${{ steps.package_info.outputs.PACKAGE_NAME }}@${{ steps.package_info.outputs.PACKAGE_VERSION }}"
-
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # 确保在您的 GitHub 仓库的 Secrets 中设置了 NPM_TOKEN
