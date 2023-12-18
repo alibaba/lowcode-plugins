@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   IPublicModelPluginContext,
   IPublicModelResource,
+  IPublicTypeSkeletonConfig,
 } from '@alilc/lowcode-types';
 import Icon from './icon';
 import { Pane } from './pane';
@@ -30,6 +31,8 @@ export interface IOptions {
   handleClose?: (force?: boolean) => void;
 
   showIconText?: boolean;
+
+  skeletonConfig?: IPublicTypeSkeletonConfig;
 }
 
 const ViewManagerPane = (
@@ -44,14 +47,12 @@ const ViewManagerPane = (
       ctx.skeleton.add({
         area: 'leftArea',
         name: 'ViewManagerPane',
-        type: 'PanelDock',
         props: {
           icon: <Icon showIconText={showIconText} />,
           description: intl('view_manager.src.ViewManagement'),
           className: `workspace-view-pane-icon ${showIconText ? 'show-icon-text' : null }`,
         },
         panelProps: {
-          hideTitleBar: true,
           width: '200px',
         },
         content: Pane,
@@ -64,6 +65,8 @@ const ViewManagerPane = (
           },
           pluginContext: ctx,
         },
+        ...(options.skeletonConfig || {}),
+        type: options.skeletonConfig?.type || 'PanelDock',
       });
     },
   };
@@ -133,6 +136,11 @@ ViewManagerPane.meta = {
       {
         key: 'showIconText',
         type: 'boolean',
+        description: '',
+      },
+      {
+        key: 'skeletonConfig',
+        type: 'object',
         description: '',
       }
     ],

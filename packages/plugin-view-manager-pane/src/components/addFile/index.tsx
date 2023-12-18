@@ -17,7 +17,7 @@ function AddFileComponent(props: { options: IOptions }) {
       <Balloon
         v2
         trigger={
-          <span>
+          <span className='add-file-icon-wrap'>
             <AddIcon />
           </span>
         }

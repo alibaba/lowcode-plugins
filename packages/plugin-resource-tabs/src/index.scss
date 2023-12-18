@@ -14,9 +14,9 @@
     }
 
     &-resource-icon {
-      position: relative;
-      top: 2px;
       margin-right: 2px;
+      display: flex;
+      align-items: center;
     }
 
     &-changed-icon {
@@ -33,6 +33,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      font-weight: 500;
     }
 
     &-tips {
