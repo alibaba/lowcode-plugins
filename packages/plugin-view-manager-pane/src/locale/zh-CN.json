@@ -10,7 +10,7 @@
   "view_manager.components.resourceTree.Component": "组件",
   "view_manager.components.resourceTree.SourceCode": "（源码）",
   "view_manager.src.icon.View": "视图",
-  "view_manager.src.ViewManagement": "视图管理",
+  "view_manager.src.ViewManagement": "资源",
   "view_manager.src.ViewManagementPanelPlugIn": "视图管理面板插件参数定义",
   "view_manager.src.pane.View": "视图"
 }
