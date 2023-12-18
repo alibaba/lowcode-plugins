@@ -24,26 +24,14 @@ jobs:
       with:
         node-version: '16' # 或者您希望的任何版本
 
-    - name: Configure Git
+    - name: Change to Package Directory
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-
-    - name: Change to Package Directory
-      run: cd packages/${{ github.event.inputs.packagePath }}
-
-    - name: Install Package Dependencies
-      run: npm install
-
-    - name: Build Package
-      run: npm run build
-
-    - name: Update Package Version
-      run: npm version ${{ github.event.inputs.betaVersion }}
-
-    - name: Publish Package
-      run: |
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-        npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # 确保在您的 GitHub 仓库的 Secrets 中设置了 NPM_TOKEN
+        cd packages/${{ github.event.inputs.packagePath }}
+        npm install --legacy-peer-deps
+        npm run build
+        npm version ${{ github.event.inputs.betaVersion }}
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        npm publish --tag beta
