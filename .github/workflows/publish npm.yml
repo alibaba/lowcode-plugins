@@ -40,8 +40,8 @@ jobs:
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
         npm publish
 
-        echo "::set-output name=PACKAGE_NAME::$(node -p "require('./package.json').name")"
-        echo "::set-output name=PACKAGE_VERSION::$(node -p "require('./package.json').version")"
+        echo "PACKAGE_NAME=$(node -p "require('./package.json').name")" >> $GITHUB_ENV
+        echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
-        git tag -a "${{ steps.package_info.outputs.PACKAGE_NAME }}@${{ steps.package_info.outputs.PACKAGE_VERSION }}" -m "Release ${{ steps.package_info.outputs.PACKAGE_NAME }} version ${{ steps.package_info.outputs.PACKAGE_VERSION }}"
-        git push origin "${{ steps.package_info.outputs.PACKAGE_NAME }}@${{ steps.package_info.outputs.PACKAGE_VERSION }}"
+        git tag -a "${PACKAGE_NAME}@${PACKAGE_VERSION}" -m "Release ${PACKAGE_NAME} version ${PACKAGE_VERSION}"
+        git push origin "${PACKAGE_NAME}@${PACKAGE_VERSION}"
