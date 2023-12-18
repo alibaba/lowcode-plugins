@@ -43,5 +43,8 @@ jobs:
         echo "PACKAGE_NAME=$(node -p "require('./package.json').name")" >> $GITHUB_ENV
         echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
+        git add package.json
+        git commit -m "Bump version to ${PACKAGE_VERSION}"
+
         git tag -a "${PACKAGE_NAME}@${PACKAGE_VERSION}" -m "Release ${PACKAGE_NAME} version ${PACKAGE_VERSION}"
         git push origin "${PACKAGE_NAME}@${PACKAGE_VERSION}"

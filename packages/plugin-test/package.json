@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-test",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "alibaba lowcode editor test plugin",
   "files": [
     "es",
