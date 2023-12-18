@@ -26,20 +26,6 @@ jobs:
       with:
         node-version: '16' # 或者您希望的任何版本
 
-    - name: Configure Git
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-
-    - name: Change to Package Directory
-      run: cd packages/${{ github.event.inputs.packagePath }}
-
-    - name: Install Package Dependencies
-      run: npm install --legacy-peer-deps
-
-    - name: Build Package
-      run: npm run build
-
     - name: Publish Package
       run: |
         git config --local user.email "action@github.com"
