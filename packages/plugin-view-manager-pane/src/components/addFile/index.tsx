@@ -8,6 +8,10 @@ import './index.scss';
 import { intl } from '../../locale';
 
 function AddFileComponent(props: { options: IOptions }) {
+  if (props.options?.renderAddFileComponent && typeof props.options.renderAddFileComponent === 'function') {
+    return props.options.renderAddFileComponent();
+  }
+  
   if (!props.options?.onAddPage && !props.options?.onAddComponent) {
     return null;
   }

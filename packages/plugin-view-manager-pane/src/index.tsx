@@ -12,6 +12,8 @@ import { intl } from './locale';
 export interface IOptions {
   init?: (ctx: IPublicModelPluginContext) => {};
 
+  renderAddFileComponent?: () => React.JSX.Element;
+
   onAddPage?: () => {};
 
   onDeletePage?: (resource: IPublicModelResource) => {};
