@@ -7,18 +7,6 @@
   &::after {
     display: none;
   }
-
-  .view-pane-popup-item {
-    height: 28px;
-    line-height: 28px;
-    padding: 0 12px;
-    color: var(--color-text);
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(--color-block-background-light, #f1f3f6);
-    }
-  }
 }
 
 .add-file-icon-wrap {
