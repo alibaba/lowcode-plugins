@@ -3,13 +3,16 @@ import {
   IPublicModelPluginContext,
   IPublicModelResource,
 } from '@alilc/lowcode-types';
-import { Search, Overlay, Balloon } from '@alifd/next';
+import { Search, Overlay, Balloon, Menu } from '@alifd/next';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { FileIcon, IconArrowRight } from './icon';
 import './index.scss';
 import { IOptions } from '../..';
 import { intl } from '../../locale';
 import { AddFile } from '../addFile';
+
+const { Popup } = Overlay;
+const { Item } = Menu;
 
 export function ResourcePaneContent(props: IPluginOptions) {
   const { workspace } = props.pluginContext || {};
@@ -177,7 +180,7 @@ function ResourceGroup(
         <div className="resource-tree-group-title">{props.categoryName}</div>
         {
           [intl('view_manager.components.resourceTree.Page'), intl('view_manager.components.resourceTree.Component')].includes(props.categoryName) ? (
-            <Overlay
+            <Popup
               v2
               visible={visible}
               target={ref?.current}
@@ -185,12 +188,11 @@ function ResourceGroup(
                 setVisible(false);
               }}
               safeNode={ref?.current}
-              // @ts-ignore
               placement="br"
               className="view-pane-popup"
             >
-              <div>
-                <div
+              <Menu openMode="single">
+                <Item
                   onClick={(e) => {
                     if (
                       props.categoryName ===
@@ -201,16 +203,15 @@ function ResourceGroup(
                       props.options.onAddComponent?.();
                     }
                   }}
-                  className="view-pane-popup-item"
                 >
                   {intl('view_manager.components.resourceTree.CreateItem', {
                     categoryName: props.categoryName === intl('view_manager.components.resourceTree.Page')
                     ? intl('view_manager.components.resourceTree.Page')
                     : intl('view_manager.components.resourceTree.Component'),
                   })}
-                </div>
-              </div>
-            </Overlay>
+                </Item>
+              </Menu>
+            </Popup>
           ) : null
         }
       </div>

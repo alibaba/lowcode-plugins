@@ -1,9 +1,12 @@
 import React from 'react';
-import { Balloon } from '@alifd/next';
+import { Overlay, Menu } from '@alifd/next';
 import { IPublicModelResource } from '@alilc/lowcode-types';
 import { OthersIcon } from '../resourceTree/icon';
 import { IOptions } from '../..';
 import { intl } from '../../locale';
+
+const { Item } = Menu;
+const { Popup } = Overlay;
 
 export function Behaviors(props: {
   resource: IPublicModelResource;
@@ -29,7 +32,7 @@ export function Behaviors(props: {
   }
 
   return (
-    <Balloon
+    <Popup
       v2
       trigger={
         <div
@@ -44,59 +47,59 @@ export function Behaviors(props: {
       }
       triggerType="click"
       align="bl"
-      popupClassName="view-pane-popup"
-      closable={false}
+      className="view-pane-popup"
       visible={props.showBehaviors}
       safeNode={props.safeNode}
       onVisibleChange={props.onVisibleChange}
     >
-      {behaviors.map((d) => {
-        let text, handleLowcodeClick, handlePageClick;
-        switch (d) {
-          case 'edit':
-            text = intl(
-              'view_manager.components.addFile.behaviors.DescriptionSettings',
-              { description: description }
-            );
-            handleLowcodeClick = props.options?.onEditComponent;
-            handlePageClick = props.options?.onEditPage;
-            break;
-          case 'copy':
-            text = intl(
-              'view_manager.components.addFile.behaviors.CopyDescription',
-              { description: description }
-            );
-            handleLowcodeClick = props.options?.onCopyComponent;
-            handlePageClick = props.options?.onCopyPage;
-            break;
-          case 'delete':
-            text = intl(
-              'view_manager.components.addFile.behaviors.DeleteDescription',
-              { description: description }
-            );
-            handleLowcodeClick = props.options?.onDeleteComponent;
-            handlePageClick = props.options?.onDeletePage;
-            break;
-        }
+      <Menu openMode="single">
+        {behaviors.map((d) => {
+          let text, handleLowcodeClick: any, handlePageClick: any;
+          switch (d) {
+            case 'edit':
+              text = intl(
+                'view_manager.components.addFile.behaviors.DescriptionSettings',
+                { description: description }
+              );
+              handleLowcodeClick = props.options?.onEditComponent;
+              handlePageClick = props.options?.onEditPage;
+              break;
+            case 'copy':
+              text = intl(
+                'view_manager.components.addFile.behaviors.CopyDescription',
+                { description: description }
+              );
+              handleLowcodeClick = props.options?.onCopyComponent;
+              handlePageClick = props.options?.onCopyPage;
+              break;
+            case 'delete':
+              text = intl(
+                'view_manager.components.addFile.behaviors.DeleteDescription',
+                { description: description }
+              );
+              handleLowcodeClick = props.options?.onDeleteComponent;
+              handlePageClick = props.options?.onDeletePage;
+              break;
+          }
 
-        return (
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              props.onVisibleChange(false);
-              if (name === 'lowcode') {
-                handleLowcodeClick(props.resource);
-              } else {
-                handlePageClick(props.resource);
-              }
-            }}
-            className="view-pane-popup-item"
-          >
-            {text}
-          </div>
-        );
-      })}
-    </Balloon>
+          return (
+            <Item
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                props.onVisibleChange(false);
+                if (name === 'lowcode') {
+                  handleLowcodeClick?.(props.resource);
+                } else {
+                  handlePageClick?.(props.resource);
+                }
+              }}
+            >
+              {text}
+            </Item>
+          );
+        })}
+      </Menu>
+    </Popup>
   );
 }

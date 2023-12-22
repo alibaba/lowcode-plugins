@@ -1,4 +1,4 @@
-import { Balloon } from '@alifd/next';
+import { Overlay, Menu } from '@alifd/next';
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { AddIcon } from '../../icon';
@@ -7,18 +7,21 @@ import { IOptions } from '../..';
 import './index.scss';
 import { intl } from '../../locale';
 
+const { Popup } = Overlay;
+const { Item } = Menu;
+
 function AddFileComponent(props: { options: IOptions }) {
   if (props.options?.renderAddFileComponent && typeof props.options.renderAddFileComponent === 'function') {
     return props.options.renderAddFileComponent();
   }
-  
+
   if (!props.options?.onAddPage && !props.options?.onAddComponent) {
     return null;
   }
 
   return (
     <>
-      <Balloon
+      <Popup
         v2
         trigger={
           <span className='add-file-icon-wrap'>
@@ -27,31 +30,30 @@ function AddFileComponent(props: { options: IOptions }) {
         }
         triggerType="click"
         align="bl"
-        popupClassName="view-pane-popup"
-        closable={false}
+        className="view-pane-popup"
       >
-        {props.options.onAddPage ? (
-          <div
-            onClick={(e) => {
-              props.options.onAddPage?.();
-            }}
-            className="view-pane-popup-item"
-          >
-            {intl('view_manager.components.addFile.CreatePage')}
-          </div>
-        ) : null}
+        <Menu openMode="single">
+          {props.options.onAddPage ? (
+            <Item
+              onClick={(e) => {
+                props.options.onAddPage?.();
+              }}
+            >
+              {intl('view_manager.components.addFile.CreatePage')}
+            </Item>
+          ) : null}
 
-        {props.options.onAddComponent ? (
-          <div
-            className="view-pane-popup-item"
-            onClick={(e) => {
-              props.options.onAddComponent?.();
-            }}
-          >
-            {intl('view_manager.components.addFile.CreateAComponent')}
-          </div>
-        ) : null}
-      </Balloon>
+          {props.options.onAddComponent ? (
+            <Item
+              onClick={(e) => {
+                props.options.onAddComponent?.();
+              }}
+            >
+              {intl('view_manager.components.addFile.CreateAComponent')}
+            </Item>
+          ) : null}
+        </Menu>
+      </Popup>
     </>
   );
 }
