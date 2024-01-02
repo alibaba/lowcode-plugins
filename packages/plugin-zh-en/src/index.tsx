@@ -1,6 +1,6 @@
 import { PureComponent } from 'react';
-import { ILowCodePluginContext, common } from '@alilc/lowcode-engine';
-import { PluginProps } from '@alilc/lowcode-types';
+import { common } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext, PluginProps } from '@alilc/lowcode-types';
 import { intl } from './locale';
 import { IconZh } from './icons/zh';
 import { IconEn } from './icons/en';
@@ -43,7 +43,7 @@ class ZhEn extends PureComponent<PluginProps> {
   }
 }
 
-const plugin = (ctx: ILowCodePluginContext) => {
+const plugin = (ctx: IPublicModelPluginContext) => {
   return {
     // 插件名，注册环境下唯一
     name: 'PluginZhEn',

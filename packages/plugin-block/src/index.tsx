@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { ILowCodePluginContext } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { default as BlockPane } from './pane';
 
-const LowcodePluginCusPlugin = (ctx: ILowCodePluginContext) => {
+const LowcodePluginCusPlugin = (ctx: IPublicModelPluginContext) => {
   return {
     // 插件名，注册环境下唯一
     name: 'LowcodePluginCusPlugin',

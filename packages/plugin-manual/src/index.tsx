@@ -1,7 +1,7 @@
-import { ILowCodePluginContext } from '@alilc/lowcode-engine';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { IconQuestion } from './icon';
 
-const PluginManual = (ctx: ILowCodePluginContext) => {
+const PluginManual = (ctx: IPublicModelPluginContext) => {
   return {
     init() {
       // 往引擎增加面板
