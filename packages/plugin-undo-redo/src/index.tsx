@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
-import { ILowCodePluginContext, project } from '@alilc/lowcode-engine';
+import { project } from '@alilc/lowcode-engine';
 import { Button, Icon } from '@alifd/next';
-import { PluginProps, IPublicTypeDisposable } from '@alilc/lowcode-types';
+import { PluginProps, IPublicTypeDisposable, IPublicModelPluginContext } from '@alilc/lowcode-types';
 
 import './index.scss';
 
@@ -89,7 +89,7 @@ class UndoRedo extends PureComponent<IProps, IState> {
   }
 }
 
-const plugin = (ctx: ILowCodePluginContext) => {
+const plugin = (ctx: IPublicModelPluginContext) => {
   return {
     // 插件名，注册环境下唯一
     name: 'PluginUndoRedo',

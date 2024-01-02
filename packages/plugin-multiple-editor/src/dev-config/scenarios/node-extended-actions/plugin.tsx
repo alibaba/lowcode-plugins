@@ -1,11 +1,6 @@
 import React from 'react';
 import {
-  ILowCodePluginContext,
   plugins,
-  skeleton,
-  project,
-  setters,
-  Node,
 } from '@alilc/lowcode-engine';
 import AliLowCodeEngineExt from '@alilc/lowcode-engine-ext';
 import { Icon, Message, Button } from '@alifd/next';
@@ -35,9 +30,10 @@ import {
 } from '../../universal/utils';
 import assets from './assets.json';
 import schema from './schema.json';
+import { IPublicModelPluginContext, IPublicModelNode } from '@alilc/lowcode-types';
 
 export default async function registerPlugins() {
-  const addHelloAction = (ctx: ILowCodePluginContext) => {
+  const addHelloAction = (ctx: IPublicModelPluginContext) => {
     return {
       async init() {
         const { addBuiltinComponentAction } = ctx.material;
@@ -46,12 +42,12 @@ export default async function registerPlugins() {
           content: {
             icon: <Icon type="atm" size="small" />,
             title: 'hello',
-            action(node: Node) {
+            action(node: IPublicModelNode) {
               Message.show('Welcome to Low-Code engine');
             },
           },
-          condition: (node: Node) => {
-            return node.componentMeta.componentName === 'NextTable';
+          condition: (node: IPublicModelNode) => {
+            return node.componentMeta?.componentName === 'NextTable';
           },
         });
       },
@@ -60,7 +56,7 @@ export default async function registerPlugins() {
   addHelloAction.pluginName = 'addHelloAction';
   await plugins.register(addHelloAction);
 
-  const removeCopyAction = (ctx: ILowCodePluginContext) => {
+  const removeCopyAction = (ctx: IPublicModelPluginContext) => {
     return {
       async init() {
         const { removeBuiltinComponentAction } = ctx.material;
@@ -82,7 +78,7 @@ export default async function registerPlugins() {
   (SimulatorResizer as any).pluginName = 'SimulatorResizer';
   plugins.register(SimulatorResizer);
 
-  const editorInit = (ctx: ILowCodePluginContext) => {
+  const editorInit = (ctx: IPublicModelPluginContext) => {
     return {
       name: 'editor-init',
       async init() {
@@ -108,7 +104,7 @@ export default async function registerPlugins() {
   editorInit.pluginName = 'editorInit';
   await plugins.register(editorInit);
 
-  const builtinPluginRegistry = (ctx: ILowCodePluginContext) => {
+  const builtinPluginRegistry = (ctx: IPublicModelPluginContext) => {
     return {
       name: 'builtin-plugin-registry',
       async init() {
@@ -152,7 +148,7 @@ export default async function registerPlugins() {
   await plugins.register(builtinPluginRegistry);
 
   // 设置内置 setter 和事件绑定、插件绑定面板
-  const setterRegistry = (ctx: ILowCodePluginContext) => {
+  const setterRegistry = (ctx: IPublicModelPluginContext) => {
     const { setterMap, pluginMap } = AliLowCodeEngineExt;
     return {
       name: 'ext-setters-registry',
@@ -190,7 +186,7 @@ export default async function registerPlugins() {
   // 注册中英文切换
   await plugins.register(ZhEnPlugin);
 
-  const loadAssetsSample = (ctx: ILowCodePluginContext) => {
+  const loadAssetsSample = (ctx: IPublicModelPluginContext) => {
     return {
       name: 'loadAssetsSample',
       async init() {
@@ -215,7 +211,7 @@ export default async function registerPlugins() {
   await plugins.register(loadAssetsSample);
 
   // 注册保存面板
-  const saveSample = (ctx: ILowCodePluginContext) => {
+  const saveSample = (ctx: IPublicModelPluginContext) => {
     return {
       name: 'saveSample',
       async init() {
@@ -263,7 +259,7 @@ export default async function registerPlugins() {
   // CodeEditor.pluginName = 'CodeEditor';
   // await plugins.register(CodeEditor);
 
-  const previewSample = (ctx: ILowCodePluginContext) => {
+  const previewSample = (ctx: IPublicModelPluginContext) => {
     return {
       name: 'previewSample',
       async init() {
@@ -290,7 +286,7 @@ export default async function registerPlugins() {
   previewSample.pluginName = 'previewSample';
   await plugins.register(previewSample);
 
-  const customSetter = (ctx: ILowCodePluginContext) => {
+  const customSetter = (ctx: IPublicModelPluginContext) => {
     return {
       name: '___registerCustomSetter___',
       async init() {
