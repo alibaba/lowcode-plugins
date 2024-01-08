@@ -72,12 +72,6 @@
     font-size: 12px;
     color: var(--color-title, #5f697a);
 
-
-    &.resource-tree-group-item-pro-code {
-      color: var(--color-text-disabled, #bcc5d1);
-      pointer-events: none;
-    }
-
     &.active .resource-tree-title {
       background-color: var(--color-block-background-light, #f7f8fa);
     }
@@ -141,6 +135,13 @@
     &-trigger {
       height: 24px;
       padding: 5px 8px;
+    }
+  }
+
+  &-group-disabled {
+    .resource-tree-title {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
   }
 

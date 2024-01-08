@@ -263,13 +263,17 @@ function ResourceItem(props: {
   }
 
   const children = props.children?.filter(d => d.config?.display !== false);
+  const {
+    disabled,
+    tips,
+  } = props.resource?.config || {};
 
-  return (
+  const context = (
     <div
       ref={ref}
       className={`resource-tree-group-node ${
-        props.resource?.options.isProCodePage
-          ? 'resource-tree-group-item-pro-code'
+        disabled
+          ? 'resource-tree-group-disabled'
           : ''
       } ${props.activeId === props.resource?.options.id || props.activeId === props.resource?.id ? 'active' : ''}`}
       onContextMenu={(e) => {
@@ -281,6 +285,9 @@ function ResourceItem(props: {
     >
       <div
         onClick={() => {
+          if (disabled) {
+            return;
+          }
           props.resource && props.pluginContext?.workspace.openEditorWindow(props.resource);
         }}
         className="resource-tree-title"
@@ -316,9 +323,6 @@ function ResourceItem(props: {
         </div>
         <div className="resource-tree-group-title-label">
           {props.resource?.options?.label || props.resource?.title}
-          {props.resource?.options.isProCodePage
-            ? intl('view_manager.components.resourceTree.SourceCode')
-            : ''}
 
           {
             props.resource?.options?.slug ||
@@ -369,6 +373,22 @@ function ResourceItem(props: {
       }
     </div>
   );
+
+  if (tips) {
+    return (
+      <Balloon
+        v2
+        trigger={context}
+        triggerType="hover"
+        align='r'
+        title=""
+      >
+        {tips}
+      </Balloon>
+    );
+  }
+
+  return context;
 }
 
 interface IPluginOptions {
