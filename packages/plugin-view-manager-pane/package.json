@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-view-manager-pane",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "alibaba lowcode editor undo redo plugin",
   "files": [
     "es",
