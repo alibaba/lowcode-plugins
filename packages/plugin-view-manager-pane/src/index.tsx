@@ -32,6 +32,8 @@ export interface IOptions {
 
   handleClose?: (force?: boolean) => void;
 
+  filterResourceList?: () => {};
+
   showIconText?: boolean;
 
   skeletonConfig?: IPublicTypeSkeletonConfig;
