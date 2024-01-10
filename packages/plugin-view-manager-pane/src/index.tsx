@@ -138,6 +138,11 @@ ViewManagerPane.meta = {
         description: '',
       },
       {
+        key: 'filterResourceList',
+        type: 'function',
+        description: '',
+      },
+      {
         key: 'showIconText',
         type: 'boolean',
         description: '',
