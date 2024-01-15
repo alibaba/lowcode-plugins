@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-resource-tabs",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "alibaba lowcode resource tabs plugin",
   "files": [
     "es",
