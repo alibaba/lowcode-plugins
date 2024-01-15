@@ -32,6 +32,8 @@ export interface IOptions {
 
   handleClose?: (force?: boolean) => void;
 
+  filterResourceList?: () => {};
+
   showIconText?: boolean;
 
   skeletonConfig?: IPublicTypeSkeletonConfig;
@@ -132,6 +134,11 @@ ViewManagerPane.meta = {
       },
       {
         key: 'handleClose',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'filterResourceList',
         type: 'function',
         description: '',
       },

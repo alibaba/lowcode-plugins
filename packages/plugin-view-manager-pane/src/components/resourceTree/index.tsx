@@ -14,13 +14,21 @@ import { AddFile } from '../addFile';
 const { Popup } = Overlay;
 const { Item } = Menu;
 
+function filterResourceList(resourceList: IPublicModelResource[] | undefined, handler?: Function) {
+  if (typeof handler === 'function') {
+    return handler(resourceList);
+  }
+
+  return resourceList;
+}
+
 export function ResourcePaneContent(props: IPluginOptions) {
   const { workspace } = props.pluginContext || {};
   const [resourceList, setResourceList] = useState<IPublicModelResource[] | undefined>(
-    workspace?.resourceList
+    filterResourceList(workspace?.resourceList, props?.options?.filterResourceList)
   );
   workspace?.onResourceListChange(() => {
-    setResourceList(workspace.resourceList);
+    setResourceList(filterResourceList(workspace?.resourceList, props?.options?.filterResourceList));
   });
   return (
     <ResourceListTree
