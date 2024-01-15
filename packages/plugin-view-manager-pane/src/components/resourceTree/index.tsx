@@ -3,16 +3,13 @@ import {
   IPublicModelPluginContext,
   IPublicModelResource,
 } from '@alilc/lowcode-types';
-import { Search, Overlay, Balloon, Menu } from '@alifd/next';
+import { Search, Balloon } from '@alifd/next';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { FileIcon, IconArrowRight } from './icon';
 import './index.scss';
 import { IOptions } from '../..';
 import { intl } from '../../locale';
 import { AddFile } from '../addFile';
-
-const { Popup } = Overlay;
-const { Item } = Menu;
 
 function filterResourceList(resourceList: IPublicModelResource[] | undefined, handler?: Function) {
   if (typeof handler === 'function') {
@@ -83,7 +80,7 @@ function ResourceListTree(
           value={filterValue}
           onChange={handleSearchChange}
         />
-        <AddFile options={props.options} />
+        <AddFile options={props.options} pluginContext={props.pluginContext} />
       </div>
       <div className="resource-tree">
         {Array.from(Object.entries(category)).map(
@@ -122,9 +119,6 @@ function ResourceGroup(
     props.defaultExpandAll ||
       props.defaultExpandedCategoryKeys?.includes(props.categoryName)
   );
-  const [visible, setVisible] = useState(false);
-  const ref = useRef(null);
-
   const resourceArr = props.resourceArr.filter(
     (d) =>
       !props.filterValue ||
@@ -160,69 +154,40 @@ function ResourceGroup(
     );
   }
 
+  const ContextMenu = props.pluginContext?.commonUI?.ContextMenu || React.Fragment;
+  const indent = props.depth * 28 + 12;
+
+  const style = {
+    paddingLeft: indent,
+    marginLeft: -indent,
+  }
+
   return (
     <div
       className="resource-tree-group"
       data-depth={props.depth}
     >
-      <div
-        className="resource-tree-group-wrap"
-        onContextMenu={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setVisible(!visible);
-        }}
-        ref={ref}
+      <ContextMenu
+        menus={props.options?.resourceGroupContextMenuActions?.(props.pluginContext!, resourceArr) || []}
       >
         <div
-          className={`resource-tree-expand ${expanded ? 'expanded' : ''}`}
+          className='resource-tree-group-wrap'
+          style={style}
           onClick={() => {
             setExpanded(!expanded);
           }}
         >
-          <IconArrowRight />
+          <div
+            className={`resource-tree-expand ${expanded ? 'expanded' : ''}`}
+          >
+            <IconArrowRight />
+          </div>
+          <div className="resource-tree-group-icon">
+            <FileIcon />
+          </div>
+          <div className="resource-tree-group-title">{props.categoryName}</div>
         </div>
-        <div className="resource-tree-group-icon">
-          <FileIcon />
-        </div>
-        <div className="resource-tree-group-title">{props.categoryName}</div>
-        {
-          [intl('view_manager.components.resourceTree.Page'), intl('view_manager.components.resourceTree.Component')].includes(props.categoryName) ? (
-            <Popup
-              v2
-              visible={visible}
-              target={ref?.current}
-              onRequestClose={() => {
-                setVisible(false);
-              }}
-              safeNode={ref?.current}
-              placement="br"
-              className="view-pane-popup"
-            >
-              <Menu openMode="single">
-                <Item
-                  onClick={(e) => {
-                    if (
-                      props.categoryName ===
-                      intl('view_manager.components.resourceTree.Page')
-                    ) {
-                      props.options.onAddPage?.();
-                    } else {
-                      props.options.onAddComponent?.();
-                    }
-                  }}
-                >
-                  {intl('view_manager.components.resourceTree.CreateItem', {
-                    categoryName: props.categoryName === intl('view_manager.components.resourceTree.Page')
-                    ? intl('view_manager.components.resourceTree.Page')
-                    : intl('view_manager.components.resourceTree.Component'),
-                  })}
-                </Item>
-              </Menu>
-            </Popup>
-          ) : null
-        }
-      </div>
+      </ContextMenu>
       {expanded && (
         <div className="resource-tree-children">
           {resourceArr.map((d) => (
@@ -256,7 +221,6 @@ function ResourceItem(props: {
 }) {
   const [expanded, setExpanded] = useState(false);
   const ref = useRef(null);
-  const [showBehaviors, setShowBehaviors] = useState(false);
   const PropsIcon = props.icon;
   const Behaviors = props.behaviors;
   const display = (props.resource?.config as any)?.display ?? true;
@@ -275,111 +239,105 @@ function ResourceItem(props: {
     disabled,
     tips,
   } = props.resource?.config || {};
+  const ContextMenu = props.pluginContext?.commonUI?.ContextMenu || React.Fragment;
 
   const context = (
-    <div
-      ref={ref}
-      className={`resource-tree-group-node ${
-        disabled
-          ? 'resource-tree-group-disabled'
-          : ''
-      } ${props.activeId === props.resource?.options.id || props.activeId === props.resource?.id ? 'active' : ''}`}
-      onContextMenu={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setShowBehaviors(!showBehaviors);
-      }}
-      data-depth={props.depth}
-    >
+    <ContextMenu menus={props.options?.resourceContextMenuActions?.(props.pluginContext!, props.resource!) || []}>
       <div
-        onClick={() => {
-          if (disabled) {
-            return;
-          }
-          props.resource && props.pluginContext?.workspace.openEditorWindow(props.resource);
-        }}
-        className="resource-tree-title"
-        style={style}
+        ref={ref}
+        className={`resource-tree-group-node ${
+          disabled
+            ? 'resource-tree-group-disabled'
+            : ''
+        } ${props.activeId === props.resource?.options.id || props.activeId === props.resource?.id ? 'active' : ''}`}
+        data-depth={props.depth}
       >
-        {props.resource?.options.modified ? (
-          <Balloon
-            v2
-            trigger={<div className='resource-tree-group-item-modified-wrap'><div className="resource-tree-group-item-modified"></div></div>}
-            triggerType="hover"
-            align='bl'
-            title=""
-          >
-            {props.resource.options.modifiedTips}
-          </Balloon>
-        ) : null}
-
-        {((children && children.length) || null) && (
-          <div
-            className={`resource-tree-expand ${expanded ? 'expanded' : ''}`}
-            onClick={(e) => {
-              setExpanded(!expanded);
-              e.stopPropagation();
-              e.preventDefault();
-            }}
-          >
-            <IconArrowRight />
-          </div>
-        )}
-
-        <div className="resource-tree-group-item-icon">
-          {PropsIcon && <PropsIcon />}
-        </div>
-        <div className="resource-tree-group-title-label">
-          {props.resource?.options?.label || props.resource?.title}
-
-          {
-            props.resource?.options?.slug ||
-            props.resource?.options?.componentName ? (
-              <span className="resource-tree-group-item-code">
-                ({ props.resource.options?.slug || props.resource.options?.componentName })
-              </span>
-            ) : null
-          }
-        </div>
-
-
-        <div className="resource-tree-group-item-behaviors">
-          {Behaviors &&
-          (props.resource?.config as any)?.disableBehaviors !== true ? (
-            <Behaviors
-              showBehaviors={showBehaviors}
-              resource={props.resource}
-              onVisibleChange={(visible: boolean) => {
-                setShowBehaviors(visible);
-              }}
-              safeNode={ref?.current}
-            />
+        <div
+          onClick={() => {
+            if (disabled) {
+              return;
+            }
+            props.resource && props.pluginContext?.workspace.openEditorWindow(props.resource);
+          }}
+          className="resource-tree-title"
+          style={style}
+        >
+          {props.resource?.options.modified ? (
+            <Balloon
+              v2
+              trigger={<div className='resource-tree-group-item-modified-wrap'><div className="resource-tree-group-item-modified"></div></div>}
+              triggerType="hover"
+              align='bl'
+              title=""
+            >
+              {props.resource.options.modifiedTips}
+            </Balloon>
           ) : null}
-        </div>
-      </div>
 
-      {
-        expanded && children?.length ? (
-          <div className='resource-tree-children'>
+          {((children && children.length) || null) && (
+            <div
+              className={`resource-tree-expand ${expanded ? 'expanded' : ''}`}
+              onClick={(e) => {
+                setExpanded(!expanded);
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+            >
+              <IconArrowRight />
+            </div>
+          )}
+
+          <div className="resource-tree-group-item-icon">
+            {PropsIcon && <PropsIcon />}
+          </div>
+          <div className="resource-tree-group-title-label">
+            {props.resource?.options?.label || props.resource?.title}
+
             {
-              props.children?.map((child) => (
-                <ResourceItem
-                  children={child.children}
-                  icon={child.icon}
-                  key={child.id}
-                  activeId={props.activeId}
-                  resource={child}
-                  behaviors={props.behaviors}
-                  options={props.options}
-                  pluginContext={props.pluginContext}
-                  depth={props.depth + 1}
-                />
-              ))
+              props.resource?.options?.slug ||
+              props.resource?.options?.componentName ? (
+                <span className="resource-tree-group-item-code">
+                  ({ props.resource.options?.slug || props.resource.options?.componentName })
+                </span>
+              ) : null
             }
           </div>
-        ) : null
-      }
-    </div>
+
+
+          <div className="resource-tree-group-item-behaviors">
+            {Behaviors &&
+            (props.resource?.config as any)?.disableBehaviors !== true ? (
+              <Behaviors
+                resource={props.resource}
+                safeNode={ref?.current}
+              />
+            ) : null}
+          </div>
+        </div>
+
+        {
+          expanded && children?.length ? (
+            <div className='resource-tree-children'>
+              {
+                props.children?.map((child) => (
+                  <ResourceItem
+                    children={child.children}
+                    icon={child.icon}
+                    key={child.id}
+                    activeId={props.activeId}
+                    resource={child}
+                    behaviors={props.behaviors}
+                    options={props.options}
+                    pluginContext={props.pluginContext}
+                    depth={props.depth + 1}
+                  />
+                ))
+              }
+            </div>
+          ) : null
+        }
+      </div>
+    </ContextMenu>
   );
 
   if (tips) {
@@ -402,7 +360,7 @@ function ResourceItem(props: {
 interface IPluginOptions {
   defaultExpandedCategoryKeys?: string[];
   defaultExpandAll?: boolean;
-  pluginContext?: IPublicModelPluginContext;
+  pluginContext: IPublicModelPluginContext;
   behaviors?: any;
   options: IOptions;
 }
