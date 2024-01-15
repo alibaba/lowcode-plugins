@@ -344,7 +344,7 @@ function ResourceItem(props: {
     return (
       <Balloon
         v2
-        trigger={context}
+        trigger={<div>{ context }</div>}
         triggerType="hover"
         align='r'
         title=""
