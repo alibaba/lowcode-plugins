@@ -34,7 +34,7 @@ jobs:
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
         cd packages/${{ github.event.inputs.packagePath }}
         npm install --legacy-peer-deps
-        npm version patch
+        npm version ${{ github.event.inputs.versionType }}
         npm run build
 
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
