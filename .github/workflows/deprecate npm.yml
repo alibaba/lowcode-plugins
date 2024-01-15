@@ -25,6 +25,8 @@ jobs:
 
     - name: deprecate Package Version
       run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
         npm deprecate ${{ github.event.inputs.version }} "This version is deprecated. Please consider upgrading to a newer version."
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
