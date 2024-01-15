@@ -13,7 +13,6 @@ import { CloseIcon, LockIcon, WarnIcon } from './icon';
 import { intl } from './locale';
 
 function CustomTabItem(props: {
-  key: string;
   pluginContext: IPublicModelPluginContext;
   options: IOptions;
   resource: IPublicModelResource;
@@ -114,7 +113,7 @@ interface ITabItem {
   windowId: string;
 }
 
-function Content(props: {
+function TabsContent(props: {
   pluginContext: IPublicModelPluginContext;
   options: IOptions;
 }) {
@@ -236,60 +235,67 @@ function Content(props: {
     }
   }, [resourceListMap]);
 
-  const ContextMenu = pluginContext?.commonUI?.ContextMenu || React.Fragment;
+  return (
+    <Tab
+      size="small"
+      activeKey={activeTitle}
+      shape={shape || 'wrapped'}
+      animation={false}
+      className={`${tabClassName} resource-tabs`}
+      excessMode="slide"
+      disableKeyboard={true}
+      contentStyle={{
+        height: 0,
+      }}
+      tabRender={(
+        key,
+        props: {
+          resource: IPublicModelResource;
+          key: string;
+        }
+      ) => (
+        <CustomTabItem
+          key={key}
+          resource={props.resource}
+          pluginContext={pluginContext}
+          options={options}
+        />
+      )}
+      onChange={(name) => {
+        setActiveTitle(name);
+        const item = tabs.filter((d) => String(d.id) === String(name))?.[0];
+        const resource = resourceListMap[item.id];
+        workspace.openEditorWindow(resource);
+      }}
+    >
+      {tabs.map((item) => {
+        const resource = resourceListMap[item.id];
+        if (!resource) {
+          return null;
+        }
+
+        return (
+          <Tab.Item
+            key={resource.id || resource.options.id}
+            // @ts-ignore
+            resource={resource}
+          />
+        );
+      })}
+    </Tab>
+  );
+}
+
+function Content(props: {
+  pluginContext: IPublicModelPluginContext;
+  options: IOptions;
+}) {
+  const ContextMenu = props.pluginContext?.commonUI?.ContextMenu || React.Fragment;
   return (
     <ContextMenu menus={props.options.contextMenuActions?.(props.pluginContext) || []}>
-      <div>
-        <Tab
-          size="small"
-          activeKey={activeTitle}
-          shape={shape || 'wrapped'}
-          animation={false}
-          className={`${tabClassName} resource-tabs`}
-          excessMode="slide"
-          disableKeyboard={true}
-          contentStyle={{
-            height: 0,
-          }}
-          tabRender={(
-            key,
-            props: {
-              resource: IPublicModelResource;
-              key: string;
-            }
-          ) => (
-            <CustomTabItem
-              key={key}
-              resource={props.resource}
-              pluginContext={pluginContext}
-              options={options}
-            />
-          )}
-          onChange={(name) => {
-            setActiveTitle(name);
-            const item = tabs.filter((d) => String(d.id) === String(name))?.[0];
-            const resource = resourceListMap[item.id];
-            workspace.openEditorWindow(resource);
-          }}
-        >
-          {tabs.map((item) => {
-            const resource = resourceListMap[item.id];
-            if (!resource) {
-              return null;
-            }
-
-            return (
-              <Tab.Item
-                key={resource.id || resource.options.id}
-                // @ts-ignore
-                resource={resource}
-              />
-            );
-          })}
-        </Tab>
-      </div>
+      <TabsContent {...props} />
     </ContextMenu>
-  );
+  )
 }
 
 interface IOptions {
