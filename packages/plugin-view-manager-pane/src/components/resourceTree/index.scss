@@ -25,6 +25,11 @@
     display: flex;
     align-items: center;
     height: 30px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-block-background-light, #f7f8fa);
+    }
   }
 
   &-expand {

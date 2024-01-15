@@ -1,61 +1,30 @@
-import { Overlay, Menu } from '@alifd/next';
 import * as React from 'react';
 import { observer } from 'mobx-react';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { AddIcon } from '../../icon';
 import { IOptions } from '../..';
-
 import './index.scss';
-import { intl } from '../../locale';
 
-const { Popup } = Overlay;
-const { Item } = Menu;
-
-function AddFileComponent(props: { options: IOptions }) {
+function AddFileComponent(props: { options: IOptions, pluginContext: IPublicModelPluginContext }) {
   if (props.options?.renderAddFileComponent && typeof props.options.renderAddFileComponent === 'function') {
     return props.options.renderAddFileComponent();
   }
 
-  if (!props.options?.onAddPage && !props.options?.onAddComponent) {
+  const menus = props.options?.contextMenuActions?.(props.pluginContext);
+
+  if (!menus || !menus.length) {
     return null;
   }
 
-  return (
-    <>
-      <Popup
-        v2
-        trigger={
-          <span className='add-file-icon-wrap'>
-            <AddIcon />
-          </span>
-        }
-        triggerType="click"
-        align="bl"
-        className="view-pane-popup"
-      >
-        <Menu openMode="single">
-          {props.options.onAddPage ? (
-            <Item
-              onClick={(e) => {
-                props.options.onAddPage?.();
-              }}
-            >
-              {intl('view_manager.components.addFile.CreatePage')}
-            </Item>
-          ) : null}
+  const ContextMenu = props.pluginContext?.commonUI?.ContextMenu || React.Fragment;
 
-          {props.options.onAddComponent ? (
-            <Item
-              onClick={(e) => {
-                props.options.onAddComponent?.();
-              }}
-            >
-              {intl('view_manager.components.addFile.CreateAComponent')}
-            </Item>
-          ) : null}
-        </Menu>
-      </Popup>
-    </>
-  );
+  return (
+    <span onClick={(e) => {
+      ContextMenu.create(menus, e)
+    }} className='add-file-icon-wrap'>
+      <AddIcon />
+    </span>
+  )
 }
 
 export const AddFile = observer(AddFileComponent);

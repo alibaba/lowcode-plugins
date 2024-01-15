@@ -12,25 +12,29 @@ export function Pane(props: {
     props.options?.init?.(props.pluginContext);
   }, []);
 
+  const ContextMenu = props.pluginContext.commonUI?.ContextMenu || React.Fragment;
+
   return (
-    <div
-      className="workspace-view-pane"
-    >
+    <ContextMenu menus={props.options?.contextMenuActions?.(props.pluginContext) || []}>
       <div
-        className="workspace-view-pane-content"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
+        className="workspace-view-pane"
       >
-        <ResourcePaneContent
-          defaultExpandAll={true}
-          pluginContext={props.pluginContext}
-          behaviors={(behaviorsProps: any) => {
-            return <Behaviors {...behaviorsProps} options={props.options} />;
+        <div
+          className="workspace-view-pane-content"
+          onClick={(e) => {
+            e.stopPropagation();
           }}
-          options={props.options}
-        />
+        >
+          <ResourcePaneContent
+            defaultExpandAll={true}
+            pluginContext={props.pluginContext}
+            behaviors={(behaviorsProps: any) => {
+              return <Behaviors {...behaviorsProps} pluginContext={props.pluginContext} options={props.options} />;
+            }}
+            options={props.options}
+          />
+        </div>
       </div>
-    </div>
+    </ContextMenu>
   );
 }
