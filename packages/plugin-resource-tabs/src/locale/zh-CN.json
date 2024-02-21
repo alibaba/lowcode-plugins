@@ -1,0 +1,8 @@
+{
+  "resource_tabs.src.Warning": "警告",
+  "resource_tabs.src.TheCurrentWindowHasUnsaved": "当前窗口有还未保存的改动，是否要舍弃变更",
+  "resource_tabs.src.DiscardChanges": "舍弃变更",
+  "resource_tabs.src.ContinueEditing": "继续编辑",
+  "resource_tabs.src.ApplicationTagColumnPlugIn": "应用标签栏插件参数定义",
+  "resource_tabs.src.UniqueIdentifierForCachingApplication": "唯一标识，用于缓存应用 Tab"
+}

@@ -1,0 +1,22 @@
+.next-overlay-wrapper .next-overlay-inner.view-pane-popup {
+  padding: 6px 0;
+  background: var(--color-pane-background, #fff);
+  box-shadow: 0 0 6px 0 var(--color-layer-mask-background, rgba(0,0,0,0.44));
+  border-radius: 2px;
+
+  &::after {
+    display: none;
+  }
+
+  .view-pane-popup-item {
+    height: 28px;
+    line-height: 28px;
+    padding: 0 12px;
+    color: var(--color-text);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-block-background-light, #f1f3f6);
+    }
+  }
+}

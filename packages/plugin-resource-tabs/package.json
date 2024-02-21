@@ -1,7 +1,7 @@
 {
-  "name": "@alilc/lowcode-plugin-zh-en",
-  "version": "1.0.0",
-  "description": "alibaba lowcode editor zhong english plugin",
+  "name": "@alilc/lowcode-plugin-resource-tabs",
+  "version": "1.0.2",
+  "description": "alibaba lowcode resource tabs plugin",
   "files": [
     "es",
     "lib"
@@ -13,6 +13,10 @@
     "build": "build-scripts build",
     "prepublishOnly": "npm run build"
   },
+  "keywords": [
+    "lowcode",
+    "editor"
+  ],
   "dependencies": {
     "@alilc/lowcode-types": "^1.0.0",
     "@alilc/lowcode-utils": "^1.0.0",
@@ -21,11 +25,12 @@
   },
   "devDependencies": {
     "@alib/build-scripts": "^0.1.3",
-    "@alilc/build-plugin-alt": "^1.0.0",
+    "@alilc/build-plugin-alt": "^1.0.1",
     "@alilc/lowcode-engine": "^1.0.0",
     "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
-    "build-plugin-fusion": "^0.1.22"
+    "build-plugin-fusion": "^0.1.22",
+    "build-plugin-moment-locales": "^0.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
@@ -34,6 +39,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/alibaba/lowcode-plugins.git",
-    "directory": "packages/plugin-zh-en"
+    "directory": "packages/plugin-resource-tabs"
   }
 }
