@@ -3,6 +3,7 @@ import {
   IPublicModelPluginContext,
   IPublicModelResource,
   IPublicModelWindow,
+  IPublicTypeContextMenuAction,
   IPublicTypePlugin,
 } from '@alilc/lowcode-types';
 import React from 'react';
@@ -12,19 +13,21 @@ import { CloseIcon, LockIcon, WarnIcon } from './icon';
 import { intl } from './locale';
 
 function CustomTabItem(props: {
-  icon: any;
-  title: string;
-  onClose: () => void;
-  key: string;
-  ctx: IPublicModelPluginContext;
-  id: string;
-}) {
-  const { id: propsId } = props;
-  const { event } = props.ctx;
+  pluginContext: IPublicModelPluginContext;
+  options: IOptions;
+  resource: IPublicModelResource;
+}): React.ReactElement {
+  const { resource } = props;
+  const { icon: ResourceIcon } = resource;
+  const propsId = resource.id || resource.options.id;
+  const { event } = props.pluginContext;
   const [changed, setChanged] = useState(false);
   const [locked, setLocked] = useState(false);
   const [warned, setWarned] = useState(false);
-  const [title, setTitle] = useState(props.title);
+  const [title, setTitle] = useState(resource.title);
+  const onClose = useCallback(() => {
+    props.pluginContext.workspace.removeEditorWindow(resource);
+  }, []);
   useEffect(() => {
     event.on('common:windowChanged', (id, changed) => {
       if (propsId === id) {
@@ -56,52 +59,52 @@ function CustomTabItem(props: {
       }
     });
   }, []);
-  const ResourceIcon = props.icon;
+  const ContextMenu = props.pluginContext?.commonUI?.ContextMenu || React.Fragment;
   return (
-    <div className="next-tabs-tab-inner resource-tab-item">
-      <div className="resource-tab-item-resource-icon">
-        {ResourceIcon ? <ResourceIcon /> : null}
-      </div>
-      <div className="resource-tab-item-title">{title}</div>
-      <div className="resource-tab-item-tips">
-        <div
-          onClick={async (e) => {
-            e.stopPropagation();
-            if (changed) {
-              Dialog.show({
-                v2: true,
-                title: intl('resource_tabs.src.Warning'),
-                content: intl('resource_tabs.src.TheCurrentWindowHasUnsaved'),
-                onOk: () => {},
-                onCancel: () => {
-                  props.onClose();
-                },
-                cancelProps: {
-                  children: intl('resource_tabs.src.DiscardChanges'),
-                },
-                okProps: {
-                  children: intl('resource_tabs.src.ContinueEditing'),
-                },
-              });
-              return;
-            }
-            props.onClose();
-          }}
-          className="resource-tab-item-close-icon"
-        >
-          <CloseIcon />
+    <ContextMenu menus={props.options?.tabContextMenuActions?.(props.pluginContext, resource) || []}>
+      <div className="next-tabs-tab-inner resource-tab-item">
+        <div className="resource-tab-item-resource-icon">
+          {ResourceIcon ? <ResourceIcon /> : null}
         </div>
-        <div className="resource-tab-item-others">
-          {changed && !warned ? (
-            <span className="resource-tab-item-changed-icon"></span>
-          ) : null}
+        <div className="resource-tab-item-title">{title}</div>
+        <div className="resource-tab-item-tips">
+          <div
+            onClick={async (e) => {
+              e.stopPropagation();
+              if (changed) {
+                Dialog.show({
+                  v2: true,
+                  title: intl('resource_tabs.src.Warning'),
+                  content: intl('resource_tabs.src.TheCurrentWindowHasUnsaved'),
+                  onOk: () => {},
+                  onCancel: onClose,
+                  cancelProps: {
+                    children: intl('resource_tabs.src.DiscardChanges'),
+                  },
+                  okProps: {
+                    children: intl('resource_tabs.src.ContinueEditing'),
+                  },
+                });
+                return;
+              }
+              onClose();
+            }}
+            className="resource-tab-item-close-icon"
+          >
+            <CloseIcon />
+          </div>
+          <div className="resource-tab-item-others">
+            {changed && !warned ? (
+              <span className="resource-tab-item-changed-icon"></span>
+            ) : null}
 
-          {locked ? <LockIcon /> : null}
+            {locked ? <LockIcon /> : null}
 
-          {warned ? <WarnIcon /> : null}
+            {warned ? <WarnIcon /> : null}
+          </div>
         </div>
       </div>
-    </div>
+    </ContextMenu>
   );
 }
 
@@ -110,15 +113,18 @@ interface ITabItem {
   windowId: string;
 }
 
-function Content(props: {
-  ctx: IPublicModelPluginContext;
-  appKey?: string;
-  onSort?: (windows: IPublicModelWindow[]) => IPublicModelWindow[];
-  shape?: 'pure' | 'wrapped' | 'text' | 'capsule';
-  tabClassName?: string;
+function TabsContent(props: {
+  pluginContext: IPublicModelPluginContext;
+  options: IOptions;
 }) {
-  const { ctx } = props;
-  const { workspace } = ctx;
+  const { pluginContext, options } = props;
+  const {
+    onSort,
+    appKey,
+    shape,
+    tabClassName,
+  } = options;
+  const { workspace } = pluginContext;
 
   const [resourceListMap, setResourceListMap] = useState<{
     [key: string]: IPublicModelResource;
@@ -126,8 +132,8 @@ function Content(props: {
 
   const getTabs = useCallback((): ITabItem[] => {
     let windows = workspace.windows;
-    if (props.onSort) {
-      windows = props.onSort(workspace.windows);
+    if (onSort) {
+      windows = onSort(workspace.windows);
     }
 
     return windows.map((d) => {
@@ -145,14 +151,14 @@ function Content(props: {
 
   const saveTabsToLocal = useCallback(() => {
     localStorage.setItem(
-      '___lowcode_plugin_resource_tabs___' + props.appKey,
+      '___lowcode_plugin_resource_tabs___' + appKey,
       JSON.stringify(getTabs())
     );
     localStorage.setItem(
-      '___lowcode_plugin_resource_tabs_active_title___' + props.appKey,
+      '___lowcode_plugin_resource_tabs_active_title___' + appKey,
       JSON.stringify({
         id:
-          workspace.window?.resource.id ||
+          workspace.window?.resource?.id ||
           workspace.window?.resource?.options.id,
       })
     );
@@ -165,7 +171,7 @@ function Content(props: {
     });
     workspace.onChangeActiveWindow(() => {
       setActiveTitle(
-        workspace.window?.resource.id || workspace.window?.resource?.options.id
+        workspace.window?.resource?.id || workspace.window?.resource?.options.id
       );
       saveTabsToLocal();
     });
@@ -173,7 +179,9 @@ function Content(props: {
 
   useEffect(() => {
     const initResourceListMap = () => {
-      const resourceListMap = {};
+      const resourceListMap: {
+        [key: string]: IPublicModelResource;
+      } = {};
       workspace.resourceList.forEach((d) => {
         resourceListMap[d.id || d.options.id] = d;
       });
@@ -194,15 +202,15 @@ function Content(props: {
       }
       const value: ITabItem[] = JSON.parse(
         localStorage.getItem(
-          '___lowcode_plugin_resource_tabs___' + props.appKey
-        )
+          '___lowcode_plugin_resource_tabs___' + appKey
+        ) || 'null'
       );
       const activeValue: {
         id: string;
       } = JSON.parse(
         localStorage.getItem(
-          '___lowcode_plugin_resource_tabs_active_title___' + props.appKey
-        )
+          '___lowcode_plugin_resource_tabs_active_title___' + appKey
+        ) || 'null'
       );
 
       if (value && value.length) {
@@ -231,9 +239,9 @@ function Content(props: {
     <Tab
       size="small"
       activeKey={activeTitle}
-      shape={props.shape || 'wrapped'}
+      shape={shape || 'wrapped'}
       animation={false}
-      className={`${props.tabClassName} resource-tabs`}
+      className={`${tabClassName} resource-tabs`}
       excessMode="slide"
       disableKeyboard={true}
       contentStyle={{
@@ -242,20 +250,15 @@ function Content(props: {
       tabRender={(
         key,
         props: {
+          resource: IPublicModelResource;
           key: string;
-          title: string;
-          icon: any;
-          onClose: () => void;
-          value: string;
         }
       ) => (
         <CustomTabItem
           key={key}
-          icon={props.icon}
-          title={props.title}
-          onClose={props.onClose}
-          id={props.value}
-          ctx={ctx}
+          resource={props.resource}
+          pluginContext={pluginContext}
+          options={options}
         />
       )}
       onChange={(name) => {
@@ -274,13 +277,8 @@ function Content(props: {
         return (
           <Tab.Item
             key={resource.id || resource.options.id}
-            title={resource.title}
             // @ts-ignore
-            icon={resource.icon}
-            value={item.windowId}
-            onClose={() => {
-              (workspace as any).removeEditorWindow(resource);
-            }}
+            resource={resource}
           />
         );
       })}
@@ -288,14 +286,36 @@ function Content(props: {
   );
 }
 
+function Content(props: {
+  pluginContext: IPublicModelPluginContext;
+  options: IOptions;
+}) {
+  const ContextMenu = props.pluginContext?.commonUI?.ContextMenu || React.Fragment;
+  return (
+    <ContextMenu menus={props.options.contextMenuActions?.(props.pluginContext) || []}>
+      <TabsContent {...props} />
+    </ContextMenu>
+  )
+}
+
+interface IOptions {
+  appKey?: string;
+  onSort?: (windows: IPublicModelWindow[]) => IPublicModelWindow[];
+  shape?: 'pure' | 'wrapped' | 'text' | 'capsule';
+  tabClassName?: string;
+  /**
+   * 右键菜单项
+   */
+  contextMenuActions: (ctx: IPublicModelPluginContext) => IPublicTypeContextMenuAction[];
+  /**
+   * 右键 Tab 菜单项
+   */
+  tabContextMenuActions: (ctx: IPublicModelPluginContext, resource: IPublicModelResource) => IPublicTypeContextMenuAction[];
+}
+
 const resourceTabs: IPublicTypePlugin = function (
   ctx: IPublicModelPluginContext,
-  options: {
-    appKey?: string;
-    onSort?: (windows: IPublicModelWindow[]) => IPublicModelWindow[];
-    shape?: string;
-    tabClassName?: string;
-  }
+  options: IOptions,
 ) {
   const { skeleton } = ctx;
   return {
@@ -311,11 +331,8 @@ const resourceTabs: IPublicTypePlugin = function (
         index: -1,
         content: Content,
         contentProps: {
-          ctx,
-          appKey: options?.appKey,
-          onSort: options?.onSort,
-          shape: options?.shape,
-          tabClassName: options?.tabClassName,
+          pluginContext: ctx,
+          options,
         },
       });
     },
@@ -350,7 +367,20 @@ resourceTabs.meta = {
         type: 'string',
         description: 'Tab className',
       },
+      {
+        key: 'contextMenuActions',
+        type: 'function',
+        description: '右键菜单项',
+      },
+      {
+        key: 'tabContextMenuActions',
+        type: 'function',
+        description: '右键 Tab 菜单项',
+      }
     ],
+  },
+  engines: {
+    lowcodeEngine: '^1.3.0', // 插件需要配合 ^1.0.0 的引擎才可运行
   },
 };
 

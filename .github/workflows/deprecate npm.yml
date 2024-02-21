@@ -1,0 +1,32 @@
+name: deprecate Package Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to be deleted package@version'
+        required: true
+
+jobs:
+  delete-package-version:
+    runs-on: ubuntu-latest
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (github.actor == 'JackLian' || github.actor == 'liujuping')
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: deprecate Package Version
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        npm deprecate ${{ github.event.inputs.version }} "This version is deprecated. Please consider upgrading to a newer version."

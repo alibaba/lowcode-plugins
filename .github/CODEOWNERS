@@ -2,13 +2,19 @@
 
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence
-* @leoyuan @alvarto
+* @liujuping @JackLian @alvarto
 
 /packages/plugin-manual/ @alvarto
-/packages/base-monaco-editor/ @alvarto @wangshihao111
-/packages/plugin-code-editor/ @alvarto
+/packages/base-monaco-editor/ @alvarto @wangshihao111 @SuSunSam
+/packages/plugin-code-editor/ @alvarto @SuSunSam
 /packages/plugin-schema/ @alvarto
-/packages/plugin-components-pane/ @mark-ck
-/packages/plugin-datasource-pane/ @xingmolu
-/packages/plugin-zh-en/ @leoyuan
-/packages/plugin-undo-redo/ @leoyuan
+/packages/plugin-components-pane/ @mark-ck @love999262
+/packages/plugin-datasource-pane/ @YSMJ1994
+/packages/plugin-zh-en/ @JackLian @liujuping
+/packages/plugin-undo-redo/ @JackLian @liujuping
+/packages/plugin-resource-tabs/ @JackLian @liujuping
+/packages/plugin-set-ref-prop/ @JackLian @liujuping
+/packages/plugin-view-manager-pane/ @JackLian @liujuping
+/packages/base-monaco-editor/ @hzd822
+/packages/plugin-multiple-editor/ @hzd822
+/packages/action-block @liujuping

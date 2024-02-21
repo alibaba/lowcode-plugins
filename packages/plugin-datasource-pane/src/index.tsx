@@ -1,10 +1,10 @@
-import { ILowCodePluginContext } from '@alilc/lowcode-engine';
 import DataSourcePanePlugin from './pane';
 
 import {
   DataSourcePaneImportPlugin,
   DataSourceType,
 } from './types';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 
 export interface Options {
   importPlugins?: DataSourcePaneImportPlugin[];
@@ -13,7 +13,7 @@ export interface Options {
 }
 
 // TODO: 2.0插件传参修改，不支持直接options: Options
-const plugin = (ctx: ILowCodePluginContext, options: Options) => {
+const plugin = (ctx: IPublicModelPluginContext, options: Options) => {
   return {
     name: 'com.alibaba.lowcode.datasource.pane',
     width: 300,

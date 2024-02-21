@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import { project } from '@alilc/lowcode-engine';
 import { Button, Icon } from '@alifd/next';
-import { PluginProps, IPublicTypeDisposable, IPublicModelPluginContext } from '@alilc/lowcode-types';
-
-import './index.scss';
+import { PluginProps, IPublicTypeDisposable } from '@alilc/lowcode-types';
 
 export interface IProps extends PluginProps {
   logo?: string;
@@ -14,8 +12,8 @@ export interface IState {
   redoEnable: boolean;
 }
 
-class UndoRedo extends PureComponent<IProps, IState> {
-  static displayName = 'LowcodeUndoRedo';
+class Test extends PureComponent<IProps, IState> {
+  static displayName = 'Test';
 
   private history: any;
   private changeDocumentDispose?: IPublicTypeDisposable;
@@ -89,10 +87,10 @@ class UndoRedo extends PureComponent<IProps, IState> {
   }
 }
 
-const plugin = (ctx: IPublicModelPluginContext) => {
+const plugin = (ctx: any) => {
   return {
     // 插件名，注册环境下唯一
-    name: 'PluginUndoRedo',
+    name: 'PluginTest',
     // 依赖的插件（插件名数组）
     dep: [],
     // 插件的初始化函数，在引擎初始化之后会立刻调用
@@ -102,7 +100,7 @@ const plugin = (ctx: IPublicModelPluginContext) => {
         area: 'topArea',
         type: 'Widget',
         name: 'undoRedo',
-        content: UndoRedo,
+        content: Test,
         props: {
           align: 'right',
           width: 88,
@@ -112,6 +110,6 @@ const plugin = (ctx: IPublicModelPluginContext) => {
   };
 };
 
-plugin.pluginName = 'PluginUndoRedo'
+plugin.pluginName = 'PluginTest'
 
 export default plugin

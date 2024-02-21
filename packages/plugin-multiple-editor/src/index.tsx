@@ -62,7 +62,7 @@ const pluginCodeEditor = (
         schemaDock && schemaDock.disable();
         project.onSimulatorRendererReady(() => {
           schemaDock.enable();
-          const service = new Service(editorController, editor);
+          const service = new Service(editorController, ctx.skeleton);
           service.init({ plugins: options.plugins });
           editorController.init(project, editor, service);
         });
