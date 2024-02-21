@@ -1,8 +1,9 @@
 import { CodeEditorPane } from './pane';
-import { project, ILowCodePluginContext } from '@alilc/lowcode-engine';
+import { project } from '@alilc/lowcode-engine';
 import icon from './icon';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 
-const plugin = (ctx: ILowCodePluginContext) => {
+const plugin = (ctx: IPublicModelPluginContext) => {
   return {
     name: 'codeEditor',
     width: 600,

@@ -1,0 +1,37 @@
+name: Publish Beta NPM Packages
+on:
+  workflow_dispatch:
+    inputs:
+      packagePath:
+        description: 'Path to the package (e.g., action-block)'
+        required: true
+      betaVersion:
+        description: 'Beta version number (e.g., 1.0.1-beta.0)'
+        required: true
+
+jobs:
+  publish-package:
+    runs-on: ubuntu-latest
+    if: >-
+      github.actor == 'JackLian' || github.actor == 'liujuping'
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16' # 或者您希望的任何版本
+
+    - name: Change to Package Directory
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        cd packages/${{ github.event.inputs.packagePath }}
+        npm install --legacy-peer-deps
+        npm run build
+        npm version ${{ github.event.inputs.betaVersion }}
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+        npm publish --tag beta

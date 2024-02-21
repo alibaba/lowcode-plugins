@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { ResourcePaneContent } from './components/resourceTree';
-import { AddFile } from './components/addFile';
-import { CloseIcon } from './icon';
 import { Behaviors } from './components/addFile/behaviors';
 import { IOptions } from '.';
-import { intl } from './locale';
 
 export function Pane(props: {
   pluginContext: IPublicModelPluginContext;
@@ -15,46 +12,29 @@ export function Pane(props: {
     props.options?.init?.(props.pluginContext);
   }, []);
 
+  const ContextMenu = props.pluginContext.commonUI?.ContextMenu || React.Fragment;
+
   return (
-    <div
-      className="workspace-view-pane"
-      onClick={() => {
-        props.options.handleClose?.();
-      }}
-    >
+    <ContextMenu menus={props.options?.contextMenuActions?.(props.pluginContext) || []}>
       <div
-        className="workspace-view-pane-content"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
+        className="workspace-view-pane"
       >
-        <div className="workspace-view-pane-top">
-          <span className="workspace-view-pane-title">
-            {intl('view_manager.src.pane.View')}
-          </span>
-          <div>
-            <span className="workspace-view-pane-top-icon">
-              <AddFile options={props.options} />
-            </span>
-            <span
-              onClick={() => {
-                props.options.handleClose?.();
-              }}
-              className="workspace-view-pane-top-icon"
-            >
-              <CloseIcon />
-            </span>
-          </div>
-        </div>
-        <ResourcePaneContent
-          defaultExpandAll={true}
-          pluginContext={props.pluginContext}
-          behaviors={(behaviorsProps: any) => {
-            return <Behaviors {...behaviorsProps} options={props.options} />;
+        <div
+          className="workspace-view-pane-content"
+          onClick={(e) => {
+            e.stopPropagation();
           }}
-          options={props.options}
-        />
+        >
+          <ResourcePaneContent
+            defaultExpandAll={true}
+            pluginContext={props.pluginContext}
+            behaviors={(behaviorsProps: any) => {
+              return <Behaviors {...behaviorsProps} pluginContext={props.pluginContext} options={props.options} />;
+            }}
+            options={props.options}
+          />
+        </div>
       </div>
-    </div>
+    </ContextMenu>
   );
 }

@@ -1,6 +1,6 @@
 import { EditorController } from './Controller';
 import { EditorHook } from './EditorHook';
-import type { Event } from '@alilc/lowcode-shell';
+import type { Skeleton } from '@alilc/lowcode-shell';
 
 export enum PluginHooks {
   onActive = 'onActive',
@@ -24,7 +24,7 @@ export class Service extends EditorHook {
 
   public onSelectFileChange = this.hookFactory(PluginHooks.onSelectFileChange);
 
-  constructor(public controller: EditorController, private editor: Event) {
+  constructor(public controller: EditorController, private skeleton: Skeleton) {
     super();
   }
 
@@ -41,12 +41,12 @@ export class Service extends EditorHook {
   }
 
   private setupHooks() {
-    this.editor.on('skeleton.panel-dock.unactive', (pluginName) => {
+    this.skeleton.onShowPanel((pluginName) => {
       if (pluginName === 'codeEditor') {
         this.triggerHook(PluginHooks.onDeActive);
       }
     });
-    this.editor.on('skeleton.panel-dock.active', (pluginName) => {
+    this.skeleton.onHidePanel((pluginName) => {
       if (pluginName === 'codeEditor') {
         this.triggerHook(PluginHooks.onActive);
       }

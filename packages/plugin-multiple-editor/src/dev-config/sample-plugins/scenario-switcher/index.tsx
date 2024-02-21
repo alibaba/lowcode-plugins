@@ -1,9 +1,7 @@
 import React from 'react';
-import {
-  ILowCodePluginContext,
-} from '@alilc/lowcode-engine';
 import { Select } from '@alifd/next';
 import scenarios from '../../universal/scenarios.json';
+import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 const { Option } = Select;
 
 const getCurrentScenarioName = () => {
@@ -25,7 +23,7 @@ function Switcher(props: any) {
   </Select>)
 }
 
-export const scenarioSwitcher = (ctx: ILowCodePluginContext) => {
+export const scenarioSwitcher = (ctx: IPublicModelPluginContext) => {
   return {
     name: 'scenarioSwitcher',
     async init() {

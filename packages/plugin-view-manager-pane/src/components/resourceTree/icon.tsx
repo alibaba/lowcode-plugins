@@ -36,8 +36,6 @@ export const OthersIcon = () => {
   )
 }
 
-
-
 export function IconArrowRight(props: IconProps) {
   return (
     <SVGIcon viewBox="0 0 1024 1024" {...props}>

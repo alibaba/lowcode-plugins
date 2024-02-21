@@ -2,6 +2,8 @@ import * as React from 'react';
 import {
   IPublicModelPluginContext,
   IPublicModelResource,
+  IPublicTypeSkeletonConfig,
+  IPublicTypeContextMenuAction,
 } from '@alilc/lowcode-types';
 import Icon from './icon';
 import { Pane } from './pane';
@@ -11,25 +13,30 @@ import { intl } from './locale';
 export interface IOptions {
   init?: (ctx: IPublicModelPluginContext) => {};
 
-  onAddPage?: () => {};
-
-  onDeletePage?: (resource: IPublicModelResource) => {};
-
-  onEditPage?: (resource: IPublicModelResource) => {};
-
-  onCopyPage?: (resource: IPublicModelResource) => {};
-
-  onAddComponent?: () => {};
-
-  onEditComponent?: (resource: IPublicModelResource) => {};
-
-  onCopyComponent?: (resource: IPublicModelResource) => {};
-
-  onDeleteComponent?: (resource: IPublicModelResource) => {};
+  renderAddFileComponent?: () => React.JSX.Element;
 
   handleClose?: (force?: boolean) => void;
 
+  filterResourceList?: () => {};
+
   showIconText?: boolean;
+
+  skeletonConfig?: IPublicTypeSkeletonConfig;
+
+  /**
+   * 右键菜单项
+   */
+  contextMenuActions?: (ctx: IPublicModelPluginContext) => IPublicTypeContextMenuAction[];
+
+  /**
+   * 右键资源项，菜单项
+   */
+  resourceContextMenuActions?: (ctx: IPublicModelPluginContext, resource: IPublicModelResource) => IPublicTypeContextMenuAction[];
+
+  /**
+   * 右键资源组，菜单项
+   */
+  resourceGroupContextMenuActions?: (ctx: IPublicModelPluginContext, resources: IPublicModelResource[]) => IPublicTypeContextMenuAction[];
 }
 
 const ViewManagerPane = (
@@ -44,14 +51,12 @@ const ViewManagerPane = (
       ctx.skeleton.add({
         area: 'leftArea',
         name: 'ViewManagerPane',
-        type: 'PanelDock',
         props: {
           icon: <Icon showIconText={showIconText} />,
           description: intl('view_manager.src.ViewManagement'),
           className: `workspace-view-pane-icon ${showIconText ? 'show-icon-text' : null }`,
         },
         panelProps: {
-          hideTitleBar: true,
           width: '200px',
         },
         content: Pane,
@@ -64,6 +69,8 @@ const ViewManagerPane = (
           },
           pluginContext: ctx,
         },
+        ...(options.skeletonConfig || {}),
+        type: options.skeletonConfig?.type || 'PanelDock',
       });
     },
   };
@@ -75,53 +82,13 @@ ViewManagerPane.meta = {
   // 依赖的插件（插件名数组）
   dependencies: [],
   engines: {
-    lowcodeEngine: '^1.0.0', // 插件需要配合 ^1.0.0 的引擎才可运行
+    lowcodeEngine: '^1.3.0', // 插件需要配合 ^1.0.0 的引擎才可运行
   },
   preferenceDeclaration: {
     title: intl('view_manager.src.ViewManagementPanelPlugIn'),
     properties: [
       {
         key: 'init',
-        type: 'function',
-        description: '',
-      },
-      {
-        key: 'onAddPage',
-        type: 'function',
-        description: '',
-      },
-      {
-        key: 'onDeletePage',
-        type: 'function',
-        description: '',
-      },
-      {
-        key: 'onEditPage',
-        type: 'function',
-        description: '',
-      },
-      {
-        key: 'onCopyPage',
-        type: 'function',
-        description: '',
-      },
-      {
-        key: 'onAddComponent',
-        type: 'function',
-        description: '',
-      },
-      {
-        key: 'onEditComponent',
-        type: 'function',
-        description: '',
-      },
-      {
-        key: 'onCopyComponent',
-        type: 'function',
-        description: '',
-      },
-      {
-        key: 'onDeleteComponent',
         type: 'function',
         description: '',
       },
@@ -133,6 +100,41 @@ ViewManagerPane.meta = {
       {
         key: 'showIconText',
         type: 'boolean',
+        description: '',
+      },
+      {
+        key: 'skeletonConfig',
+        type: 'object',
+        description: '',
+      },
+      {
+        key: 'contextMenuActions',
+        type: 'function',
+        description: '右键菜单项',
+      },
+      {
+        key: 'resourceContextMenuActions',
+        type: 'function',
+        description: '右键资源项，菜单项',
+      },
+      {
+        key: 'resourceGroupContextMenuActions',
+        type: 'function',
+        description: '右键资源组，菜单项',
+      },
+      {
+        key: 'filterResourceList',
+        type: 'function',
+        description: '',
+      },
+      {
+        key: 'showIconText',
+        type: 'boolean',
+        description: '',
+      },
+      {
+        key: 'skeletonConfig',
+        type: 'object',
         description: '',
       }
     ],
