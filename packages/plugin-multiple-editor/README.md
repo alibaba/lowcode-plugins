@@ -6,6 +6,7 @@
 
 ```ts
 import multipleFileCodeEditorFactory from '@alilc/lowcode-plugin-multiple-editor';
+
 import { PrettierPlugin } from '@alilc/lowcode-plugin-multiple-editor/es/plugins/prettier-plugin';
 
 
