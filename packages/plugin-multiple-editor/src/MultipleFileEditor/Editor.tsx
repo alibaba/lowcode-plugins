@@ -1,26 +1,24 @@
 import FileTree from '@/components/FileTree';
 import MonacoEditor from '@/components/MonacoEditor';
+import Outline from '@/components/Outline';
 import { useEditorContext } from '../Context';
 import { Dialog, Message } from '@alifd/next';
 import cls from 'classnames';
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import './index.less';
 import { HandleChangeFn } from '../components/FileTree/TreeNode';
 import { languageMap } from '../utils/constants';
-import { getKeyByPath, parseKey, treeToMap } from 'utils/files';
+import { parseKey, treeToMap } from 'utils/files';
 import { editorController, HookKeys } from '../Controller';
 
 import { initEditorModel, useUnReactiveFn } from './util';
 import type { editor } from 'monaco-editor';
 import { Monaco } from '../types';
 import { PluginHooks } from '@/Service';
+
+// 最大最小宽（带工具栏）
+const MINWIDTH = 246;
+const MAXWIDTH = 446;
 
 const Editor: FC = () => {
   const editorContext = useEditorContext();
@@ -37,34 +35,30 @@ const Editor: FC = () => {
   const monacoEditor = useRef<editor.IStandaloneCodeEditor>();
   const monacoRef = useRef<Monaco>();
   const [fullscreen, setFullscreen] = useState(false);
-
+  const [fileContent, setFileContent] = useState(file?.content);
+  const [fileTreeWidth, setFileTreeWidth] = useState('200px');
   const containerRef = useRef<HTMLDivElement>();
-  const filePath = useMemo(
-    () => [...path, file?.name].join('/'),
-    [file?.name, path]
-  );
+  const filePath = file?.fullPath || '';
   const handleChange = useCallback<HandleChangeFn>(
     (file, path) => {
       selectFile(file, path);
+      setFileContent(file?.content);
     },
     [selectFile]
   );
   const handleEditorChange = useCallback(
     (value: string) => {
+      setFileContent(value);
       file && (file.content = value);
-      const curKey = getKeyByPath(path, file?.name || '');
       editorController.triggerHook(HookKeys.onEditCodeChange, {
-        file: path
-          .join('/')
-          .concat('/')
-          .concat(file?.name || ''),
+        file: file?.fullPath,
         content: value,
       });
-      if (!modifiedKeys.find((k) => k === curKey)) {
-        updateState({ modifiedKeys: [...modifiedKeys, curKey] });
+      if (!modifiedKeys.find((k) => k === file?.fullPath)) {
+        updateState({ modifiedKeys: [...modifiedKeys, file?.fullPath as any] });
       }
     },
-    [file, modifiedKeys, path, updateState]
+    [file, modifiedKeys, updateState]
   );
 
   const handleCompile = useCallback(
@@ -87,7 +81,6 @@ const Editor: FC = () => {
     },
     [fileTree]
   );
-
   const { handler: handleSave } = useUnReactiveFn(() => {
     if (handleCompile(true)) {
       // 全部保存, 标记清空
@@ -109,6 +102,10 @@ const Editor: FC = () => {
       monacoRef.current = monaco;
       initEditorModel(initialFileMap, monaco);
       editorController.initCodeEditor(codeEditor, editorContext);
+      editorController.service.triggerHook(
+        PluginHooks.onEditorMount,
+        codeEditor
+      );
     },
     [editorContext, initialFileMap]
   );
@@ -120,16 +117,12 @@ const Editor: FC = () => {
   }, [editorContext]);
 
   useEffect(() => {
-    const filepath = path
-      .join('/')
-      .concat('/')
-      .concat(file?.name || '');
     editorController.service.triggerHook(PluginHooks.onSelectFileChange, {
-      filepath,
+      filepath: file?.fullPath,
       content: file?.content,
     });
     editorController.triggerHook(HookKeys.onEditCodeChange, {
-      file: filepath,
+      file: file?.fullPath,
       content: file?.content,
     });
   }, [file, path]);
@@ -150,6 +143,27 @@ const Editor: FC = () => {
   const handleFullScreen = useCallback((enable: boolean) => {
     setFullscreen(enable);
   }, []);
+  const handleMoveDrag = () => {
+    let first = true;
+    document.onmousemove = function (e) {
+      if (first) {
+        // 只拖动一下视为点击误触 防止偶现点击触发拖动问题
+        first = false;
+        return;
+      }
+      const clientX = e.clientX;
+      const maxWidth =
+        clientX < MINWIDTH ? MINWIDTH : clientX > MAXWIDTH ? MAXWIDTH : clientX;
+      setFileTreeWidth(`${fullscreen ? maxWidth : maxWidth - 46}px`);
+      return false;
+    };
+
+    document.onmouseup = function (e) {
+      document.onmousemove = null;
+      // document.onmouseup = null;
+      return false;
+    };
+  };
   return (
     <div
       className={cls(
@@ -158,16 +172,32 @@ const Editor: FC = () => {
       )}
       ref={containerRef as any}
     >
-      <FileTree
-        mode={mode}
-        dir={fileTree}
-        className="ilp-multiple-editor-tree"
-        onChange={handleChange}
-        onSave={() => handleCompile()}
-        fullscreen={fullscreen}
-        onFullscreen={handleFullScreen}
+      <div
+        onMouseDown={handleMoveDrag}
+        className="ilp-multiple-editor-tree-drag"
+        style={{ width: fileTreeWidth }}
+      >
+        <FileTree
+          mode={mode}
+          dir={fileTree}
+          className="ilp-multiple-editor-tree"
+          onChange={handleChange}
+          onSave={() => handleCompile()}
+          fullscreen={fullscreen}
+          onFullscreen={handleFullScreen}
+          actions={editorController.service.actionMap}
+        />
+      </div>
+      <Outline
+        ilpOutLineStyle={{ width: fileTreeWidth }}
+        content={fileContent}
+        filePath={filePath}
+        className="ilp-multiple-editor-outline"
       />
-      <div className="ilp-multiple-editor-wrapper">
+      <div
+        className="ilp-multiple-editor-wrapper"
+        style={{ left: fileTreeWidth, width: `calc(100% - ${fileTreeWidth})` }}
+      >
         <h3>{file ? file.name : '无文件'}</h3>
         {file ? (
           <MonacoEditor

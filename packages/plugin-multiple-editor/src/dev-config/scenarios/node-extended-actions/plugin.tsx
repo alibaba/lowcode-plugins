@@ -1,6 +1,10 @@
 import React from 'react';
 import {
   plugins,
+  skeleton,
+  project,
+  setters,
+  Node,
 } from '@alilc/lowcode-engine';
 import AliLowCodeEngineExt from '@alilc/lowcode-engine-ext';
 import { Icon, Message, Button } from '@alifd/next';
@@ -30,10 +34,9 @@ import {
 } from '../../universal/utils';
 import assets from './assets.json';
 import schema from './schema.json';
-import { IPublicModelPluginContext, IPublicModelNode } from '@alilc/lowcode-types';
 
 export default async function registerPlugins() {
-  const addHelloAction = (ctx: IPublicModelPluginContext) => {
+  const addHelloAction = (ctx: any) => {
     return {
       async init() {
         const { addBuiltinComponentAction } = ctx.material;
@@ -42,12 +45,12 @@ export default async function registerPlugins() {
           content: {
             icon: <Icon type="atm" size="small" />,
             title: 'hello',
-            action(node: IPublicModelNode) {
+            action(node: Node) {
               Message.show('Welcome to Low-Code engine');
             },
           },
-          condition: (node: IPublicModelNode) => {
-            return node.componentMeta?.componentName === 'NextTable';
+          condition: (node: Node) => {
+            return node.componentMeta.componentName === 'NextTable';
           },
         });
       },
@@ -56,7 +59,7 @@ export default async function registerPlugins() {
   addHelloAction.pluginName = 'addHelloAction';
   await plugins.register(addHelloAction);
 
-  const removeCopyAction = (ctx: IPublicModelPluginContext) => {
+  const removeCopyAction = (ctx: any) => {
     return {
       async init() {
         const { removeBuiltinComponentAction } = ctx.material;
@@ -78,7 +81,7 @@ export default async function registerPlugins() {
   (SimulatorResizer as any).pluginName = 'SimulatorResizer';
   plugins.register(SimulatorResizer);
 
-  const editorInit = (ctx: IPublicModelPluginContext) => {
+  const editorInit = (ctx: any) => {
     return {
       name: 'editor-init',
       async init() {
@@ -104,7 +107,7 @@ export default async function registerPlugins() {
   editorInit.pluginName = 'editorInit';
   await plugins.register(editorInit);
 
-  const builtinPluginRegistry = (ctx: IPublicModelPluginContext) => {
+  const builtinPluginRegistry = (ctx: any) => {
     return {
       name: 'builtin-plugin-registry',
       async init() {
@@ -148,7 +151,7 @@ export default async function registerPlugins() {
   await plugins.register(builtinPluginRegistry);
 
   // 设置内置 setter 和事件绑定、插件绑定面板
-  const setterRegistry = (ctx: IPublicModelPluginContext) => {
+  const setterRegistry = (ctx: any) => {
     const { setterMap, pluginMap } = AliLowCodeEngineExt;
     return {
       name: 'ext-setters-registry',
@@ -186,7 +189,7 @@ export default async function registerPlugins() {
   // 注册中英文切换
   await plugins.register(ZhEnPlugin);
 
-  const loadAssetsSample = (ctx: IPublicModelPluginContext) => {
+  const loadAssetsSample = (ctx: any) => {
     return {
       name: 'loadAssetsSample',
       async init() {
@@ -211,7 +214,7 @@ export default async function registerPlugins() {
   await plugins.register(loadAssetsSample);
 
   // 注册保存面板
-  const saveSample = (ctx: IPublicModelPluginContext) => {
+  const saveSample = (ctx: any) => {
     return {
       name: 'saveSample',
       async init() {
@@ -259,7 +262,7 @@ export default async function registerPlugins() {
   // CodeEditor.pluginName = 'CodeEditor';
   // await plugins.register(CodeEditor);
 
-  const previewSample = (ctx: IPublicModelPluginContext) => {
+  const previewSample = (ctx: any) => {
     return {
       name: 'previewSample',
       async init() {
@@ -286,7 +289,7 @@ export default async function registerPlugins() {
   previewSample.pluginName = 'previewSample';
   await plugins.register(previewSample);
 
-  const customSetter = (ctx: IPublicModelPluginContext) => {
+  const customSetter = (ctx: any) => {
     return {
       name: '___registerCustomSetter___',
       async init() {

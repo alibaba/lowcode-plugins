@@ -14,7 +14,10 @@ function compatIndexContent(content: string) {
   return content;
 }
 
-export const getDefaultFileList = (rootSchema: any): ObjectType<string> => {
+export const getDefaultFileList = (
+  rootSchema: any,
+  useLess?: boolean
+): ObjectType<string> => {
   const sourceCodeMap = rootSchema?.componentsTree?.[0]?._sourceCodeMap || {};
   const { files } = compatGetSourceCodeMap(sourceCodeMap); // 兼容旧格式
   if (files['index.js']) {
@@ -28,7 +31,8 @@ export const getDefaultFileList = (rootSchema: any): ObjectType<string> => {
         {}
       )
     ),
-    'index.css': rootSchema?.componentsTree?.[0]?.css || '',
+    [useLess ? 'index.less' : 'index.css']:
+      rootSchema?.componentsTree?.[0]?.css || '',
     ...files,
   };
 
@@ -101,9 +105,13 @@ export async function addFunction(
   if (!monacoEditor || !monaco) {
     return;
   }
-  const count = monacoEditor.getModel()?.getLineCount() ?? 0;
-  const range = new monaco.Range(count, 1, count, 1);
+  let count = monacoEditor.getModel()?.getLineCount() ?? 0;
+  // 找到倒数第一个非空行
+  while (!monacoEditor.getModel()?.getLineContent(count)) {
+    count--;
+  }
 
+  const range = new monaco.Range(count, 1, count, 1);
   const functionCode = params.template
     ? params.template
     : `\n\t${params.functionName}(){\n\t}\n`;

@@ -1,7 +1,7 @@
 import { material, project } from '@alilc/lowcode-engine';
 import { filterPackages } from '@alilc/lowcode-plugin-inject';
 import { Message, Dialog } from '@alifd/next';
-import { IPublicEnumTransformStage } from '@alilc/lowcode-types';
+import { TransformStage } from '@alilc/lowcode-types';
 
 export const loadIncrementalAssets = () => {
   material?.onChangeAssets(() => {
@@ -252,7 +252,7 @@ const setProjectSchemaToLocalStorage = (scenarioName: string) => {
   }
   window.localStorage.setItem(
     getLSName(scenarioName),
-    JSON.stringify(project.exportSchema(IPublicEnumTransformStage.Save))
+    JSON.stringify(project.exportSchema(TransformStage.Save as any))
   );
 };
 
@@ -296,5 +296,6 @@ function request(
   headers?: object,
   otherProps?: any
 ): Promise<any> {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return Promise.resolve(require('./schema.json'));
 }

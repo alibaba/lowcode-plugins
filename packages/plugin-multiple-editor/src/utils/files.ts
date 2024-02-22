@@ -4,7 +4,11 @@ export class File {
 
   public type = 'file';
 
-  constructor(public name: string, public content: string) {
+  constructor(
+    public name: string,
+    public content: string,
+    public fullPath: string
+  ) {
     this.ext = name.match(/\.(\w+)$/)?.[1];
   }
 }
@@ -13,10 +17,17 @@ export class Dir {
   public dirs: Dir[];
   public files: File[];
   public type = 'dir';
+  public fullPath = '';
 
-  constructor(public name: string, dirs?: Dir[], files?: File[]) {
+  constructor(
+    public name: string,
+    dirs: Dir[],
+    files: File[],
+    fullPath: string
+  ) {
     this.dirs = dirs || [];
     this.files = files || [];
+    this.fullPath = fullPath || '';
   }
 }
 
@@ -25,9 +36,9 @@ export const getKey = (parent: string | undefined, cur: string) => {
   return `${finalParent}${cur}`;
 };
 
-export function getKeyByPath(path: string[], name: string) {
-  return ['', ...path, name].join('/');
-}
+// export function getKeyByPath(path: string[], name: string) {
+//   return ['', ...path, name].join('/');
+// }
 
 export const parseKey = (key: string) => {
   const fragment = key.split('/').filter(Boolean);
@@ -106,13 +117,13 @@ export function generateFile(
   for (const dir of path) {
     let found: Dir | undefined = nextDir.dirs.find((d) => d.name === dir);
     if (!found) {
-      found = new Dir(dir);
+      found = new Dir(dir, [], [], path.join('/'));
       nextDir.dirs.push(found);
     }
     nextDir = found;
   }
   // 添加文件
-  nextDir.files.push(new File(filename, file.content));
+  nextDir.files.push(new File(filename, file.content, file.name));
 }
 
 /**
@@ -124,7 +135,7 @@ export function generateFile(
 export function fileMapToTree(obj: any) {
   const { files } = compatGetSourceCodeMap(obj);
   const keys = Object.keys(files);
-  const dir = new Dir('/');
+  const dir = new Dir('/', [], [], '');
   for (const key of keys) {
     generateFile({ name: key, content: files[key] }, dir);
   }
@@ -145,10 +156,14 @@ export function treeToMap(root: Dir, base = '') {
   return files;
 }
 
-export function compatGetSourceCodeMap(origin: any = {}) {
+export function compatGetSourceCodeMap(origin: any = {}, defaultFiles?: any) {
   const { meta, files, ...rest } = origin;
+  let finalFiles = files;
+  if (!finalFiles) {
+    finalFiles = Object.keys(rest).length ? rest : defaultFiles;
+  }
   return {
-    files: files || rest,
+    files: finalFiles || {},
     meta: meta || {},
   };
 }

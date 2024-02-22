@@ -1,13 +1,21 @@
 .ilp-file-bar {
-  width: 200px;
+  width: 100%;
   padding: 8px;
   &-title {
     font-size: 14px;
     color: #333;
     margin: 0;
+    height: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .ilp-tree-action-item {
+      display: inline-block;
+      margin-left: 8px;
+      img {
+        margin-left: 0;
+      }
+    }
     img {
       width: 16px;
       height: 16px;

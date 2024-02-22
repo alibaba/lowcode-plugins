@@ -37,7 +37,11 @@ export function pureTranspile(
       ];
   let plugins: any[] = [modulePlugin];
   if (es6) {
-    plugins.unshift(availablePlugins['transform-modules-commonjs']);
+    plugins.unshift(
+      availablePlugins['transform-modules-commonjs'],
+      availablePlugins['syntax-jsx'],
+      availablePlugins['transform-react-jsx']
+    );
   }
   if (options?.presets) {
     presets = presets.concat(options.presets);

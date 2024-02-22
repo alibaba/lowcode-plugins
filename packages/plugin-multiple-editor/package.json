@@ -24,7 +24,8 @@
     "release": "fast-publish"
   },
   "dependencies": {
-    "@alilc/lowcode-types": "^1.0.3"
+    "@alilc/lowcode-types": "^1.0.3",
+    "@babel/types": "^7.16.0"
   },
   "devDependencies": {
     "@alifd/next": "^1.25.29",
@@ -121,6 +122,9 @@
     "webpack-manifest-plugin": "^4.0.2",
     "webpackbar": "^5.0.2",
     "workbox-webpack-plugin": "^6.4.1"
+  },
+  "resolutions": {
+    "@types/react": "^17.0.2"
   },
   "browserslist": {
     "production": [

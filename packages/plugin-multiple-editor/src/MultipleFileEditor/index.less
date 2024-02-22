@@ -9,7 +9,7 @@
   background-color: #fff;
   position: relative;
   box-sizing: border-box;
-  padding-left: @leftWidth;
+  padding-left: 0;
   &-fullscreen {
     position: fixed;
     top: 0;
@@ -18,10 +18,24 @@
     height: 100vh;
     z-index: 2000;
   }
+  &-tree-drag{
+    position: absolute;
+    height: 60%;
+    cursor: col-resize;
+  }
   &-tree {
+    height: 100%;
     position: absolute;
     left: 0;
     top: 0;
+    border-right: 1px solid #efeffe;
+  }
+  &-outline {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 60%;
+    height: 40%;
     border-right: 1px solid #efeffe;
   }
   &-wrapper {

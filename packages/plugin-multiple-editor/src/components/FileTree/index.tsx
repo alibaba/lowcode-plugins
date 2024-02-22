@@ -1,18 +1,19 @@
 import React, { CSSProperties, FC, useCallback, useRef, useState } from 'react';
 import { Form, Input, Dialog, Message } from '@alifd/next';
 import cls from 'classnames';
-import { Dir, File, getFileOrDirTarget, getKeyByPath } from '../../utils/files';
+import { Dir, File, getFileOrDirTarget } from '../../utils/files';
 import TreeNode, {
   HandleAddFn,
   HandleChangeFn,
   HandleDeleteFn,
+  HandleRenameFn,
 } from './TreeNode';
 import './index.less';
 import { useEditorContext } from '../../Context';
-// import saveIcon from './img/save.svg';
 import fullscreenIcon from './img/fullscreen.svg';
 import fullscreenExitIcon from './img/fullscreen-exit.svg';
 import compileIcon from './img/compile.svg';
+import { PluginAction } from '@/Service';
 
 export interface FileTreeProps {
   dir?: Dir;
@@ -22,9 +23,10 @@ export interface FileTreeProps {
   onSave?: () => any;
   onFullscreen?: (enable: boolean) => void;
   fullscreen?: boolean;
+  actions?: PluginAction[];
 }
 
-const defaultDir = new Dir('/');
+const defaultDir = new Dir('/', [], [], '');
 
 function validate(
   data: { type: string; path: any },
@@ -46,8 +48,13 @@ function validate(
       return '文件或文件夹已存在';
     }
   }
+  if (data.type === 'file' && name.endsWith('.less') && name !== 'index.less') {
+    return 'less 文件仅支持创建 index.less';
+  }
   if (data.type === 'file') {
-    return name && /\.(js)$/.test(name) ? undefined : '文件名必填且未js后缀';
+    return name && /\.(js|less)$/.test(name)
+      ? undefined
+      : '文件名必填且未js后缀';
   }
 }
 
@@ -63,14 +70,22 @@ const FileTree: FC<FileTreeProps> = ({
   onFullscreen,
   fullscreen,
   mode,
+  actions,
 }) => {
   const { updateFileTreeByPath, fileTree, modifiedKeys, currentFile } =
     useEditorContext();
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState({ name: '' });
-  const tmp = useRef<{ path: string[]; type: string }>({} as any).current;
+  const tmp = useRef<{
+    path: string[];
+    type: string;
+    fullPath: string;
+    operation?: string;
+    target?: any;
+  }>({} as any).current;
   const handleAdd = useCallback<HandleAddFn>(
     (type, path) => {
+      tmp.operation = 'add';
       tmp.path = path;
       tmp.type = type;
       setValue({ name: '' });
@@ -78,7 +93,17 @@ const FileTree: FC<FileTreeProps> = ({
     },
     [tmp]
   );
-
+  const handleRename = useCallback<HandleRenameFn>(
+    (type, path, target) => {
+      tmp.target = target;
+      tmp.operation = 'rename';
+      tmp.path = path;
+      tmp.type = type;
+      setValue({ name: '' });
+      setVisible(true);
+    },
+    [tmp]
+  );
   const handleClose = useCallback(() => {
     setVisible(false);
   }, []);
@@ -87,7 +112,7 @@ const FileTree: FC<FileTreeProps> = ({
     setValue({ name: v });
   }, []);
 
-  const handleAddFileToTree = useCallback(
+  const handleEditFileToTree = useCallback(
     async (e?: React.KeyboardEvent<HTMLInputElement>) => {
       if (e && !(e.key === 'Enter' || e?.keyCode === 13)) {
         return;
@@ -95,8 +120,16 @@ const FileTree: FC<FileTreeProps> = ({
       const { name } = value;
       const validMsg = validate(tmp, name, fileTree);
       if (!validMsg) {
-        const target = tmp.type === 'file' ? new File(name, '') : new Dir(name);
-        updateFileTreeByPath(tmp.path, target, 'add');
+        const fullPath = `${tmp.path}/${name}`;
+        if (tmp.operation === 'rename') {
+          updateFileTreeByPath(tmp.path, tmp.target, 'rename', name);
+        } else {
+          const target =
+            tmp.type === 'file'
+              ? new File(name, '', fullPath)
+              : new Dir(name, [], [], fullPath);
+          updateFileTreeByPath(tmp.path, target, 'add');
+        }
         setVisible(false);
       } else {
         Message.error(validMsg);
@@ -116,6 +149,10 @@ const FileTree: FC<FileTreeProps> = ({
     },
     [updateFileTreeByPath]
   );
+  let title = tmp.type === 'file' ? '新建文件' : '新建文件夹';
+  if (tmp.operation === 'rename') {
+    title = tmp.type === 'file' ? '重命名文件' : '重命名文件夹';
+  }
   return (
     <div className={cls('ilp-file-bar', className)}>
       <h4 className="ilp-file-bar-title">
@@ -133,6 +170,16 @@ const FileTree: FC<FileTreeProps> = ({
             title="编译代码"
             onClick={onSave}
           />
+          {actions?.map((item) => (
+            <span
+              className="ilp-tree-action-item"
+              key={item.key}
+              title={item.title}
+              onClick={item.action}
+            >
+              {item.icon}
+            </span>
+          ))}
         </span>
       </h4>
 
@@ -143,20 +190,18 @@ const FileTree: FC<FileTreeProps> = ({
         onChange={onChange}
         onAdd={handleAdd}
         onDelete={handleDelete}
+        onRename={handleRename}
         modifiedKeys={modifiedKeys}
-        selectedKey={getKeyByPath(
-          currentFile.path,
-          currentFile.file?.name || ''
-        )}
+        selectedKey={currentFile.file?.fullPath}
       />
 
       <Dialog
         style={newModalStyle}
-        title={tmp.type === 'file' ? '新建文件' : '新建文件夹'}
+        title={title}
         visible={visible}
         onCancel={handleClose}
         onClose={handleClose}
-        onOk={() => handleAddFileToTree()}
+        onOk={() => handleEditFileToTree()}
       >
         <Form>
           <Form.Item
@@ -169,7 +214,7 @@ const FileTree: FC<FileTreeProps> = ({
               autoFocus
               value={value.name}
               onChange={handleChange}
-              onKeyDown={(e) => handleAddFileToTree(e)}
+              onKeyDown={(e) => handleEditFileToTree(e)}
             />
           </Form.Item>
         </Form>

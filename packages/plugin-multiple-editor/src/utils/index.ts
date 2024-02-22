@@ -4,3 +4,4 @@ export * from './tsUtils';
 export * from './files';
 export * from './codeLint';
 export * from './ghostBabel';
+export * from './path';

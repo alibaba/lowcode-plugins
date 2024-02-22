@@ -6,6 +6,7 @@ import dirIcon from './img/file-directory.png';
 import fileIcon from './img/file.png';
 import menuIcon from './img/menu.png';
 import deleteIcon from './img/delete.png';
+import renameIcon from './img/rename.png';
 
 import './index.less';
 
@@ -14,6 +15,12 @@ export type HandleAddFn = (type: 'file' | 'dir', path: string[]) => void;
 export type HandleDeleteFn = (path: string[], target: Dir | File) => void;
 
 export type HandleChangeFn = (value: File, path: string[]) => void;
+
+export type HandleRenameFn = (
+  type: 'file' | 'dir',
+  path: string[],
+  target: Dir | File
+) => void;
 
 export interface TreeNodeProps {
   disableAction?: boolean;
@@ -25,6 +32,7 @@ export interface TreeNodeProps {
   onChange?: HandleChangeFn;
   onAdd?: HandleAddFn;
   onDelete?: HandleDeleteFn;
+  onRename?: HandleRenameFn;
   className?: string;
 }
 
@@ -37,7 +45,7 @@ const helpPopupProps = {
   placementOffset: 4,
 };
 
-const defaultDir = new Dir('root');
+const defaultDir = new Dir('/', [], [], '');
 
 const TreeNode: FC<TreeNodeProps> = ({
   dir = defaultDir,
@@ -48,6 +56,7 @@ const TreeNode: FC<TreeNodeProps> = ({
   onChange,
   onDelete,
   onAdd,
+  onRename,
   modifiedKeys,
   disableAction,
 }) => {
@@ -75,19 +84,38 @@ const TreeNode: FC<TreeNodeProps> = ({
     ];
     // 根目录不能删除
     if (parentKey) {
-      baseActions.push({
-        title: '删除目录',
-        action: () => {
-          path.pop();
-          onDelete?.(path, dir);
+      baseActions.push(
+        {
+          title: '删除目录',
+          action: () => {
+            path.pop();
+            onDelete?.(path, dir);
+          },
+          id: 'delete',
         },
-        id: 'delete',
-      });
+        {
+          title: '修改目录名',
+          action: () => {
+            path.pop();
+            onRename?.('dir', path, dir);
+          },
+          id: 'rename',
+        }
+      );
     }
     return baseActions;
-  }, [dir, onAdd, onDelete, parentKey]);
+  }, [dir, onAdd, onDelete, onRename, parentKey]);
   const handleFileClick = (f: File, key: string) => {
     onChange?.(f, parseKey(key).path);
+  };
+  const handleRename = (
+    e: MouseEvent<HTMLImageElement>,
+    file: File,
+    key: string
+  ) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onRename?.('file', parseKey(key).path, file);
   };
   const handleDelete = (
     e: MouseEvent<HTMLImageElement>,
@@ -176,6 +204,7 @@ const TreeNode: FC<TreeNodeProps> = ({
                 parentKey={getKey(parentKey, d.name)}
                 onChange={onChange}
                 onAdd={onAdd}
+                onRename={onRename}
                 onDelete={onDelete}
                 modifiedKeys={modifiedKeys}
               />
@@ -188,23 +217,29 @@ const TreeNode: FC<TreeNodeProps> = ({
                   style={{ paddingLeft: 8 * (level + 1) }}
                   className={cls(
                     'ilp-tree-node-file',
-                    selectedKey === key && 'ilp-tree-node-file-selected',
-                    modifiedKeys?.find((k) => k === key) &&
+                    selectedKey === f.fullPath && 'ilp-tree-node-file-selected',
+                    modifiedKeys?.find((k) => k === f.fullPath) &&
                       'ilp-tree-node-file-modified'
                   )}
                   onClick={() => handleFileClick(f, key)}
                 >
                   <img src={fileIcon} alt="file" />
                   <span>{f.name}</span>
-                  {f.ext !== 'css' &&
-                    !(f.name === 'index.js' && !parentKey) &&
-                    !actionDisabled && (
-                    <img
-                      src={deleteIcon}
-                      className="ilp-tree-node-file-icon"
-                      alt=""
-                      onClick={(e) => handleDelete(e, f, key)}
-                    />
+                  {!(f.name === 'index.js' && !parentKey) && !actionDisabled && (
+                    <div className="ilp-tree-node-file-icon-wrap">
+                      <img
+                        src={deleteIcon}
+                        className="ilp-tree-node-file-icon-delete"
+                        alt=""
+                        onClick={(e) => handleDelete(e, f, key)}
+                      />
+                      <img
+                        src={renameIcon}
+                        className="ilp-tree-node-file-icon"
+                        alt=""
+                        onClick={(e) => handleRename(e, f, key)}
+                      />
+                    </div>
                   )}
                 </div>
               );

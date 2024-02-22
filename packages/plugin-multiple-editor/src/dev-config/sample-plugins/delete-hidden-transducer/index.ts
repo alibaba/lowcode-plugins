@@ -11,6 +11,6 @@ export const deleteHiddenTransducer = (ctx: any) => {
       }, IPublicEnumTransformStage.Save);
     },
   };
-}
+};
 
 deleteHiddenTransducer.pluginName = 'deleteHiddenTransducer';
