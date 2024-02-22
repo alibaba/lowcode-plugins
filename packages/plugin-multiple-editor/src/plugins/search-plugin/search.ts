@@ -37,6 +37,9 @@ function getMethodFromNode(node: any): Methods {
 
   // 合并一个节点数组，例如 slot 的元素列表
   const mergeNodeList = (list: any[]) => {
+    if (!isArray(list)) {
+      return;
+    }
     for (const item of list) {
       mergeMethod(methods, getMethodFromNode(item));
     }

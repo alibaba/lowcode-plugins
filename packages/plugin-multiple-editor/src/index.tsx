@@ -1,12 +1,17 @@
-import { project, editor } from '@alilc/lowcode-engine';
+import { project, event } from '@alilc/lowcode-engine';
+import { IPublicTypePluginConfig, IPublicModelPluginContext } from '@alilc/lowcode-types';
 import { controller as baseController } from '@alilc/lowcode-plugin-base-monaco-editor/es/controller';
 import { EditorProvider } from './Context';
 import MultipleFileEditor from './MultipleFileEditor';
 import React from 'react';
 import { EditorController, editorController } from './Controller';
 import { EditorPluginInterface, Service } from './Service';
+import { loadLess, loadPrettier } from './utils/script-loader';
 
 export { editorController };
+
+loadPrettier();
+loadLess();
 
 baseController.registerMethod('getSchema', () => {
   return editorController.getSchema();
@@ -20,14 +25,16 @@ const pluginCodeEditor = (
     onInstall?: (controller: EditorController) => void;
     plugins?: EditorPluginInterface[];
     defaultFiles?: Record<string, string>;
+    useLess?: boolean;
   } = {}
 ) => {
-  const plugin = (ctx: any): any => {
+  const plugin = (ctx: IPublicModelPluginContext): IPublicTypePluginConfig => {
     return {
       exports: () => ({}),
       init() {
         options.onInstall?.(editorController);
         editorController.es6 = options.es6;
+        editorController.useLess = options.useLess;
         editorController.defaultFiles = options.defaultFiles || {};
         const schemaDock = ctx.skeleton.add({
           area: 'leftArea',
@@ -62,9 +69,10 @@ const pluginCodeEditor = (
         schemaDock && schemaDock.disable();
         project.onSimulatorRendererReady(() => {
           schemaDock.enable();
+          const finalEditor = event;
           const service = new Service(editorController, ctx.skeleton);
           service.init({ plugins: options.plugins });
-          editorController.init(project, editor, service);
+          editorController.init(project, finalEditor, service);
         });
       },
     };

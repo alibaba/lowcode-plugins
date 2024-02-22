@@ -58,6 +58,7 @@ await plugins.register(plugin);
 4. 如需在 setter 内适用类型定义，请开启 base-editor 的单例模式，仅需在应用入口处调用如下方法即可：
 5. 如果低码项目有使用出码，则需对出码进行定制，将 _sourceCodeMap 中的文件生成到项目中，并对文件的引用进行处理，具体处理方式可自行组织
 
+__使用单例模式__
 ```ts
 import { configure } from '@alilc/lowcode-plugin-base-monaco-editor';
 configure({ singleton: true });

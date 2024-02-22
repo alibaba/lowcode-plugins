@@ -1,3 +1,4 @@
+import { IPublicTypeProjectSchema, IPublicTypeRootSchema } from '@alilc/lowcode-types';
 // @ts-ignore
 import prettier from 'prettier/esm/standalone.mjs';
 import parserBabel from 'prettier/parser-babel';
@@ -23,7 +24,9 @@ const prettierCssConfig = {
   printWidth: 120, // 超过120个字符强制换行
 };
 
-export const initCode = (componentSchema: any | undefined) => {
+export const initCode = (
+  componentSchema: IPublicTypeRootSchema | undefined
+) => {
   return (
     (componentSchema as any)?.originCode ||
     `export default class LowcodeComponent extends Component {
@@ -72,6 +75,6 @@ export const beautifyCSS = (input: string, options: any): string => {
 };
 
 // schema转换为CSS代码
-export const schema2CssCode = (schema: any, prettierOptions: any) => {
+export const schema2CssCode = (schema: IPublicTypeProjectSchema, prettierOptions: any) => {
   return beautifyCSS(schema.componentsTree[0]?.css || '', prettierOptions);
 };

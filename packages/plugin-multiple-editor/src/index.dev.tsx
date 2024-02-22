@@ -10,6 +10,8 @@ import codePlugin from './index';
 import { EditorController } from './Controller';
 import registerAllPlugin from './dev-config/universal/plugin';
 import { SearchPlugin } from './plugins/search-plugin';
+import { EditorPluginInterface, Service } from './Service';
+import { PrettierPlugin } from './plugins/prettier-plugin';
 
 controller.updateMeta({ singleton: true });
 
@@ -17,15 +19,40 @@ controller.updateMeta({ singleton: true });
   console.log((await getMonaco()) === (await getMonaco()));
 })();
 
+class TestPlugin implements EditorPluginInterface {
+  apply(service: Service): void {
+    service.registerAction({
+      icon: (
+        <img
+          src="https://gw.alicdn.com/imgextra/i1/O1CN019CCwKb1s2lrE9EUp7_!!6000000005709-0-tps-750-720.jpg"
+          alt="111"
+        />
+      ),
+      key: 'hello',
+      action() {
+        alert('111');
+      },
+      title: '111',
+      priority: 0,
+    });
+  }
+}
+
 async function initEditor(el: any) {
   await registerAllPlugin();
   await plugins.register(
     codePlugin({
       softSave: true,
+      useLess: true,
       // mode: 'single',
       es6: true,
       defaultFiles: {
         'aspect.js': 'export default {}',
+        'utils/index.js': 'xxx',
+        'utils/u.js': 'xxx',
+        'config/life/index.js': 'xxx',
+        'config/life/a.js': 'xxx',
+        'util.js': '',
       },
       plugins: [
         new SearchPlugin({
@@ -33,6 +60,8 @@ async function initEditor(el: any) {
             console.log(name);
           },
         }),
+        new TestPlugin(),
+        new PrettierPlugin(),
       ],
       onInstall(controller: EditorController) {
         (window as any).codeEditorController = controller;
@@ -62,10 +91,17 @@ async function initEditor(el: any) {
         }, 1000);
 
         controller.onEditCodeChange((v) => {
-          console.log('value change', v);
+          // console.log('value change', v);
         });
+
+        setTimeout(() => {
+          controller.addFiles({
+            'extends/index.js': 'console.log(1)',
+            'extends/util.js': 'console.log(2)',
+          });
+        }, 3000);
       },
-    })
+    }) as any
   );
   await init(el, {
     locale: 'zh-CN',
@@ -73,7 +109,7 @@ async function initEditor(el: any) {
     enableCanvasLock: true,
     // 默认绑定变量
     supportVariableGlobally: true,
-  });
+  } as any);
 }
 
 const LowcodeRender = () => {

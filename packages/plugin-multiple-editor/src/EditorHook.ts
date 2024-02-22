@@ -2,6 +2,7 @@ export enum HookKeys {
   onImport = 'onImport',
   onSourceCodeChange = 'onSourceCodeChange',
   onEditCodeChange = 'onEditCodeChange',
+  onMonacoLoaded = 'onMonacoLoaded',
 }
 
 export class EditorHook {

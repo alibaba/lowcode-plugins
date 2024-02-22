@@ -46,6 +46,7 @@ export class SearchPlugin implements EditorPluginInterface {
     });
     service.onSelectFileChange(
       ({ filepath, content }: { filepath: string; content: string }) => {
+        if (!filepath) return;
         // 只需要初始化一次
         if (
           filepath.replace(/^\//, '') === 'index.js' &&

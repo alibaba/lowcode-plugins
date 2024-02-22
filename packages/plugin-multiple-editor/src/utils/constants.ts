@@ -4,4 +4,6 @@ export const languageMap: ObjectType<string> = {
   js: 'javascript',
   css: 'css',
   json: 'json',
+  ts: 'typescript',
+  less: 'less',
 };

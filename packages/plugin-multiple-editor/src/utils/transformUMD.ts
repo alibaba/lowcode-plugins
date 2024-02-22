@@ -88,7 +88,7 @@ function preprocessIndex(content: string) {
 
 export function getInitFuncContent(fileMap: ObjectType<string>, es6?: boolean) {
   const finalFileMap = Object.entries(fileMap)
-    .filter(([k]) => !['index.css'].includes(k))
+    .filter(([k]) => !['index.css', 'index.less'].includes(k))
     .map(([key, content]) => {
       let realContent = content;
       if (key === 'index.js') {

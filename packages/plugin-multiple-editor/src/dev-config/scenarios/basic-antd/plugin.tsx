@@ -1,7 +1,9 @@
 import React from 'react';
 import {
   plugins,
+  skeleton,
   project,
+  setters,
 } from '@alilc/lowcode-engine';
 import AliLowCodeEngineExt from '@alilc/lowcode-engine-ext';
 import { Button } from '@alifd/next';
@@ -31,7 +33,6 @@ import {
 } from '../../universal/utils';
 import assets from './assets.json';
 import schema from './schema.json';
-import { IPublicModelPluginContext } from '@alilc/lowcode-types';
 
 export default async function registerPlugins() {
   // await plugins.register(ManualPlugin);
@@ -45,7 +46,7 @@ export default async function registerPlugins() {
   (SimulatorResizer as any).pluginName = 'SimulatorResizer';
   plugins.register(SimulatorResizer);
 
-  const editorInit = (ctx: IPublicModelPluginContext) => {
+  const editorInit = (ctx: any) => {
     return {
       name: 'editor-init',
       async init() {
@@ -71,7 +72,7 @@ export default async function registerPlugins() {
   editorInit.pluginName = 'editorInit';
   await plugins.register(editorInit);
 
-  const builtinPluginRegistry = (ctx: IPublicModelPluginContext) => {
+  const builtinPluginRegistry = (ctx: any) => {
     return {
       name: 'builtin-plugin-registry',
       async init() {
@@ -115,7 +116,7 @@ export default async function registerPlugins() {
   await plugins.register(builtinPluginRegistry);
 
   // 设置内置 setter 和事件绑定、插件绑定面板
-  const setterRegistry = (ctx: IPublicModelPluginContext) => {
+  const setterRegistry = (ctx: any) => {
     const { setterMap, pluginMap } = AliLowCodeEngineExt;
     return {
       name: 'ext-setters-registry',
@@ -153,7 +154,7 @@ export default async function registerPlugins() {
   // 注册中英文切换
   await plugins.register(ZhEnPlugin);
 
-  const loadAssetsSample = (ctx: IPublicModelPluginContext) => {
+  const loadAssetsSample = (ctx: any) => {
     return {
       name: 'loadAssetsSample',
       async init() {
@@ -178,7 +179,7 @@ export default async function registerPlugins() {
   await plugins.register(loadAssetsSample);
 
   // 注册保存面板
-  const saveSample = (ctx: IPublicModelPluginContext) => {
+  const saveSample = (ctx: any) => {
     return {
       name: 'saveSample',
       async init() {
@@ -206,7 +207,7 @@ export default async function registerPlugins() {
             <Button onClick={() => resetSchema('basic-antd')}>重置页面</Button>
           ),
         });
-        hotkey.bind('command+s', (e) => {
+        hotkey.bind('command+s', (e: any) => {
           e.preventDefault();
           saveSchema('basic-antd');
         });
@@ -223,10 +224,10 @@ export default async function registerPlugins() {
   // await plugins.register(CodeEditor);
 
   // 注册出码插件
-  CodeGenPlugin.pluginName = 'CodeGenPlugin';
-  await plugins.register(CodeGenPlugin);
+  // CodeGenPlugin.pluginName = 'CodeGenPlugin';
+  // await plugins.register(CodeGenPlugin);
 
-  const previewSample = (ctx: IPublicModelPluginContext) => {
+  const previewSample = (ctx: any) => {
     return {
       name: 'previewSample',
       async init() {
@@ -250,7 +251,7 @@ export default async function registerPlugins() {
   previewSample.pluginName = 'previewSample';
   await plugins.register(previewSample);
 
-  const customSetter = (ctx: IPublicModelPluginContext) => {
+  const customSetter = (ctx: any) => {
     return {
       name: '___registerCustomSetter___',
       async init() {

@@ -21,7 +21,6 @@ import {
   sortDir,
 } from './utils/files';
 import { editorController } from './Controller';
-import { getDefaultFileList } from './MultipleFileEditor/util';
 
 export type CurrentFile = {
   file?: File;
@@ -39,11 +38,13 @@ export interface EditorContextType {
   updateFileTreeByPath(
     path: string[],
     target: Dir | File,
-    operation: 'delete' | 'add'
+    operation: 'delete' | 'add' | 'rename',
+    newName?: string
   ): void;
   selectFile(file: File | string, path: string[]): void;
   selectFileByName(name: string): void;
   updateState(state: Partial<StoreState>): void;
+  updateCurrentFile(content: string): void;
   initialFileMap: Record<string, string>;
   extraLibs: { path: string; content: string }[];
 }
@@ -86,7 +87,9 @@ export const EditorProvider: FC<{
     () => editorController.getCodeTemp()?._sourceCodeMap.files || {},
     []
   );
-  const initFileTree = fileMap ? fileMapToTree(fileMap) : new Dir('/');
+  const initFileTree = fileMap
+    ? fileMapToTree(fileMap)
+    : new Dir('/', [], [], '');
   const initState: StoreState = {
     declarations: '',
     extraLibs: [],
@@ -103,7 +106,7 @@ export const EditorProvider: FC<{
       if (typeof file === 'string') {
         const { fileTree } = state;
         const targetFile = getFileByPath(fileTree, file, path);
-        finalFile = targetFile || new File('index.js', '');
+        finalFile = targetFile || new File('index.js', '', 'index.js');
       } else {
         finalFile = file;
       }
@@ -123,12 +126,14 @@ export const EditorProvider: FC<{
       updateFileTree(tree: Dir) {
         dispatch({ type: 'update', payload: { fileTree: sortDir(tree) } });
       },
-      updateFileTreeByPath(path, target, operation) {
+      updateFileTreeByPath(path, target, operation, newName) {
         const { fileTree } = state;
         if (operation === 'add') {
           insertNodeToTree(fileTree, path, target);
         } else if (operation === 'delete') {
           deleteNodeOnTree(fileTree, path, target);
+        } else if (operation === 'rename') {
+          target.name = newName as string;
         }
         const payload: Partial<StoreState> = { fileTree: sortDir(fileTree) };
         // 新增文件时，选中当前文件
@@ -147,12 +152,27 @@ export const EditorProvider: FC<{
       updateState(state: Partial<StoreState>) {
         dispatch({ type: 'update', payload: state });
       },
+      updateCurrentFile(content) {
+        if (this.currentFile.file) {
+          this.currentFile.file.content = content;
+          this.updateState({
+            currentFile: {
+              ...this.currentFile,
+              file: {
+                ...this.currentFile.file,
+                content,
+              },
+            },
+          });
+          // this.updateFileTree({...this.fileTree});
+        }
+      },
     }),
-    [fileMap, selectFile, softSave, state]
+    [fileMap, mode, selectFile, softSave, state]
   );
   useEffect(() => {
     const off = editorController.onSourceCodeChange((codeMap) => {
-      const fileTree = fileMapToTree(codeMap) || new Dir('/');
+      const fileTree = fileMapToTree(codeMap) || new Dir('/', [], [], '');
       dispatch({ type: 'update', payload: { fileTree } });
       const targetFile = getFileByPath(fileTree, 'index.js', []);
       setTimeout(() => {

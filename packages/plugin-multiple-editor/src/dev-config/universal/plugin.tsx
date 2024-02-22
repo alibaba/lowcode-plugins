@@ -1,15 +1,11 @@
 import React from 'react';
 import {
   plugins,
-  skeleton,
   project,
-  setters,
 } from '@alilc/lowcode-engine';
 import AliLowCodeEngineExt from '@alilc/lowcode-engine-ext';
 import { Button } from '@alifd/next';
 import ComponentsPane from '@alilc/lowcode-plugin-components-pane';
-import ZhEnPlugin from '@alilc/lowcode-plugin-zh-en';
-import SchemaPlugin from '@alilc/lowcode-plugin-schema';
 import Inject, { injectAssets } from '@alilc/lowcode-plugin-inject';
 
 // 注册到引擎
@@ -35,10 +31,6 @@ export default async function registerPlugins() {
   await plugins.register(registerRefProp);
 
   await plugins.register(deleteHiddenTransducer);
-
-  // plugin API 见 https://yuque.antfin.com/ali-lowcode/docs/cdukce
-  SchemaPlugin.pluginName = 'SchemaPlugin';
-  await plugins.register(SchemaPlugin);
 
   const editorInit = (ctx: any) => {
     return {
@@ -140,9 +132,6 @@ export default async function registerPlugins() {
   };
   setterRegistry.pluginName = 'setterRegistry';
   await plugins.register(setterRegistry);
-
-  // 注册中英文切换
-  await plugins.register(ZhEnPlugin);
 
   const loadAssetsSample = (ctx: any) => {
     return {

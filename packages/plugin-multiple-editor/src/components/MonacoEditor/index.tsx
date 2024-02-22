@@ -3,6 +3,7 @@ import BaseMonacoEditor from '@alilc/lowcode-plugin-base-monaco-editor';
 import type { editor } from 'monaco-editor';
 import './index.css';
 import { Monaco } from '../../types';
+import { editorController } from '@/Controller';
 
 export interface MonacoEditorProps {
   theme?: string;
@@ -33,6 +34,11 @@ class MonacoEditor extends PureComponent<MonacoEditorProps> {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
+    editorController.onImportSchema(() => {
+      setTimeout(() => {
+        this.editor?.getModel()?.setValue(this.props.value || '');
+      }, 500);
+    });
   }
 
   componentDidUpdate(prevProps: MonacoEditorProps) {
@@ -53,13 +59,6 @@ class MonacoEditor extends PureComponent<MonacoEditorProps> {
         minimap: { enabled: this.props.isFullscreen },
       });
     }
-    // base editor 的bug，value 改变编辑器不会更新，暂时这么解决
-    if (
-      this.props.value !== prevProps.value &&
-      this.props.filePath === prevProps.filePath
-    ) {
-      this.editor?.getModel()?.setValue(this.props.value || '');
-    }
   }
 
   initMonaco = () => {
@@ -76,13 +75,15 @@ class MonacoEditor extends PureComponent<MonacoEditorProps> {
     // compiler options
     monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
       target: monaco.languages.typescript.ScriptTarget.ES2020,
-      module: monaco.languages.typescript.ModuleKind.ES2015,
+      module: monaco.languages.typescript.ModuleKind.CommonJS,
       allowJs: true,
       allowNonTsExtensions: true,
+      moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
       noEmit: true,
       esModuleInterop: true,
       jsx: monaco.languages.typescript.JsxEmit.React,
       reactNamespace: 'React',
+      typeRoots: ['node_modules/@types'],
     });
 
     monaco.languages.typescript.javascriptDefaults.setEagerModelSync(true);
@@ -90,15 +91,21 @@ class MonacoEditor extends PureComponent<MonacoEditorProps> {
     const openEditorBase = editorService.openCodeEditor.bind(editorService);
     editorService.openCodeEditor = async (input: any, source: any) => {
       const result = await openEditorBase(input, source);
+      const { selection } = input.options;
       if (result === null) {
         this.props.onGotoFile?.(input.resource?.path);
-        // console.log('Open definition for:', input);
-        // console.log(
-        //   'Corresponding model:',
-        //   monaco.editor.getModel(input.resource)
-        // );
+        // 定位到对应文件位置
+        setTimeout(() => {
+          const position = {
+            lineNumber: selection.startLineNumber,
+            column: selection.startColumn,
+          };
+          this.editor?.revealLineInCenter(position.lineNumber);
+          this.editor?.setPosition(position);
+          this.editor?.focus();
+        }, 50);
       }
-      return result; // always return the base result
+      return result;
     };
     window.addEventListener('resize', this.handleResize);
   };

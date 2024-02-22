@@ -1,8 +1,10 @@
 import type { Project, Event } from '@alilc/lowcode-shell';
-import { skeleton, common } from '@alilc/lowcode-engine';
+import { IPublicTypeProjectSchema } from '@alilc/lowcode-types';
+import { skeleton } from '@alilc/lowcode-engine';
 import {
   beautifyCSS,
   compatGetSourceCodeMap,
+  fileMapToTree,
   getConstructorContent,
   getDefaultDeclaration,
   getInitFuncContent,
@@ -10,7 +12,8 @@ import {
   treeToMap,
 } from './utils';
 import { FunctionEventParams, Monaco, ObjectType } from './types';
-import type { editor } from 'monaco-editor';
+import { common } from '@alilc/lowcode-engine';
+import { editor } from 'monaco-editor';
 import {
   addFunction,
   focusByFunctionName,
@@ -21,13 +24,14 @@ import { EditorContextType } from './Context';
 import { Message } from '@alifd/next';
 import { getMethods } from './utils/get-methods';
 import { EditorHook, HookKeys } from './EditorHook';
-import { Service } from './Service';
+import { PluginHooks, Service } from './Service';
+import { MonacoSuggestions } from './MonacoSuggestions';
 
 export * from './EditorHook';
 
 export interface EditorControllerState {
   declarationsMap: Record<string, string>;
-  extraLibs: Array<{ path: string; content: string }>;
+  extraLibs: { path: string; content: string }[];
 }
 
 export type HookHandleFn<T = any> = (fn: T) => () => void;
@@ -49,7 +53,9 @@ export class EditorController extends EditorHook {
 
   defaultFiles: ObjectType<string>;
 
-  monaco?: Monaco;
+  useLess?: boolean;
+
+  public monaco?: Monaco;
 
   private codeTemp?: CodeTemp;
 
@@ -59,22 +65,29 @@ export class EditorController extends EditorHook {
 
   private state: EditorControllerState;
 
-  codeEditor?: editor.IStandaloneCodeEditor;
+  public codeEditor?: editor.IStandaloneCodeEditor;
 
-  private codeEditorCtx?: EditorContextType;
+  public codeEditorCtx?: EditorContextType;
 
-  service!: Service;
+  public service!: Service;
 
-  onImportSchema: HookHandleFn<(schema: any) => void | Promise<void>> =
-    this.hookFactory(HookKeys.onImport);
+  private loadMonacoPromise?: Promise<any>;
 
-  onSourceCodeChange: HookHandleFn<(code: any) => void> = this.hookFactory(
-    HookKeys.onSourceCodeChange
-  );
+  private monacoSuggestions: MonacoSuggestions;
 
-  onEditCodeChange: HookHandleFn<
+  public onImportSchema: HookHandleFn<
+    (schema: IPublicTypeProjectSchema) => void | Promise<void>
+  > = this.hookFactory(HookKeys.onImport);
+
+  public onSourceCodeChange: HookHandleFn<(code: any) => void> =
+    this.hookFactory(HookKeys.onSourceCodeChange);
+
+  public onEditCodeChange: HookHandleFn<
     (code: { content: string; file: string }) => void
   > = this.hookFactory(HookKeys.onEditCodeChange);
+
+  public onMonacoLoaded: HookHandleFn<(monaco: Monaco) => void> =
+    this.hookFactory(HookKeys.onMonacoLoaded);
 
   constructor() {
     super();
@@ -85,6 +98,21 @@ export class EditorController extends EditorHook {
     this.listeners = [];
     this.defaultFiles = {};
     this.extraLibMap = new Map();
+    this.monacoSuggestions = new MonacoSuggestions(this);
+  }
+
+  async initMonaco() {
+    if (!this.monaco) {
+      if (!this.loadMonacoPromise) {
+        const { getMonaco } = await import(
+          '@alilc/lowcode-plugin-base-monaco-editor'
+        );
+        this.loadMonacoPromise = getMonaco();
+      }
+      this.monaco = await this.loadMonacoPromise;
+      this.triggerHook(HookKeys.onMonacoLoaded, this.monaco);
+      this.service.triggerHook(PluginHooks.onMonacoLoaded, this.monaco);
+    }
   }
 
   init(project: Project, editor: Event, service: Service) {
@@ -94,6 +122,7 @@ export class EditorController extends EditorHook {
     this.setupEventListeners();
     this.initCodeTempBySchema(this.getSchema(true));
     this.triggerHook(HookKeys.onImport, this.getSchema(true));
+    this.initMonaco();
   }
 
   initCodeEditor(
@@ -102,6 +131,7 @@ export class EditorController extends EditorHook {
   ) {
     this.codeEditor = codeEditor;
     this.codeEditorCtx = ctx;
+    this.monacoSuggestions.init();
   }
 
   setCodeTemp(code: any | ((old: CodeTemp) => CodeTemp)) {
@@ -122,7 +152,7 @@ export class EditorController extends EditorHook {
     this.applyLibs();
   }
 
-  addComponentDeclarations(list: Array<[string, string]> = []) {
+  addComponentDeclarations(list: [string, string][] = []) {
     for (const [key, dec] of list) {
       this.state.declarationsMap[key] = dec;
     }
@@ -131,7 +161,7 @@ export class EditorController extends EditorHook {
   }
 
   private publishExtraLib() {
-    const libs: Array<{ path: string; content: string }> = [];
+    const libs: { path: string; content: string }[] = [];
     this.extraLibMap.forEach((content, path) => libs.push({ content, path }));
     this.state.extraLibs = libs;
     this.publish();
@@ -151,10 +181,7 @@ export class EditorController extends EditorHook {
 
   private async applyLibs() {
     if (!this.monaco) {
-      const { getMonaco } = await import(
-        '@alilc/lowcode-plugin-base-monaco-editor'
-      );
-      this.monaco = await getMonaco(undefined) as any;
+      await this.initMonaco();
     }
     const decStr = Object.keys(this.state.declarationsMap).reduce(
       (v, k) => `${v}\n${k}: ${this.state.declarationsMap[k]};\n`,
@@ -173,7 +200,7 @@ export class EditorController extends EditorHook {
     });
   }
 
-  getSchema(pure?: boolean): any {
+  getSchema(pure?: boolean): IPublicTypeProjectSchema {
     const schema = this.project.exportSchema(
       common.designerCabin.TransformStage.Save
     );
@@ -182,15 +209,21 @@ export class EditorController extends EditorHook {
       ? treeToMap(this.codeEditorCtx.fileTree)
       : this.codeTemp?._sourceCodeMap.files; // 获取最新的fileMap
     if (fileMap && !pure) {
-      if (!this.compileSourceCode(fileMap)) {
-        throw new Error('编译失败');
+      try {
+        if (!this.compileSourceCode(fileMap)) {
+          // 下面会导致整个页面挂掉，先作为弱依赖，给个提示
+          throw new Error('编译失败');
+        }
+        Object.assign(schema.componentsTree[0], this.codeTemp);
+      } catch (error) {
+        console.error(error);
+        Message.error('源码编译失败，请返回修改');
       }
-      Object.assign(schema.componentsTree[0], this.codeTemp);
     }
     return schema;
   }
 
-  importSchema(schema: any) {
+  importSchema(schema: IPublicTypeProjectSchema) {
     this.project.importSchema(schema);
     this.initCodeTempBySchema(schema);
     this.triggerHook(HookKeys.onImport, schema);
@@ -217,15 +250,15 @@ export class EditorController extends EditorHook {
     };
   }
 
-  initCodeTempBySchema(schema: any) {
+  public initCodeTempBySchema(schema: IPublicTypeProjectSchema) {
     const componentSchema = schema.componentsTree[0] || {};
-    const { css, methods, state, lifeCycles } = componentSchema;
+    const { css, methods, state, lifeCycles } = componentSchema as any;
     const codeMap = (componentSchema as any)._sourceCodeMap;
     const defaultFileMap = {
       ...this.defaultFiles,
-      ...getDefaultFileList(schema),
+      ...getDefaultFileList(schema, this.useLess),
     };
-    const compatMap = compatGetSourceCodeMap(codeMap);
+    const compatMap = compatGetSourceCodeMap(codeMap, defaultFileMap);
     this.codeTemp = {
       css,
       methods,
@@ -233,7 +266,6 @@ export class EditorController extends EditorHook {
       lifeCycles,
       _sourceCodeMap: {
         ...compatMap,
-        files: defaultFileMap,
       },
     };
   }
@@ -253,8 +285,8 @@ export class EditorController extends EditorHook {
     this.editor?.on('common:codeEditor.addFunction', ((
       params: FunctionEventParams
     ) => {
+      this.codeEditorCtx?.selectFile('index.js', []);
       setTimeout(() => {
-        this.codeEditorCtx?.selectFile('index.js', []);
         if (this.monaco && this.codeEditor) {
           addFunction(this.codeEditor, params, this.monaco);
         }
@@ -306,7 +338,20 @@ export class EditorController extends EditorHook {
     pageNode.state = state;
     pageNode.methods = methods;
     pageNode.lifeCycles = lifeCycles;
-    pageNode.css = beautifyCSS(fileMap['index.css'] || '', {});
+    const lessContent = fileMap['index.less'];
+    // 没有less文件，走之前的逻辑
+    if (!lessContent) {
+      pageNode.css = beautifyCSS(fileMap['index.css'] || '', {});
+    }
+    if (this.useLess && lessContent) {
+      window.less?.render(lessContent, {}, (err: any, output: any) => {
+        if (err) {
+          Message.error('less 编译失败');
+          console.error(err);
+        }
+        pageNode.css = output?.css || '';
+      });
+    }
     if (lifeCycles.constructor === {}.constructor) {
       lifeCycles.constructor = {
         originalCode: 'function constructor() { }',
@@ -341,8 +386,23 @@ export class EditorController extends EditorHook {
     return true;
   }
 
-  resetSaveStatus() {
+  public resetSaveStatus() {
     this.codeEditorCtx?.updateState({ modifiedKeys: [] });
+  }
+
+  // 添加一堆文件
+  public addFiles(fileMap: ObjectType<string>) {
+    if (!Object.keys(fileMap || {}).length || !this.codeEditorCtx?.fileTree) {
+      return;
+    }
+    const subTree = fileMapToTree(fileMap);
+    const { files, dirs } = subTree;
+    const newTree = { ...this.codeEditorCtx?.fileTree };
+    newTree.files?.push(...files);
+    newTree.dirs?.push(...dirs);
+    this.codeEditorCtx.updateState({
+      fileTree: newTree,
+    });
   }
 
   triggerHook(key: HookKeys, ...args: any[]): void {

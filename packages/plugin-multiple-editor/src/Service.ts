@@ -1,11 +1,15 @@
-import { EditorController } from './Controller';
+import { ReactElement } from 'react';
+import { EditorController, HookHandleFn } from './Controller';
 import { EditorHook } from './EditorHook';
-import type { Skeleton } from '@alilc/lowcode-shell';
+import type {IPublicApiSkeleton} from '@alilc/lowcode-types';
+import { Monaco } from './types';
 
 export enum PluginHooks {
   onActive = 'onActive',
   onDeActive = 'onDeActive',
   onSelectFileChange = 'onSelectFileChange',
+  onEditorMount = 'onEditorMount',
+  onMonacoLoaded = 'onMonacoLoaded',
 }
 
 export interface EditorPluginInterface {
@@ -16,6 +20,14 @@ export interface ServiceInitOptions {
   plugins?: EditorPluginInterface[];
 }
 
+export interface PluginAction {
+  key: string;
+  title: string;
+  icon: ReactElement;
+  action: () => any;
+  priority: number;
+}
+
 export class Service extends EditorHook {
   // private options: ServiceInitOptions;
   public onActive = this.hookFactory(PluginHooks.onActive);
@@ -24,12 +36,19 @@ export class Service extends EditorHook {
 
   public onSelectFileChange = this.hookFactory(PluginHooks.onSelectFileChange);
 
-  constructor(public controller: EditorController, private skeleton: Skeleton) {
+  public onEditorMount = this.hookFactory(PluginHooks.onEditorMount);
+
+  public onMonacoLoaded: HookHandleFn<(monaco: Monaco) => void> =
+    this.hookFactory(PluginHooks.onMonacoLoaded);
+
+  actionMap: Array<PluginAction>;
+
+  constructor(public controller: EditorController, private skeleton: IPublicApiSkeleton) {
     super();
+    this.actionMap = [];
   }
 
   init(options: ServiceInitOptions) {
-    // this.options = options;
     const { plugins } = options;
     if (plugins) {
       for (const plugin of plugins) {
@@ -41,12 +60,12 @@ export class Service extends EditorHook {
   }
 
   private setupHooks() {
-    this.skeleton.onShowPanel((pluginName) => {
+    this.skeleton.onHidePanel((pluginName) => {
       if (pluginName === 'codeEditor') {
         this.triggerHook(PluginHooks.onDeActive);
       }
     });
-    this.skeleton.onHidePanel((pluginName) => {
+    this.skeleton.onShowPanel((pluginName) => {
       if (pluginName === 'codeEditor') {
         this.triggerHook(PluginHooks.onActive);
       }
@@ -55,5 +74,16 @@ export class Service extends EditorHook {
 
   public triggerHook(key: PluginHooks, ...args: any[]): void {
     super.triggerHook(key, ...args);
+  }
+
+  public registerAction(action: PluginAction) {
+    const index = this.actionMap.findIndex((item) => item.key === action.key);
+    if (index > -1) {
+      console.error(
+        `Action ${action.key}, 已被注册，此 Action 将覆盖原 Action`
+      );
+      this.actionMap.splice(index, 1);
+    }
+    this.actionMap.push(action);
   }
 }
