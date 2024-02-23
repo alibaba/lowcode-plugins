@@ -43,7 +43,8 @@
     "f2elint": "^2.0.1",
     "husky": "^7.0.4",
     "lerna": "^4.x",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "webpack": "^5.90.3"
   },
   "engines": {
     "node": ">=14.0.0"
