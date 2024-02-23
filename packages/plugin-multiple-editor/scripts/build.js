@@ -126,6 +126,8 @@ function build(previousFileSizes) {
       compiler.run((err, stats) => {
         let messages;
         if (err) {
+          console.log(err);
+
           if (!err.message) {
             return reject(err);
           }
