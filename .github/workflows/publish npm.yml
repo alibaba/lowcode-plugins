@@ -32,7 +32,7 @@ jobs:
         git config --local user.name "GitHub Action"
 
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-        npm install
+        npm install --legacy-peer-deps
         cd packages/${{ github.event.inputs.packagePath }}
         npm install --legacy-peer-deps
         npm version ${{ github.event.inputs.versionType }}

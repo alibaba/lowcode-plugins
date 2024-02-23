@@ -28,7 +28,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        npm install
+        npm install --legacy-peer-deps
         echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
         cd packages/${{ github.event.inputs.packagePath }}
         npm install --legacy-peer-deps
