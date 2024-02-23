@@ -1,6 +1,6 @@
 {
   "name": "@alilc/lowcode-plugin-multiple-editor",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "main": "es/index.js",
   "license": "MIT",
   "private": false,
