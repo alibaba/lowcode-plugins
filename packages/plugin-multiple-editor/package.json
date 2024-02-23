@@ -179,5 +179,6 @@
   ],
   "fastPublish": {
     "npmClient": "npm"
-  }
+  },
+  "repository": "https://github.com/alibaba/lowcode-plugins.git"
 }
