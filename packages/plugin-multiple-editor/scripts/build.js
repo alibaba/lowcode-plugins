@@ -1,5 +1,6 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
+// process.env.CI = 'false';
 
 process.on('unhandledRejection', err => {
   console.log(err);
@@ -168,6 +169,10 @@ try {
             }
             return reject(new Error(messages.errors.join('\n\n')));
           }
+          console.log('process.env.CI', process.env.CI, process.env.CI &&
+          (typeof process.env.CI !== 'string' ||
+            process.env.CI.toLowerCase() !== 'false') &&
+          messages.warnings.length)
           if (
             process.env.CI &&
             (typeof process.env.CI !== 'string' ||
