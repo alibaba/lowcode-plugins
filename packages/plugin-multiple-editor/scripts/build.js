@@ -7,6 +7,7 @@ process.on('unhandledRejection', err => {
 });
 
 try {
+  console.log('Building the plugin-multiple-editor...');
   // Ensure environment variables are read.
   require('../config/env');
 
@@ -48,14 +49,17 @@ try {
   const { checkBrowsers } = require('react-dev-utils/browsersHelper');
   checkBrowsers(paths.appPath, isInteractive)
     .then(() => {
+      console.log('Creating an optimized production build...');
       return measureFileSizesBeforeBuild(paths.appBuild);
     })
     .then(previousFileSizes => {
+      console.log('Removing the build folder...');
       fs.emptyDirSync(paths.appBuild);
       return build(previousFileSizes);
     })
     .then(
       ({ stats, previousFileSizes, warnings }) => {
+        console.log('File sizes after gzip:\n');
         if (warnings.length) {
           console.log(chalk.yellow('Compiled with warnings.\n'));
           console.log(warnings.join('\n\n'));
@@ -97,6 +101,7 @@ try {
       },
       err => {
         const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
+        console.log(chalk.red('Failed to compile.\n'));
         if (tscCompileOnError) {
           console.log(
             chalk.yellow(
@@ -124,9 +129,11 @@ try {
     console.log('Creating an optimized production build...');
 
     const compiler = webpack(config);
+    console.log('compiler')
     return new Promise((resolve, reject) => {
       try {
         compiler.run((err, stats) => {
+          console.log('compiler.run')
           let messages;
           if (err) {
             console.log(err);
@@ -178,6 +185,7 @@ try {
                     'Most CI servers set it automatically.\n'
                 )
               );
+              console.log(filteredWarnings, messages.warnings);
               return reject(new Error(filteredWarnings.join('\n\n')));
             }
           }
