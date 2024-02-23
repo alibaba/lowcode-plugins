@@ -185,7 +185,7 @@ try {
                     'Most CI servers set it automatically.\n'
                 )
               );
-              console.log(filteredWarnings, messages.warnings);
+              console.log(filteredWarnings, messages, messages.warnings);
               return reject(new Error(filteredWarnings.join('\n\n')));
             }
           }
