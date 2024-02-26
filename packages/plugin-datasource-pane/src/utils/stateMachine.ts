@@ -50,7 +50,8 @@ type DataSourcePaneStateEvent =
   | { type: 'START_VIEW' }
   | { type: 'EXPORT.toggleSelect' };
 
-export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => createMachine<DataSourcePaneStateContext, DataSourcePaneStateEvent>(
+export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) =>
+  createMachine<DataSourcePaneStateContext, DataSourcePaneStateEvent>(
     {
       id: 'dataSourcePane',
       initial: 'idle',
@@ -82,7 +83,9 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
               target: 'idle',
               actions: assign({
                 dataSourceList: (context, event) => {
-                  return context.sort.dataSourceList;
+                  return context.sort.dataSourceList.length !== 0
+                    ? context.sort.dataSourceList
+                    : context.dataSourceList;
                 },
               }),
             },
@@ -106,7 +109,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
                 export: (context, event) => {
                   const { selectedDataSourceIdList } = context.export;
                   const index = selectedDataSourceIdList.indexOf(
-                    event.dataSourceId,
+                    event.dataSourceId
                   );
                   if (index !== -1) {
                     return {
@@ -118,7 +121,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
                   return {
                     selectedDataSourceIdList:
                       context.export.selectedDataSourceIdList.concat(
-                        event.dataSourceId,
+                        event.dataSourceId
                       ),
                   };
                 },
@@ -162,11 +165,13 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
                   actions: assign({
                     dataSourceList: (context, event) => {
                       // 直接 concat 会出现重复
-                      const filterDataSourceList = context.dataSourceList.filter((item) => {
-                        return !event.payload.find(
-                          (dataSource: DataSourceConfig) => dataSource.id === item.id,
-                        )
-                      })
+                      const filterDataSourceList =
+                        context.dataSourceList.filter((item) => {
+                          return !event.payload.find(
+                            (dataSource: DataSourceConfig) =>
+                              dataSource.id === item.id
+                          );
+                        });
 
                       return filterDataSourceList.concat(event.payload);
                     },
@@ -256,7 +261,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
               const dataSourceUpdateIndex = dataSourceList.findIndex(
                 (dataSource) => {
                   return dataSource.id === id;
-                },
+                }
               );
               dataSourceList[dataSourceUpdateIndex] = event.payload;
               return dataSourceList;
@@ -284,7 +289,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
           actions: assign({
             dataSourceList: (context, event) => {
               return context.dataSourceList.filter(
-                (item) => item.id !== event.dataSourceId,
+                (item) => item.id !== event.dataSourceId
               );
             },
           }),
@@ -308,10 +313,10 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
           actions: assign({
             detail: (context, event) => {
               const dataSource = context.dataSourceList.find(
-                (item) => item.id === event.dataSourceId,
+                (item) => item.id === event.dataSourceId
               );
               const dataSourceType = event.dataSourceTypes.find(
-                (i) => i.type === dataSource.type,
+                (i) => i.type === dataSource.type
               );
               return {
                 visible: true,
@@ -329,7 +334,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
           actions: assign({
             detail: (context, event) => {
               const dataSource = context.dataSourceList.find(
-                (item) => item.id === event.dataSourceId,
+                (item) => item.id === event.dataSourceId
               );
               return {
                 visible: true,
@@ -339,7 +344,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
                 data: {
                   dataSource,
                   dataSourceType: event.dataSourceTypes.find(
-                    (i) => i.type === dataSource.type,
+                    (i) => i.type === dataSource.type
                   ),
                 },
               };
@@ -351,7 +356,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
           actions: assign({
             detail: (context, event) => {
               const dataSource = context.dataSourceList.find(
-                (item) => item.id === event.dataSourceId,
+                (item) => item.id === event.dataSourceId
               );
               return {
                 visible: true,
@@ -362,7 +367,7 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
                     id: _uniqueId(`${event.dataSourceId}_`),
                   },
                   dataSourceType: event.dataSourceTypes.find(
-                    (i) => i.type === dataSource.type,
+                    (i) => i.type === dataSource.type
                   ),
                 },
               };
@@ -397,9 +402,10 @@ export const createStateMachine = (dataSourceList: DataSourceConfig[] = []) => c
     },
     {
       actions: {},
-    },
+    }
   );
 
-export const createStateService = () => interpret(createStateMachine()).onTransition((current) => {
+export const createStateService = () =>
+  interpret(createStateMachine()).onTransition((current) => {
     // console.log('current transition list', current.value);
   });
